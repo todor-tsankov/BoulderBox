@@ -9,6 +9,11 @@ namespace BoulderBox.Data.Configurations
         public void Configure(EntityTypeBuilder<ApplicationUser> appUser)
         {
             appUser
+                .HasOne(x => x.Points)
+                .WithOne(x => x.ApplicationUser)
+                .HasForeignKey<ApplicationUser>(x => x.PointsId);
+
+            appUser
                 .HasMany(e => e.Claims)
                 .WithOne()
                 .HasForeignKey(e => e.UserId)

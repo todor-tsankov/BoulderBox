@@ -24,6 +24,32 @@ namespace BoulderBox.Data
         {
         }
 
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
+
+        public DbSet<Ascent> Ascents { get; set; }
+
+        public DbSet<Boulder> Boulders { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Country> Countries { get; set; }
+
+        public DbSet<ForumCategory> ForumCategories { get; set; }
+
+        public DbSet<ForumComment> ForumComments { get; set; }
+
+        public DbSet<ForumPost> ForumPosts { get; set; }
+
+        public DbSet<Grade> Grades { get; set; }
+
+        public DbSet<Gym> Gyms { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Points> Points { get; set; }
+
+        public DbSet<Style> Styles { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
