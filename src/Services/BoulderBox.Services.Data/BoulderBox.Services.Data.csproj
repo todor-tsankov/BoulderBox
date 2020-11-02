@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\BoulderBox.Data.Common\BoulderBox.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\BoulderBox.Data.Models\BoulderBox.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\BoulderBox.Data\BoulderBox.Data.csproj" />
     <ProjectReference Include="..\BoulderBox.Services.Mapping\BoulderBox.Services.Mapping.csproj" />
   </ItemGroup>
 
