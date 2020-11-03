@@ -14,6 +14,7 @@ namespace BoulderBox.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Points = new Points { ApplicationUserId = this.Id };
 
             this.Ascents = new HashSet<Ascent>();
             this.Boulders = new HashSet<Boulder>();
