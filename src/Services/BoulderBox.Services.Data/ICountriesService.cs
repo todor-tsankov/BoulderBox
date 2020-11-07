@@ -9,9 +9,9 @@ namespace BoulderBox.Services.Data
 {
     public interface ICountriesService
     {
-        int CountCountries(Expression<Func<Country, bool>>[] predicate);
+        int CountCountries(Expression<Func<Country, bool>> predicate = null);
 
-        IEnumerable<T> GetCountry<T>(Expression<Func<Country, bool>> predicate);
+        T GetCountry<T>(Expression<Func<Country, bool>> predicate);
 
         IEnumerable<T> GetCountries<T>(
            Expression<Func<Country, bool>> predicate = null,
@@ -19,7 +19,7 @@ namespace BoulderBox.Services.Data
            int? skip = null,
            int? take = null);
 
-        Task<string> CreateCountry<T>(T inputModel);
+        Task<string> CreateCountry(object inputModel);
 
         Task<bool> DeleteCountry(Expression<Func<Country, bool>> predicate);
     }
