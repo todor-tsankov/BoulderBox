@@ -9,9 +9,9 @@ namespace BoulderBox.Services.Data
 {
     public interface ICitiesService
     {
-        int CountCities(Expression<Func<City, bool>>[] predicate);
+        int CountCities(Expression<Func<City, bool>> predicate = null);
 
-        IEnumerable<T> GetCity<T>(Expression<Func<City, bool>> predicate);
+        T GetCity<T>(Expression<Func<City, bool>> predicate);
 
         IEnumerable<T> GetCities<T>(
            Expression<Func<City, bool>> predicate = null,
@@ -19,7 +19,7 @@ namespace BoulderBox.Services.Data
            int? skip = null,
            int? take = null);
 
-        Task<string> CreateCity<T>(T inputModel);
+        Task<string> CreateCity(object inputModel);
 
         Task<bool> DeleteCity(Expression<Func<City, bool>> predicate);
     }
