@@ -2,7 +2,7 @@
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
 
-namespace BoulderBox.Services.Data
+namespace BoulderBox.Services.Data.Boulders
 {
     public class AscentsService : BaseService<Ascent>, IAscentsService
     {
