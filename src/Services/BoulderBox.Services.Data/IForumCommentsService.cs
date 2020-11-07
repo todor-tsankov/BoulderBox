@@ -1,26 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-using BoulderBox.Data.Models;
+﻿using BoulderBox.Data.Models;
+using BoulderBox.Services.Data.Common;
 
 namespace BoulderBox.Services.Data
 {
-    public interface IForumCommentsService
+    public interface IForumCommentsService : IBaseService<ForumComment>
     {
-        int CountForumComments(Expression<Func<ForumComment, bool>>[] predicate);
-
-        IEnumerable<T> GetForumComment<T>(Expression<Func<ForumComment, bool>> predicate);
-
-        IEnumerable<T> GetForumComments<T>(
-           Expression<Func<ForumComment, bool>> predicate = null,
-           Expression<Func<ForumComment, object>> orderBySelector = null,
-           int? skip = null,
-           int? take = null);
-
-        Task<string> CreateForumComment<T>(T inputModel);
-
-        Task<bool> DeleteForumComment(Expression<Func<ForumComment, bool>> predicate);
     }
 }

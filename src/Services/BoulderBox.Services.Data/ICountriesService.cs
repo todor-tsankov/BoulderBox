@@ -1,26 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-
-using BoulderBox.Data.Models;
+﻿using BoulderBox.Data.Models;
+using BoulderBox.Services.Data.Common;
 
 namespace BoulderBox.Services.Data
 {
-    public interface ICountriesService
+    public interface ICountriesService : IBaseService<Country>
     {
-        int CountCountries(Expression<Func<Country, bool>> predicate = null);
-
-        T GetCountry<T>(Expression<Func<Country, bool>> predicate);
-
-        IEnumerable<T> GetCountries<T>(
-           Expression<Func<Country, bool>> predicate = null,
-           Expression<Func<Country, object>> orderBySelector = null,
-           int? skip = null,
-           int? take = null);
-
-        Task<string> CreateCountry(object inputModel);
-
-        Task<bool> DeleteCountry(Expression<Func<Country, bool>> predicate);
     }
 }
