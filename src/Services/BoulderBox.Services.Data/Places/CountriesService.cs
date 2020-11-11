@@ -1,6 +1,12 @@
-﻿using BoulderBox.Data.Common.Repositories;
+﻿using System.Threading.Tasks;
+
+using AutoMapper;
+using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
+using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.Countries;
+using BoulderBox.Web.ViewModels.Images;
 
 namespace BoulderBox.Services.Data.Places
 {
@@ -12,6 +18,17 @@ namespace BoulderBox.Services.Data.Places
             : base(countriesRepository)
         {
             this.countriesRepository = countriesRepository;
+        }
+
+        public async Task<bool> AddCountryAsync(CountryInputModel countryInput)
+        {
+            var mapper = AutoMapperConfig.MapperInstance;
+            var country = mapper.Map<Country>(countryInput);
+
+            await this.countriesRepository.AddAsync(country);
+            await this.countriesRepository.SaveChangesAsync();
+
+            return true;
         }
     }
 }

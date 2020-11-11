@@ -7,6 +7,11 @@ using BoulderBox.Data.Models;
 using BoulderBox.Data.Repositories;
 using BoulderBox.Data.Seeding;
 using BoulderBox.Services.Data;
+using BoulderBox.Services.Data.Boulders;
+using BoulderBox.Services.Data.Files;
+using BoulderBox.Services.Data.Forum;
+using BoulderBox.Services.Data.Places;
+using BoulderBox.Services.Data.Users;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Services.Messaging;
 using BoulderBox.Web.ViewModels;
@@ -63,6 +68,28 @@ namespace BoulderBox.Web
 
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
+
+            // Boulders - Application services
+            services.AddTransient<IAscentsService, AscentsService>();
+            services.AddTransient<IBouldersService, BouldersService>();
+            services.AddTransient<IGradesService, GradesService>();
+            services.AddTransient<IStylesService, StylesService>();
+
+            // Files - Application services
+            services.AddTransient<IImagesService, ImagesService>();
+
+            // Forum - Application services
+            services.AddTransient<IForumCategoriesService, ForumCategoriesService>();
+            services.AddTransient<IForumCommentsService, ForumCommentsService>();
+            services.AddTransient<IForumPostsService, ForumPostsService>();
+
+            // Places - Application services
+            services.AddTransient<ICitiesService, CitiesService>();
+            services.AddTransient<ICountriesService, CountriesService>();
+            services.AddTransient<IGymsService, GymsService>();
+
+            // Users - Application services
+            services.AddTransient<IApplicationUsersService, ApplicationUsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
