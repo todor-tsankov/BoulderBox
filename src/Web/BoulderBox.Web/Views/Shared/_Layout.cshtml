@@ -35,7 +35,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Explore</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Countries</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
                             <a class="dropdown-item" href="#">Cities</a>
                             <a class="dropdown-item" href="#">Gyms</a>
                         </div>
@@ -52,13 +52,11 @@
 
     <partial name="_CookieConsentPartial" />
     <main role="main" class="pb-3">
-            @this.RenderBody()
+        @this.RenderBody()
     </main>
 
-    <footer class="footer bg-primary text-light">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a class="text-light" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+    <footer class="card-footer border-top text-light bg-primary justify-content-center">
+        &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>

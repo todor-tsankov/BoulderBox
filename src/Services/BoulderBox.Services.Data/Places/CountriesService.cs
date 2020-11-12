@@ -20,10 +20,12 @@ namespace BoulderBox.Services.Data.Places
             this.countriesRepository = countriesRepository;
         }
 
-        public async Task<bool> AddCountryAsync(CountryInputModel countryInput)
+        public async Task<bool> AddCountryAsync(CountryInputModel countryInput, ImageInputModel imageInput = null)
         {
             var mapper = AutoMapperConfig.MapperInstance;
             var country = mapper.Map<Country>(countryInput);
+
+            country.Image = mapper.Map<Image>(imageInput);
 
             await this.countriesRepository.AddAsync(country);
             await this.countriesRepository.SaveChangesAsync();

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using BoulderBox.Data.Models;
+
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.ViewModels.Countries;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +19,9 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index()
         {
-            return this.View();
+            var countries = this.countriesService.GetMany<CountryViewModel>();
+
+            return this.View(countries);
         }
 
         public IActionResult Create()
@@ -29,14 +30,15 @@ namespace BoulderBox.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CountryInputModel input, List<FormFile> formFiles)
+        public async Task<IActionResult> Create(CountryInputModel input, IFormFile formFile)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
 
-            await this.countriesService.AddCountryAsync(input);
+            var image = await this.SaveImageFileAsync(formFile);
+            await this.countriesService.AddCountryAsync(input, image);
 
             return this.RedirectToAction("Index");
         }

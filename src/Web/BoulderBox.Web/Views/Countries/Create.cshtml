@@ -6,9 +6,9 @@
 
 <div class="offset-md-3 col-md-6">
     <form asp-controller="Countries" asp-action="Create" method="post" enctype="multipart/form-data">
-        <hr />
+        <br />
         <h1>Create Country</h1>
-        <hr />
+        <hr class="bg-secondary" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="col-form-label"></label>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label class="col-form-label">Picture</label>
-            <input type="file" class="form-control" />
+            <input type="file" name="formFile" class="form-control" />
         </div>
         <button type="submit" class="btn btn-dark">Create</button>
     </form>
