@@ -24,6 +24,13 @@ namespace BoulderBox.Web.Controllers
             return this.View(countries);
         }
 
+        public IActionResult Details(string id)
+        {
+            var country = this.countriesService.GetSingle<CountryViewModel>(x => x.Id == id);
+
+            return this.View(country);
+        }
+
         public IActionResult Create()
         {
             return this.View();
