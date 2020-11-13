@@ -9,7 +9,7 @@
     <br />
     <h1>@ViewData["Title"]</h1>
     <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-        <hr />
+        <hr class="bg-primary" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Input.Email">Email *</label>

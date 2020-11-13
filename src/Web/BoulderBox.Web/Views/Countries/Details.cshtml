@@ -1,7 +1,7 @@
 ﻿@model BoulderBox.Web.ViewModels.Countries.CountryDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
 }
 
 <div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
@@ -30,8 +30,8 @@
                 <th scope="col">№</th>
                 <th scope="col">City Name</th>
                 <th scope="col">Gyms Count</th>
-                <th scope="col">Boulders Count</th>
                 <th scope="col">Ascents Count</th>
+                <th scope="col">Boulders Count</th>
                 <th></th>
             </tr>
         </thead>
@@ -59,8 +59,8 @@
                     <td>@i</td>
                     <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-primary"/>@city.Name<a/></td>
                     <td>@city.GymsCount</td>
-                    <td>@city.BoulderCount</td>
                     <td>@city.AscentsCount</td>
+                    <td>@city.BoulderCount</td>
                     <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="btn btn-dark">Details</a></td>
                 </tr>
 

@@ -52,11 +52,17 @@
 
     <partial name="_CookieConsentPartial" />
     <main role="main" class="pb-3">
-        @this.RenderBody()
+        <div style="padding-bottom: 100px">
+            @this.RenderBody()
+        </div>
     </main>
 
-    <footer class="card-footer border-top text-light bg-primary justify-content-center">
-        &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-light bg-primary">
+        <div class="col-md-10 offset-1">
+            <div class="col-md-4">
+                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
