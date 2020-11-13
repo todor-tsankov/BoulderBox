@@ -26,7 +26,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var country = this.countriesService.GetSingle<CountryViewModel>(x => x.Id == id);
+            var country = this.countriesService.GetSingle<CountryDetailsViewModel>(x => x.Id == id);
 
             return this.View(country);
         }
@@ -37,7 +37,7 @@ namespace BoulderBox.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CountryInputModel input, IFormFile formFile)
+        public async Task<IActionResult> Create(CountryInputModel countryInput, IFormFile formFile)
         {
             if (!this.ModelState.IsValid)
             {
@@ -45,7 +45,7 @@ namespace BoulderBox.Web.Controllers
             }
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.countriesService.AddCountryAsync(input, image);
+            await this.countriesService.AddCountryAsync(countryInput, image);
 
             return this.RedirectToAction("Index");
         }

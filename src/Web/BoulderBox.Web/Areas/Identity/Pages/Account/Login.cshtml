@@ -10,16 +10,16 @@
     <br />
     <h1>@ViewData["Title"]</h1>
 
-    <form id="account" method="post" >
+    <form id="account" method="post">
         <hr />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Input.Email"></label>
+            <label asp-for="Input.Email">Email *</label>
             <input asp-for="Input.Email" class="form-control" />
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Input.Password"></label>
+            <label asp-for="Input.Password">Password *</label>
             <input asp-for="Input.Password" class="form-control" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
@@ -31,6 +31,7 @@
                 </label>
             </div>
         </div>
+        <p>* Required</p>
         <div class="form-group">
             <button type="submit" class="btn btn-dark">Log in</button>
         </div>

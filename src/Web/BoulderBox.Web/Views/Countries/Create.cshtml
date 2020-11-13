@@ -11,23 +11,23 @@
         <hr class="bg-secondary" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Name" class="col-form-label">Country Name *</label>
-            <input asp-for="Name" class="form-control" />
+            <label asp-for="Name" class="col-form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Country name"/>
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="CountryCode" class="col-form-label">Country Code *</label>
-            <input asp-for="CountryCode" class="form-control" />
+            <label asp-for="CountryCode" class="col-form-label"></label>
+            <input asp-for="CountryCode" class="form-control" placeholder="From AAA to ZZZ"/>
             <span asp-validation-for="CountryCode" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="Description" class="col-form-label">Description</label>
-            <textarea asp-for="Description" class="form-control"></textarea>
+            <label asp-for="Description" class="col-form-label"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Short description of the country..."></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label class="col-form-label">Picture</label>
-            <input type="file" name="formFile" class="form-control" />
+            <input type="file" name="formFile" class="form-control-file" />
         </div>
         <p>* Required</p>
         <button type="submit" class="btn btn-dark">Create</button>

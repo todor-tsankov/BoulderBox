@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.Cities;
+using System.Collections.Generic;
 
 namespace BoulderBox.Web.ViewModels.Countries
 {

@@ -1,11 +1,71 @@
-﻿@model BoulderBox.Web.ViewModels.Countries.CountryViewModel
+﻿@model BoulderBox.Web.ViewModels.Countries.CountryDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<div class="offset-md-3 col-md-6">
-    <h1>details</h1>
-    <h1>@Model.Id @Model.Name</h1>
-</div>
+<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
+    <br />
+    <div class="row justify-content-center">
+        @if (Model.ImageSource != null)
+        {
+            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="img-thumbnail border border-dark col-1" />
+        }
+        else
+        {
+            <img src="~/img/no-image-available-2.jpg" style="padding:0px" class="img-thumbnail border border-dark col-1" />
+        }
+        <span class="text-light">....</span>
+        <h1>@Model.Name, @Model.CountryCode</h1>
+    </div>
+    <hr class="bg-primary" />
+    <p>@(Model.Description ?? "No description avaible.")</p>
+    <hr class="bg-primary" />
+    <br />
+    <h2>Cities in @Model.Name</h2>
+    <br />
+    <table class="table table-primary table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">City Name</th>
+                <th scope="col">Gyms Count</th>
+                <th scope="col">Boulders Count</th>
+                <th scope="col">Ascents Count</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 
+            @{
+                var i = 1;
+            }
+
+            @if (Model.Cities.Count == 0)
+            {
+                <tr class="bg-light">
+                    <td>1</td>
+                    <td>No cities in @Model.Name</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><a class="btn btn-dark text-muted">Details</a></td>
+                </tr>
+            }
+
+            @foreach (var city in Model.Cities)
+            {
+                <tr class="bg-light">
+                    <td>@i</td>
+                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-primary"/>@city.Name<a/></td>
+                    <td>@city.GymsCount</td>
+                    <td>@city.BoulderCount</td>
+                    <td>@city.AscentsCount</td>
+                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="btn btn-dark">Details</a></td>
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+</div>
