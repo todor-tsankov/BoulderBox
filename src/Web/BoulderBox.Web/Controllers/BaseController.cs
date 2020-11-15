@@ -21,7 +21,7 @@ namespace BoulderBox.Web.Controllers
 
             var guid = Guid.NewGuid().ToString();
             var filePath = $"./wwwroot/img/{guid}.jpg";
-            var source = $"img/{guid}.jpg";
+            var source = $"~/img/{guid}.jpg";
 
             using var stream = new FileStream(filePath, FileMode.Create);
             await formFile.CopyToAsync(stream);
