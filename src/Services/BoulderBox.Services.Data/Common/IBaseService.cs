@@ -12,6 +12,8 @@ namespace BoulderBox.Services.Data.Common
     {
         int Count(Expression<Func<TModel, bool>> predicate);
 
+        bool Exists(Expression<Func<TModel, bool>> predicate);
+
         T GetSingle<T>(Expression<Func<TModel, bool>> predicate);
 
         IEnumerable<T> GetMany<T>(
@@ -20,6 +22,6 @@ namespace BoulderBox.Services.Data.Common
            int? skip = null,
            int? take = null);
 
-        Task<bool> Delete(Expression<Func<TModel, bool>> predicate);
+        Task<bool> DeleteAsync(Expression<Func<TModel, bool>> predicate);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.ViewModels.Countries;
 using BoulderBox.Web.ViewModels.Gyms;
@@ -27,9 +28,11 @@ namespace BoulderBox.Web.Controllers
             return this.View(gyms);
         }
 
-        public IActionResult Details()
+        public IActionResult Details(string id)
         {
-            return this.View();
+            var gym = string.Empty;
+
+            return this.View(gym);
         }
 
         public IActionResult Create()
@@ -56,11 +59,11 @@ namespace BoulderBox.Web.Controllers
             return this.Redirect("Index");
         }
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            this.gymsService.Delete(x => x.Id == id);
+            await this.gymsService.DeleteAsync(x => x.Id == id);
 
-            return this.Redirect("Index");
+            return this.RedirectToAction("Index");
         }
     }
 }

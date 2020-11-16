@@ -6,21 +6,15 @@ using BoulderBox.Services.Mapping;
 
 namespace BoulderBox.Web.ViewModels.Countries
 {
-    public class CountryDetailsCityViewModel : IMapFrom<City>
+    public class CountryDetailsCityViewModel : IMapFrom<City>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public string CountryName { get; set; }
-
-        public string ImageSource { get; set; }
-
-        public string Description { get; set; }
-
         public int GymsCount { get; set; }
 
-        public int BoulderCount { get; set; }
+        public int BouldersCount { get; set; }
 
         public int AscentsCount { get; set; }
 
@@ -28,8 +22,8 @@ namespace BoulderBox.Web.ViewModels.Countries
         {
             configuration.CreateMap<City, CountryDetailsCityViewModel>()
                 .ForMember(x => x.GymsCount, x => x.MapFrom(y => y.Gyms.Count))
-                .ForMember(x => x.BoulderCount, x => x.MapFrom(y => y.Gyms.Sum(z => z.Boulders.Count)))
-                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => y.Gyms.SelectMany(z => z.Boulders).Sum(z => z.Ascents.Count)));
+                .ForMember(x => x.BouldersCount, x => x.MapFrom(y => y.Gyms.Select(z => z.Boulders.Count).ToArray().Sum()))
+                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => y.Gyms.SelectMany(z => z.Boulders).Select(z => z.Ascents.Count).ToArray().Sum()));
         }
     }
 }

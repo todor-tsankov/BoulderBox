@@ -30,9 +30,9 @@
                         <br />
                         <br />
                         <div class="row justify-content-end align-items-end">
-                            <a asp-controller="Countries" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-info">Details</a>
+                            <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-info">Details</a>
                             <span class="text-light">.</span>
-                            <a class="btn btn-outline-danger">Delete</a>
+                            <a asp-area="" asp-controller="Countries" asp-action="Delete" asp-route-id="@gym.Id" class="btn btn-outline-danger">Delete</a>
                         </div>
                     </div>
                 </div>

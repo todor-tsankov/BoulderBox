@@ -1,4 +1,4 @@
-﻿@model BoulderBox.Web.ViewModels.Cities.CityViewModel
+﻿@model BoulderBox.Web.ViewModels.Cities.CityDetailsViewModel
 @{
     ViewData["Title"] = Model.Name;
 }
@@ -17,16 +17,16 @@
         <span class="text-light">....</span>
         <h1>@Model.Name, @Model.CountryName</h1>
     </div>
-    <hr class="bg-primary" />
+    <hr class="bg-success" />
     @if (Model.Description != null)
     {
         <p>@Model.Description</p>
-        <hr class="bg-primary" />
+        <hr class="bg-success" />
     }
     <br />
     <h2>Gyms in @Model.Name</h2>
     <br />
-    <table class="table table-primary table-hover table-bordered">
+    <table class="table table-primary border border-success table-sm">
         <thead>
             <tr>
                 <th scope="col">№</th>
@@ -36,7 +36,35 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-light">
+
+            @{
+                var i = 1;
+            }
+
+            @if (!Model.Gyms.Any())
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>No gyms in this city</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><a class="btn btn-primary text-muted">Details</a></td>
+                </tr>
+            }
+
+            @foreach (var gym in Model.Gyms)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-dark">@gym.Name</a></td>
+                    <td>@gym.AscentsCount</td>
+                    <td>@gym.BouldersCount</td>
+                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-primary">Details</a></td>
+                </tr>
+
+                i++;
+            }
         </tbody>
     </table>
 </div>

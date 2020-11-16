@@ -21,10 +21,5 @@ namespace BoulderBox.Web.ViewModels.Countries
         public virtual string ImageSource { get; set; }
 
         public ICollection<CountryDetailsCityViewModel> Cities { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Country, CountryDetailsViewModel>();
-        }
     }
 }

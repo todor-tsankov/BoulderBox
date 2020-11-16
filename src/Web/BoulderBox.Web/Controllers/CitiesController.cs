@@ -33,7 +33,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var city = this.citiesService.GetSingle<CityViewModel>(x => x.Id == id);
+            var city = this.citiesService.GetSingle<CityDetailsViewModel>(x => x.Id == id);
 
             return this.View(city);
         }
@@ -62,11 +62,11 @@ namespace BoulderBox.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            this.citiesService.Delete(x => x.Id == id);
+            await this.citiesService.DeleteAsync(x => x.Id == id);
 
-            return this.Redirect("Index");
+            return this.RedirectToAction("Index");
         }
     }
 }

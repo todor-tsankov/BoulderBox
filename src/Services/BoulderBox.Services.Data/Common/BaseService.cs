@@ -22,6 +22,8 @@ namespace BoulderBox.Services.Data.Common
 
         public int Count(Expression<Func<TModel, bool>> predicate)
         {
+            this.NullCheck(predicate, nameof(predicate));
+
             var entities = this.entityRepository
                .AllAsNoTracking();
 
@@ -33,8 +35,21 @@ namespace BoulderBox.Services.Data.Common
             return entities.Count();
         }
 
+        public bool Exists(Expression<Func<TModel, bool>> predicate)
+        {
+            this.NullCheck(predicate, nameof(predicate));
+
+            var exists = this.entityRepository
+                .AllAsNoTracking()
+                .Any(predicate);
+
+            return exists;
+        }
+
         public TViewModel GetSingle<TViewModel>(Expression<Func<TModel, bool>> predicate)
         {
+            this.NullCheck(predicate, nameof(predicate));
+
             var entity = this.entityRepository
                 .AllAsNoTracking()
                 .Where(predicate)
@@ -80,8 +95,10 @@ namespace BoulderBox.Services.Data.Common
             return mapped;
         }
 
-        public async Task<bool> Delete(Expression<Func<TModel, bool>> predicate)
+        public async Task<bool> DeleteAsync(Expression<Func<TModel, bool>> predicate)
         {
+            this.NullCheck(predicate, nameof(predicate));
+
             var entity = this.entityRepository
                 .All()
                 .Where(predicate)
@@ -96,6 +113,14 @@ namespace BoulderBox.Services.Data.Common
             await this.entityRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        private void NullCheck(object predicate, string parameter)
+        {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(parameter));
+            }
         }
     }
 }
