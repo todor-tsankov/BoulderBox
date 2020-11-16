@@ -2,11 +2,10 @@
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.Cities;
-using System.Collections.Generic;
 
 namespace BoulderBox.Web.ViewModels.Countries
 {
-    public class CountryViewModel : IMapFrom<Country>, IHaveCustomMappings
+    public class CountryViewModel : IMapFrom<Country>
     {
         public string Id { get; set; }
 
@@ -17,11 +16,5 @@ namespace BoulderBox.Web.ViewModels.Countries
         public string Description { get; set; }
 
         public virtual string ImageSource { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Country, CountryViewModel>()
-                .ForMember(x => x.ImageSource, x => x.MapFrom(y => y.Image.Source));
-        }
     }
 }

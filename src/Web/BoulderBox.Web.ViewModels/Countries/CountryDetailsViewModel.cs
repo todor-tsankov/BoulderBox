@@ -24,9 +24,7 @@ namespace BoulderBox.Web.ViewModels.Countries
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Country, CountryDetailsViewModel>()
-                .ForMember(x => x.ImageSource, x => x.MapFrom(y => y.Image.Source))
-                .ForMember(x => x.Cities, x => x.MapFrom(y => y.Cities));
+            configuration.CreateMap<Country, CountryDetailsViewModel>();
         }
     }
 }
