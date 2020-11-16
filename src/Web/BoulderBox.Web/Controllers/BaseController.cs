@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BoulderBox.Web.ViewModels.Images;
@@ -14,14 +14,16 @@ namespace BoulderBox.Web.Controllers
     {
         protected async Task<ImageInputModel> SaveImageFileAsync(IFormFile formFile)
         {
-            if (formFile == null || formFile.Length < 1)
+            if (!this.IsImage(formFile))
             {
                 return null;
             }
 
             var guid = Guid.NewGuid().ToString();
-            var filePath = $"./wwwroot/img/{guid}.jpg";
-            var source = $"~/img/{guid}.jpg";
+            var extension = Regex.Match(formFile.FileName, @"\.[a-z]+$");
+
+            var filePath = $"./wwwroot/img/{guid}{extension}";
+            var source = $"~/img/{guid}{extension}";
 
             using var stream = new FileStream(filePath, FileMode.Create);
             await formFile.CopyToAsync(stream);
@@ -33,6 +35,20 @@ namespace BoulderBox.Web.Controllers
             };
 
             return imageInputModel;
+        }
+
+        private bool IsImage(IFormFile formFile)
+        {
+            try
+            {
+                var img = Image.FromStream(formFile.OpenReadStream());
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
