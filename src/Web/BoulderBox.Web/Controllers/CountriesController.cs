@@ -49,5 +49,12 @@ namespace BoulderBox.Web.Controllers
 
             return this.RedirectToAction("Index");
         }
+
+        public IActionResult Delete(string id)
+        {
+            this.countriesService.Delete(x => x.Id == id);
+
+            return this.Redirect("Index");
+        }
     }
 }
