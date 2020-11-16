@@ -24,9 +24,10 @@
     <br />
     <h2>Cities in @Model.Name</h2>
     <br />
-    <table class="table table-primary table-hover table-bordered">
+
+    <table class="table table-dark border border-dark">
         <thead>
-            <tr>
+            <tr class="text-light">
                 <th scope="col">№</th>
                 <th scope="col">City Name</th>
                 <th scope="col">Gyms Count</th>
@@ -35,7 +36,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="bg-light text-primary">
 
             @{
                 var i = 1;
@@ -43,7 +44,7 @@
 
             @if (Model.Cities.Count == 0)
             {
-                <tr class="bg-light">
+                <tr>
                     <td>1</td>
                     <td>No cities in @Model.Name</td>
                     <td>-</td>
@@ -55,9 +56,9 @@
 
             @foreach (var city in Model.Cities)
             {
-                <tr class="bg-light">
+                <tr>
                     <td>@i</td>
-                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-primary"/>@city.Name<a/></td>
+                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-primary" />@city.Name<a /></td>
                     <td>@city.GymsCount</td>
                     <td>@city.AscentsCount</td>
                     <td>@city.BoulderCount</td>

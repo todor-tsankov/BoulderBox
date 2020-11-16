@@ -14,8 +14,11 @@
         <div class="row justify-content-start">
             @foreach (var city in Model)
             {
-                <div class="card border-primary mb-3 col-lg-3">
-                    <div class="card-header bg-secondary text-light">@city.Name, @city.CountryName</div>
+                <div class="card border-primary bg-light mb-3 col-lg-3">
+                    <div class="card-header bg-secondary text-light">
+                        <a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-light">@city.Name</a>,
+                        <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@city.CountryId" class="text-light">@city.CountryName</a>
+                    </div>
                     <div class="card-body">
                         @if (city.ImageSource != null)
                         {
@@ -28,7 +31,7 @@
                         <br />
                         <br />
                         <div class="row justify-content-end align-items-end">
-                            <a asp-controller="Countries" asp-action="Details" asp-route-id="@city.Id" class="btn btn-outline-primary">Details</a>
+                            <a asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="btn btn-outline-primary">Details</a>
                             <span class="text-light">.</span>
                             <a class="btn btn-outline-danger">Delete</a>
                         </div>
