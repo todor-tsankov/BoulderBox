@@ -1,7 +1,72 @@
-﻿
+﻿@model BoulderBox.Web.ViewModels.Boulders.BoulderDetailsViewModel
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
 }
 
-<h1>Details</h1>
+<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
+    <br />
+    <br />
+    <div class="row justify-content-center">
+        <h1>@Model.GradeText - @Model.Name</h1>
+    </div>
+    <div class="row justify-content-center">
+        <h3>@Model.CreatedOn.ToString("dd:MM:yyy") at @Model.GymName</h3>
+    </div>
+    <hr class="bg-secondary" />
+    @if (Model.Description != null)
+    {
+        <p>@Model.Description</p>
+        <hr class="bg-secondary" />
+    }
 
+    <img src="@this.Url.Content(Model.ImageSource)" class="card-img" />
+    <br />
+    <br />
+    <h2>Ascents of @Model.Name</h2>
+    <br />
+    <table class="table border border-warning table-sm">
+        <thead class="bg-warning">
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Style</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Date</th>
+                <th scope="col">Comment</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="bg-light">
+
+            @{
+                var i = 1;
+            }
+
+            @if (!Model.Ascents.Any())
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>No ascents of this boulder</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><a class="btn btn-outline-warning text-muted">Details</a></td>
+                </tr>
+            }
+
+            @foreach (var ascent in Model.Ascents)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@ascent.StyleShortText</td>
+                    <td>@ascent.GradeText</td>
+                    <td>@ascent.Date.ToString("dd:MM:yyyy")</td>
+                    <td>@ascent.Comment</td>
+                    <td><a class="btn btn-outline-warning">Details</a></td>
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+</div>

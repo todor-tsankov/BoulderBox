@@ -32,7 +32,18 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index()
         {
-            return this.View();
+            var boulders = this.bouldersService
+                .GetMany<BoulderViewModel>();
+
+            return this.View(boulders);
+        }
+
+        public IActionResult Details(string id)
+        {
+            var boulder = this.bouldersService
+                .GetSingle<BoulderDetailsViewModel>(x => x.Id == id);
+
+            return this.View(boulder);
         }
 
         public IActionResult Create()

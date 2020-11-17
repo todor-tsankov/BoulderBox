@@ -1,0 +1,17 @@
+﻿[
+  {
+    "shortText": "OS",
+    "longText": "On-sight",
+    "bonusPoints": 145
+  },
+  {
+    "shortText": "FL",
+    "longText": "Flash",
+    "bonusPoints": 53
+  },
+  {
+    "shortText": "RP",
+    "longText": "Redpoint",
+    "bonusPoints": 0
+  }
+]
