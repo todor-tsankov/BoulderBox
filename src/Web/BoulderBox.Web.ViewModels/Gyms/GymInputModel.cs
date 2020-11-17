@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Gyms
 {
@@ -25,5 +27,7 @@ namespace BoulderBox.Web.ViewModels.Gyms
 
         [MaxLength(1000, ErrorMessage = InvalidDescriptionMessage)]
         public string Description { get; set; }
+
+        public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
     }
 }

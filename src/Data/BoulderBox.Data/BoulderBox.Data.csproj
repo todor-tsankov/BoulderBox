@@ -44,4 +44,10 @@
     <ProjectReference Include="..\BoulderBox.Data.Models\BoulderBox.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Seeding\Data\Grades.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

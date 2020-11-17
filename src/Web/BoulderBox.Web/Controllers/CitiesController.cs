@@ -40,12 +40,14 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Create()
         {
-            this.ViewBag.SelectListItems = this.countriesService
+            var city = new CityInputModel();
+
+            city.CountriesSelectListItems = this.countriesService
                 .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
                 .Select(x => new SelectListItem(x.Name, x.Id))
                 .ToList();
 
-            return this.View();
+            return this.View(city);
         }
 
         [HttpPost]

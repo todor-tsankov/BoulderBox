@@ -8,7 +8,7 @@
     <form asp-controller="Cities" asp-action="Create" method="post" enctype="multipart/form-data">
         <br />
         <h1>Create City</h1>
-        <hr class="bg-success" />
+        <hr class="bg-secondary" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="col-form-label"></label>
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label asp-for="CountryId" class="col-form-label"></label>
-            <select asp-for="CountryId" asp-items="ViewBag.SelectListItems" class="form-control"></select>
+            <select asp-for="CountryId" asp-items="Model.CountriesSelectListItems" class="form-control"></select>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
         <div class="form-group">

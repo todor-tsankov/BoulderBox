@@ -1,7 +1,71 @@
-﻿
+﻿@model BoulderBox.Web.ViewModels.Gyms.GymDetailsViewModel
+
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
 }
 
-<h1>Details</h1>
+<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
+    <br />
+    <div class="row justify-content-center">
+        @if (Model.ImageSource != null)
+        {
+            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="card-img border border-secondary col-1" />
+        }
+        <span class="text-light">....</span>
+        <h1>@Model.Name, @Model.CityName</h1>
+    </div>
+    <hr class="bg-secondary" />
+    @if (Model.Description != null)
+    {
+        <p>@Model.Description</p>
+        <hr class="bg-secondary" />
+    }
+    <br />
+    <h2>Boulders in @Model.Name</h2>
+    <br />
+    <table class="table border border-success table-sm text-dark">
+        <thead class="bg-success text-light">
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Boulder Name</th>
+                <th scope="col">Created On</th>
+                <th scope="col">Ascents Count</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="bg-light">
+
+            @{
+                var i = 1;
+            }
+
+            @if (!Model.Boulders.Any())
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>No boulders in this gym</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><a class="btn btn-outline-success text-muted">Details</a></td>
+                </tr>
+            }
+
+            @foreach (var boulder in Model.Boulders)
+            {
+                <tr class="text-dark">
+                    <td>@i</td>
+                    <td>@boulder.GradeText</td>
+                    <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a></td>
+                    <td>@boulder.CreatedOn.ToString("dd:MM:yyyy")</td>
+                    <td>@boulder.AscentsCount</td>
+                    <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="btn btn-outline-success text-dark">Details</a></td>
+                </tr>
+
+                i++;
+            }
+        </tbody>
+    </table>
+</div>
 

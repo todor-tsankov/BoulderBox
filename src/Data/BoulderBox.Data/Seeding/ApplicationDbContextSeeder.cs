@@ -26,6 +26,7 @@ namespace BoulderBox.Data.Seeding
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
+                              new GradesSeeder(),
                           };
 
             foreach (var seeder in seeders)

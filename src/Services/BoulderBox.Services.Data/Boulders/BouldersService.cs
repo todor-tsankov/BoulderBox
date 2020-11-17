@@ -1,6 +1,11 @@
-﻿using BoulderBox.Data.Common.Repositories;
+﻿using System.Threading.Tasks;
+
+using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
+using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.Boulders;
+using BoulderBox.Web.ViewModels.Images;
 
 namespace BoulderBox.Services.Data.Boulders
 {
@@ -12,6 +17,20 @@ namespace BoulderBox.Services.Data.Boulders
             : base(bouldersRepository)
         {
             this.bouldersRepository = bouldersRepository;
+        }
+
+        public async Task<bool> AddBoulderAsync(BoulderInputModel boulderInput, ImageInputModel imageInput)
+        {
+            var mapper = AutoMapperConfig.MapperInstance;
+
+            var image = mapper.Map<Image>(imageInput);
+            var boulder = mapper.Map<Boulder>(boulderInput);
+
+            boulder.Image = image;
+            await this.bouldersRepository.AddAsync(boulder);
+            await this.bouldersRepository.SaveChangesAsync();
+
+            return true;
         }
     }
 }

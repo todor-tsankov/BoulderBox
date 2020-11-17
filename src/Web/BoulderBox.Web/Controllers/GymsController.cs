@@ -30,19 +30,21 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var gym = string.Empty;
+            var gym = this.gymsService.GetSingle<GymDetailsViewModel>(x => x.Id == id);
 
             return this.View(gym);
         }
 
         public IActionResult Create()
         {
-            this.ViewBag.SelectListItems = this.countriesService
+            var gym = new GymInputModel();
+
+            gym.CountriesSelectListItems = this.countriesService
                 .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
                 .Select(x => new SelectListItem(x.Name, x.Id))
                 .ToList();
 
-            return this.View();
+            return this.View(gym);
         }
 
         [HttpPost]

@@ -9,18 +9,14 @@
     <div class="row justify-content-center">
         @if (Model.ImageSource != null)
         {
-            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="img-thumbnail border border-dark col-1" />
-        }
-        else
-        {
-            <img src="~/img/no-image-available-2.jpg" style="padding:0px" class="img-thumbnail border border-dark col-1" />
+            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="card-img border border-secondary col-1" />
         }
         <span class="text-light">....</span>
         <h1>@Model.Name, @Model.CountryCode</h1>
     </div>
-    <hr class="bg-primary" />
+    <hr class="bg-secondary" />
     <p>@(Model.Description ?? "No description avaible.")</p>
-    <hr class="bg-primary" />
+    <hr class="bg-secondary" />
     <br />
     <h2>Cities in @Model.Name</h2>
     <br />
@@ -50,7 +46,7 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
-                    <td><a class="btn btn-dark text-muted">Details</a></td>
+                    <td><a class="btn btn-outline-dark text-muted">Details</a></td>
                 </tr>
             }
 
@@ -62,7 +58,7 @@
                     <td>@city.GymsCount</td>
                     <td>@city.AscentsCount</td>
                     <td>@city.BouldersCount</td>
-                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="btn btn-dark">Details</a></td>
+                    <td><a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="btn btn-outline-dark">Details</a></td>
                 </tr>
 
                 i++;

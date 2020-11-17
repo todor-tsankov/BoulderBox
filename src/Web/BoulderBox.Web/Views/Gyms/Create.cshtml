@@ -8,7 +8,7 @@
     <form asp-controller="Gyms" asp-action="Create" method="post" enctype="multipart/form-data">
         <br />
         <h1>Create Gym</h1>
-        <hr class="bg-info" />
+        <hr class="bg-secondary" />
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Name" class="col-form-label"></label>
@@ -17,8 +17,8 @@
         </div>
         <div class="form-group">
             <label class="col-form-label">Country *</label>
-            <select onchange="fillCountrySelect()" id="countrySelect" asp-items="ViewBag.SelectListItems" class="form-control">
-                <option>Select country</option>
+            <select onchange="fillCitySelect()" id="countrySelect" asp-items="Model.CountriesSelectListItems" class="form-control">
+                <option></option>
             </select>
             <span class="text-danger"></span>
         </div>
@@ -37,20 +37,20 @@
             <input type="file" name="formFile" class="form-control-file" />
         </div>
         <p>* Required</p>
-        <button type="submit" class="btn btn-info">Create</button>
+        <button type="submit" class="btn btn-success">Create</button>
     </form>
 </div>
 
 <script>
-    function fillCountrySelect() {
+    function fillCitySelect() {
 
         let xhttp = new XMLHttpRequest();
 
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
+                document.getElementById("countrySelect").innerHTML = document.getElementById("countrySelect").innerHTML.replace('<option></option>', '');
                 document.getElementById("citySelect").innerHTML = '';
-                document.getElementById("citySelect").textContent = '';
 
                 var cities = JSON.parse(this.responseText);
 

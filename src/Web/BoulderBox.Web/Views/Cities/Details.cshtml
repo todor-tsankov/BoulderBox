@@ -8,20 +8,16 @@
     <div class="row justify-content-center">
         @if (Model.ImageSource != null)
         {
-            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="img-thumbnail border border-dark col-1" />
-        }
-        else
-        {
-            <img src="~/img/no-image-available-2.jpg" style="padding:0px" class="img-thumbnail border border-dark col-1" />
+            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="card-img border border-secondary col-1" />
         }
         <span class="text-light">....</span>
         <h1>@Model.Name, @Model.CountryName</h1>
     </div>
-    <hr class="bg-success" />
+    <hr class="bg-secondary" />
     @if (Model.Description != null)
     {
         <p>@Model.Description</p>
-        <hr class="bg-success" />
+        <hr class="bg-secondary" />
     }
     <br />
     <h2>Gyms in @Model.Name</h2>
@@ -49,7 +45,7 @@
                     <td>No gyms in this city</td>
                     <td>-</td>
                     <td>-</td>
-                    <td><a class="btn btn-primary text-muted">Details</a></td>
+                    <td><a class="btn btn-outline-primary text-muted">Details</a></td>
                 </tr>
             }
 
@@ -60,7 +56,7 @@
                     <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-dark">@gym.Name</a></td>
                     <td>@gym.AscentsCount</td>
                     <td>@gym.BouldersCount</td>
-                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-primary">Details</a></td>
+                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-primary">Details</a></td>
                 </tr>
 
                 i++;

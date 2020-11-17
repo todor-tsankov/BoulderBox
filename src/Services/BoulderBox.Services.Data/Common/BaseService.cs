@@ -115,11 +115,11 @@ namespace BoulderBox.Services.Data.Common
             return true;
         }
 
-        private void NullCheck(object predicate, string parameter)
+        protected void NullCheck(object obj, string name)
         {
-            if (predicate == null)
+            if (obj == null)
             {
-                throw new ArgumentNullException(nameof(parameter));
+                throw new ArgumentNullException(nameof(name));
             }
         }
     }

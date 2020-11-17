@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Cities
 {
@@ -26,5 +27,7 @@ namespace BoulderBox.Web.ViewModels.Cities
 
         [MaxLength(1000)]
         public string Description { get; set; }
+
+        public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
     }
 }
