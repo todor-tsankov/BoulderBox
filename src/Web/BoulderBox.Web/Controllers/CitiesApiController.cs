@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.ViewModels.Cities;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +20,7 @@ namespace BoulderBox.Web.Controllers
         public IEnumerable<CityViewModel> Get(string countryId)
         {
             var cities = this.citiesService
-                .GetMany<CityViewModel>(x => x.CountryId == countryId);
+                .GetMany<CityViewModel>(x => x.CountryId == countryId && x.Gyms.Any());
 
             return cities;
         }
