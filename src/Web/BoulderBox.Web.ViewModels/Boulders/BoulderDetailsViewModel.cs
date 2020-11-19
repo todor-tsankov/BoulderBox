@@ -20,7 +20,7 @@ namespace BoulderBox.Web.ViewModels.Boulders
 
         public string GymName { get; set; }
 
-        public string GradeText{ get; set; }
+        public string GradeText { get; set; }
 
         public string ImageSource { get; set; }
 

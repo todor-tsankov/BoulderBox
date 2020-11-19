@@ -1,6 +1,7 @@
-﻿using BoulderBox.Data.Models;
+﻿using System;
+
+using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
-using System;
 
 namespace BoulderBox.Web.ViewModels.Gyms
 {

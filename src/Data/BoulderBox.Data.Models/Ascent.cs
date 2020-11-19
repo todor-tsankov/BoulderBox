@@ -36,7 +36,7 @@ namespace BoulderBox.Data.Models
         [Required]
         public virtual Style Style { get; set; }
 
-        public bool? Recommend { get; set; }
+        public bool Recommend { get; set; }
 
         public int? Stars { get; set; }
 

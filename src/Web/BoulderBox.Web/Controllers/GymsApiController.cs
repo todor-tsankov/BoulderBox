@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Controllers
 {
+    [ApiController]
     [Route("api/Gyms")]
     public class GymsApiController : ControllerBase
     {

@@ -1,51 +1,33 @@
-﻿@model BoulderBox.Web.ViewModels.Boulders.BoulderDetailsViewModel
+﻿@model IEnumerable<BoulderBox.Web.ViewModels.Ascents.AscentViewModel>
 
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = "Ascents";
 }
 
-<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
-    <br />
-    <br />
-    <div class="row justify-content-center">
-        <h1>@Model.GradeText - @Model.Name</h1>
-    </div>
-    <div class="row justify-content-center">
-        <h3>@Model.CreatedOn.ToString("dd:MM:yyy") at @Model.GymName</h3>
-    </div>
-    <div class="row justify-content-center">
-        <a asp-area="" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-warning">Add Ascent</a>
-    </div>
-    <hr class="bg-secondary" />
-    @if (Model.Description != null)
-    {
-        <p>@Model.Description</p>
-        <hr class="bg-secondary" />
-    }
+<div class="col-8 offset-2">
 
-    <img src="@this.Url.Content(Model.ImageSource)" class="card-img" />
     <br />
-    <br />
-    <h2>Ascents of @Model.Name</h2>
-    <br />
-    <table class="table border border-warning table-sm">
-        <thead class="bg-warning">
+    <h1>Ascents</h1>
+    <hr class="bg-secondary" />
+
+    <table class="table table-primary border border-success">
+        <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
                 <th scope="col">Style</th>
                 <th scope="col">Grade</th>
+                <th scope="col">Boulder</th>
                 <th scope="col">Comment</th>
                 <th scope="col">Stars</th>
             </tr>
         </thead>
         <tbody class="bg-light">
 
-            @if (!Model.Ascents.Any())
+            @if (!Model.Any())
             {
                 <tr>
-                    <td>No ascents of this boulder</td>
-                    <td>-</td>
+                    <td>No ascents</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -54,7 +36,7 @@
                 </tr>
             }
 
-            @foreach (var ascent in Model.Ascents)
+            @foreach (var ascent in Model)
             {
                 var badge = "badge badge-danger";
 
@@ -72,6 +54,7 @@
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@badge">@ascent.StyleShortText</span></td>
                     <td>@ascent.GradeText</td>
+                    <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
                     <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
@@ -85,4 +68,9 @@
             }
         </tbody>
     </table>
+    @foreach (var ascent in Model)
+    {
+
+    }
 </div>
+
