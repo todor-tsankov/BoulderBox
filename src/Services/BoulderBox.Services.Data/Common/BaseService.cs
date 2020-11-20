@@ -46,6 +46,15 @@ namespace BoulderBox.Services.Data.Common
             return exists;
         }
 
+        public async Task Create(object inputModel)
+        {
+            var mapper = AutoMapperConfig.MapperInstance;
+            var entity = mapper.Map<TModel>(inputModel);
+
+            await this.entityRepository.AddAsync(entity);
+            await this.entityRepository.SaveChangesAsync();
+        }
+
         public TViewModel GetSingle<TViewModel>(Expression<Func<TModel, bool>> predicate)
         {
             this.NullCheck(predicate, nameof(predicate));
