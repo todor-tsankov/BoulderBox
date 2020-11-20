@@ -1,0 +1,56 @@
+﻿@model BoulderBox.Web.ViewModels.Forum.ForumCategoryDetailsViewModel
+
+@{
+    ViewData["Title"] = "Category";
+}
+
+<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
+    <br />
+    <br />
+    <h1>
+        @Model.Name
+        <a asp-area="" asp-controller="Forum" asp-action="CreatePost" class="btn btn-outline-dark">Create Post</a>
+    </h1>
+    <hr class="bg-secondary" />
+    @if (Model.Description != null)
+    {
+        <p>@Model.Description</p>
+        <hr class="bg-secondary" />
+    }
+    <br />
+    <h2>Posts in @Model.Name</h2>
+    <br />
+    <table class="table table-borderless text-dark">
+        <thead>
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Created On</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if (!Model.ForumPosts.Any())
+            {
+                <tr>
+                    <td>No posts in this category</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><a class="btn btn-outline-dark text-muted">Details</a></td>
+                </tr>
+            }
+
+            @foreach (var post in Model.ForumPosts)
+            {
+                <tr class="text-dark">
+                    <td>@post.Title</td>
+                    <td>@post.ApplicationUserUserName</td>
+                    <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
