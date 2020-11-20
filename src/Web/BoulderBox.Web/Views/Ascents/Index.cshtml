@@ -13,7 +13,7 @@
     <table class="table table-primary border border-success">
         <thead>
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">User</th>
                 <th scope="col">Date</th>
                 <th scope="col">Style</th>
                 <th scope="col">Grade</th>
@@ -50,7 +50,7 @@
                 }
 
                 <tr>
-                    <td>@ascent.ApplicationUserEmail</td>
+                    <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@badge">@ascent.StyleShortText</span></td>
                     <td>@ascent.GradeText</td>
@@ -68,9 +68,4 @@
             }
         </tbody>
     </table>
-    @foreach (var ascent in Model)
-    {
-
-    }
 </div>
-

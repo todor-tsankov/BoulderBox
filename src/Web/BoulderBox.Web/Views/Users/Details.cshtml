@@ -1,40 +1,32 @@
-﻿@model BoulderBox.Web.ViewModels.Boulders.BoulderDetailsViewModel
+﻿@model BoulderBox.Web.ViewModels.Users.UserDetailsViewModel
 
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model.UserName;
 }
 
 <div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
     <br />
     <br />
     <div class="row justify-content-center">
-        <h1>@Model.GradeText - @Model.Name</h1>
-    </div>
-    <div class="row justify-content-center">
-        <h3>@Model.CreatedOn.ToString("dd:MM:yyy") at @Model.GymName</h3>
-    </div>
-    <div class="row justify-content-center">
-        <a asp-area="" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-warning">Add Ascent</a>
+        <img src="@Model.ImageSource" class="card-img"/>
+        <h1>@Model.UserName</h1>
     </div>
     <hr class="bg-secondary" />
-    @if (Model.Description != null)
+    @if (Model.Bio != null)
     {
-        <p>@Model.Description</p>
+        <p>@Model.Bio</p>
         <hr class="bg-secondary" />
     }
 
-    <img src="@this.Url.Content(Model.ImageSource)" class="card-img" />
-    <br />
-    <br />
-    <h2>Ascents of @Model.Name</h2>
+    <h2>Ascents of @Model.UserName</h2>
     <br />
     <table class="table border border-warning table-sm">
         <thead class="bg-warning">
             <tr>
-                <th scope="col">User</th>
                 <th scope="col">Date</th>
                 <th scope="col">Style</th>
                 <th scope="col">Grade</th>
+                <th scope="col">Boulder</th>
                 <th scope="col">Comment</th>
                 <th scope="col">Stars</th>
             </tr>
@@ -44,7 +36,7 @@
             @if (!Model.Ascents.Any())
             {
                 <tr>
-                    <td>No ascents of this boulder.</td>
+                    <td>No ascents of this boulder</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -67,10 +59,10 @@
                 }
 
                 <tr>
-                    <td>@ascent.ApplicationUserUserName</td>
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@badge">@ascent.StyleShortText</span></td>
                     <td>@ascent.GradeText</td>
+                    <td>@ascent.BoulderName</td>
                     <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
@@ -85,3 +77,5 @@
         </tbody>
     </table>
 </div>
+
+

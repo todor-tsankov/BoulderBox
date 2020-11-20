@@ -11,7 +11,7 @@ namespace BoulderBox.Web.ViewModels.Ascents
 
         public string ApplicationUserId { get; set; }
 
-        public string ApplicationUserEmail { get; set; }
+        public string ApplicationUserUsername { get; set; }
 
         public string BoulderId { get; set; }
 

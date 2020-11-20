@@ -14,7 +14,7 @@ namespace BoulderBox.Web.ViewModels.Boulders
 
         public string AuthorId { get; set; }
 
-        public string AuthorEmail { get; set; }
+        public string AuthorUserName { get; set; }
 
         public string GymId { get; set; }
 

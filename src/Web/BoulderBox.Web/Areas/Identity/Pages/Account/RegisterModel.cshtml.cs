@@ -46,21 +46,30 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "Username is required.")]
+            [MinLength(2)]
+            [MaxLength(50)]
+            public string Username { get; set; }
+
+            [Required(ErrorMessage = "Email is required.")]
+            [EmailAddress(ErrorMessage = "Invlaid email.")]
+            [Display(Name = "Email *")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Password is required.")]
+            [StringLength(100, ErrorMessage = "The Password must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Password *")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirm password *")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Required(ErrorMessage = "Confirm password is required.")]
             public string ConfirmPassword { get; set; }
+
+            [MaxLength(1000)]
+            public string Bio { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +84,7 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Email, Email = this.Input.Email };
+                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, Bio = this.Input.Bio };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {

@@ -11,7 +11,7 @@ namespace BoulderBox.Web.ViewModels.Boulders
 
         public string ApplicationUserId { get; set; }
 
-        public string ApplicationUserEmail { get; set; }
+        public string ApplicationUserUserName { get; set; }
 
         public string GradeText { get; set; }
 
