@@ -58,6 +58,7 @@ namespace BoulderBox.Web
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSingleton(this.configuration);
 
@@ -108,7 +109,7 @@ namespace BoulderBox.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
