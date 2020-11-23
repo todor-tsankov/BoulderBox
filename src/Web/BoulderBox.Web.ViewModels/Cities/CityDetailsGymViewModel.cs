@@ -19,8 +19,12 @@ namespace BoulderBox.Web.ViewModels.Cities
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Gym, CityDetailsGymViewModel>()
-                .ForMember(x => x.BouldersCount, x => x.MapFrom(y => y.Boulders.Count))
-                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => y.Boulders.Select(z => z.Ascents.Count).ToArray().Sum()));
+                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => Sum(y.Boulders.Select(z => z.Ascents.Count).ToArray())));
+        }
+
+        private static int Sum(int[] counts)
+        {
+            return counts.Sum();
         }
     }
 }

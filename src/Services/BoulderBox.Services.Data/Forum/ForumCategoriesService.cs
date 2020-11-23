@@ -4,7 +4,7 @@ using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
 using BoulderBox.Services.Mapping;
-using BoulderBox.Web.ViewModels.Forum;
+using BoulderBox.Web.ViewModels.ForumCategories;
 using BoulderBox.Web.ViewModels.Images;
 
 namespace BoulderBox.Services.Data.Forum

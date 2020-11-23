@@ -22,8 +22,12 @@ namespace BoulderBox.Data.Models
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(10000)]
         public string Text { get; set; }
+
+        public string ForumCategoryId { get; set; }
+
+        public ForumCategory ForumCategory { get; set; }
 
         [Required]
         public string ApplicationUserId { get; set; }

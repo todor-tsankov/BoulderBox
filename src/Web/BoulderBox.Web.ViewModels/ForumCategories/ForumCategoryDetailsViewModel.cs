@@ -3,7 +3,7 @@
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 
-namespace BoulderBox.Web.ViewModels.Forum
+namespace BoulderBox.Web.ViewModels.ForumCategories
 {
     public class ForumCategoryDetailsViewModel : IMapFrom<ForumCategory>
     {
@@ -15,6 +15,6 @@ namespace BoulderBox.Web.ViewModels.Forum
 
         public string ImageSource { get; set; }
 
-        public ICollection<ForumPostViewModel> ForumPosts { get; set; }
+        public ICollection<ForumCategoryDetailsForumPostViewModel> ForumPosts { get; set; }
     }
 }

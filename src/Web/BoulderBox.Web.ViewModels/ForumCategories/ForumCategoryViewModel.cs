@@ -1,7 +1,7 @@
 ﻿using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 
-namespace BoulderBox.Web.ViewModels.Forum
+namespace BoulderBox.Web.ViewModels.ForumCategories
 {
     public class ForumCategoryViewModel : IMapFrom<ForumCategory>
     {

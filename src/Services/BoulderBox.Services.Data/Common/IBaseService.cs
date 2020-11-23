@@ -19,6 +19,7 @@ namespace BoulderBox.Services.Data.Common
         IEnumerable<T> GetMany<T>(
            Expression<Func<TModel, bool>> predicate = null,
            Expression<Func<TModel, object>> orderBySelector = null,
+           bool asc = true,
            int? skip = null,
            int? take = null);
 

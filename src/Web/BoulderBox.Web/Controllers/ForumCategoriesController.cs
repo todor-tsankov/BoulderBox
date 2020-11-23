@@ -1,17 +1,17 @@
 ﻿using System.Threading.Tasks;
 
 using BoulderBox.Services.Data.Forum;
-using BoulderBox.Web.ViewModels.Forum;
+using BoulderBox.Web.ViewModels.ForumCategories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Controllers
 {
-    public class ForumController : BaseController
+    public class ForumCategoriesController : BaseController
     {
         private readonly IForumCategoriesService forumCategoriesService;
 
-        public ForumController(IForumCategoriesService forumCategoriesService)
+        public ForumCategoriesController(IForumCategoriesService forumCategoriesService)
         {
             this.forumCategoriesService = forumCategoriesService;
         }
@@ -24,7 +24,7 @@ namespace BoulderBox.Web.Controllers
             return this.View(categories);
         }
 
-        public IActionResult Category(string id)
+        public IActionResult Details(string id)
         {
             var category = this.forumCategoriesService
                 .GetSingle<ForumCategoryDetailsViewModel>(x => x.Id == id);
@@ -32,13 +32,13 @@ namespace BoulderBox.Web.Controllers
             return this.View(category);
         }
 
-        public IActionResult CreateCategory()
+        public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(ForumCategoryInputModel forumCategoryInput, IFormFile formFile)
+        public async Task<IActionResult> Create(ForumCategoryInputModel forumCategoryInput, IFormFile formFile)
         {
             if (!this.ModelState.IsValid)
             {

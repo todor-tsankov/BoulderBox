@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using AutoMapper;
 using BoulderBox.Data.Models;
@@ -21,9 +22,13 @@ namespace BoulderBox.Web.ViewModels.Countries
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<City, CountryDetailsCityViewModel>()
-                .ForMember(x => x.GymsCount, x => x.MapFrom(y => y.Gyms.Count))
-                .ForMember(x => x.BouldersCount, x => x.MapFrom(y => y.Gyms.Select(z => z.Boulders.Count).ToArray().Sum()))
-                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => y.Gyms.SelectMany(z => z.Boulders).Select(z => z.Ascents.Count).ToArray().Sum()));
+                .ForMember(x => x.BouldersCount, x => x.MapFrom(y => Sum(y.Gyms.Select(z => z.Boulders.Count).ToArray())))
+                .ForMember(x => x.AscentsCount, x => x.MapFrom(y => Sum(y.Gyms.SelectMany(z => z.Boulders).Select(z => z.Ascents.Count).ToArray())));
+        }
+
+        private static int Sum(int[] counts)
+        {
+            return counts.Sum();
         }
     }
 }

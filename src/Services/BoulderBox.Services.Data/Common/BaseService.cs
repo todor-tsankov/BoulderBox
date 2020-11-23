@@ -71,6 +71,7 @@ namespace BoulderBox.Services.Data.Common
         public IEnumerable<T> GetMany<T>(
             Expression<Func<TModel, bool>> predicate = null,
             Expression<Func<TModel, object>> orderBySelector = null,
+            bool asc = true,
             int? skip = null,
             int? take = null)
         {
@@ -84,7 +85,14 @@ namespace BoulderBox.Services.Data.Common
 
             if (orderBySelector != null)
             {
-                entities = entities.OrderBy(orderBySelector);
+                if (asc)
+                {
+                    entities = entities.OrderBy(orderBySelector);
+                }
+                else
+                {
+                    entities = entities.OrderByDescending(orderBySelector);
+                }
             }
 
             if (skip != null)
@@ -128,7 +136,7 @@ namespace BoulderBox.Services.Data.Common
         {
             if (obj == null)
             {
-                throw new ArgumentNullException(nameof(name));
+                throw new ArgumentNullException(name);
             }
         }
     }

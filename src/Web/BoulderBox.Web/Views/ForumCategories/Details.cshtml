@@ -1,4 +1,4 @@
-﻿@model BoulderBox.Web.ViewModels.Forum.ForumCategoryDetailsViewModel
+﻿@model BoulderBox.Web.ViewModels.ForumCategories.ForumCategoryDetailsViewModel
 
 @{
     ViewData["Title"] = "Category";
@@ -9,7 +9,7 @@
     <br />
     <h1>
         @Model.Name
-        <a asp-area="" asp-controller="Forum" asp-action="CreatePost" class="btn btn-outline-dark">Create Post</a>
+        <a asp-area="" asp-controller="ForumPosts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-dark">Create Post</a>
     </h1>
     <hr class="bg-secondary" />
     @if (Model.Description != null)
@@ -47,6 +47,7 @@
                     <td>@post.Title</td>
                     <td>@post.ApplicationUserUserName</td>
                     <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
+                    <td><a asp-area="" asp-controller="ForumPosts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-outline-dark">Details</a></td>
                 </tr>
             }
         </tbody>
