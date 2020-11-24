@@ -4,68 +4,64 @@
     ViewData["Title"] = "Ascents";
 }
 
-<div class="col-8 offset-2">
+<h1>Ascents</h1>
+<hr class="bg-secondary" />
 
-    <br />
-    <h1>Ascents</h1>
-    <hr class="bg-secondary" />
+<table class="table table-primary border border-success">
+    <thead>
+        <tr>
+            <th scope="col">User</th>
+            <th scope="col">Date</th>
+            <th scope="col">Style</th>
+            <th scope="col">Grade</th>
+            <th scope="col">Boulder</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Stars</th>
+        </tr>
+    </thead>
+    <tbody class="bg-light">
 
-    <table class="table table-primary border border-success">
-        <thead>
+        @if (!Model.Any())
+        {
             <tr>
-                <th scope="col">User</th>
-                <th scope="col">Date</th>
-                <th scope="col">Style</th>
-                <th scope="col">Grade</th>
-                <th scope="col">Boulder</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Stars</th>
+                <td>No ascents</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
             </tr>
-        </thead>
-        <tbody class="bg-light">
+        }
 
-            @if (!Model.Any())
+        @foreach (var ascent in Model)
+        {
+            var badge = "badge badge-danger";
+
+            if (ascent.StyleShortText == "OS")
             {
-                <tr>
-                    <td>No ascents</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
+                badge = "badge badge-info";
+            }
+            else if (ascent.StyleShortText == "FL")
+            {
+                badge = "badge badge-warning";
             }
 
-            @foreach (var ascent in Model)
-            {
-                var badge = "badge badge-danger";
-
-                if (ascent.StyleShortText == "OS")
+            <tr>
+                <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
+                <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
+                <td><span class="@badge">@ascent.StyleShortText</span></td>
+                <td>@ascent.GradeText</td>
+                <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
+                <td>@(ascent.Comment ?? "-")</td>
+                @if (ascent.Stars == null)
                 {
-                    badge = "badge badge-info";
+                    <td>-</td>
                 }
-                else if (ascent.StyleShortText == "FL")
+                else
                 {
-                    badge = "badge badge-warning";
+                    <td>@ascent.Stars</td>
                 }
-
-                <tr>
-                    <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
-                    <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
-                    <td><span class="@badge">@ascent.StyleShortText</span></td>
-                    <td>@ascent.GradeText</td>
-                    <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
-                    <td>@(ascent.Comment ?? "-")</td>
-                    @if (ascent.Stars == null)
-                    {
-                        <td>-</td>
-                    }
-                    else
-                    {
-                        <td>@ascent.Stars</td>
-                    }
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </tr>
+        }
+    </tbody>
+</table>

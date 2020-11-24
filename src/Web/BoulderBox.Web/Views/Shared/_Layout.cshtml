@@ -4,11 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
+
+    <link href="~/css/theme.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/theme.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -44,22 +47,39 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                    <button class="btn btn-dark" type="submit">Search</button>
                 </form>
             </div>
         </nav>
     </header>
 
     <partial name="_CookieConsentPartial" />
+
     <main role="main" class="pb-3">
-        <div style="padding-bottom: 100px">
-            @this.RenderBody()
+        <div class="container-fluid">
+            <div class="row">
+                <div class="d-none d-lg-block col-lg-2">
+                    <br />
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                    <h1>Side</h1>
+                </div>
+                <div class="col-lg-10">
+                    <br />
+                    @this.RenderBody()
+                </div>
+            </div>
         </div>
     </main>
 
     <footer class="footer text-light bg-primary">
         <div>
-                &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

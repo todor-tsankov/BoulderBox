@@ -4,34 +4,27 @@
     ViewData["Title"] = "Create Post";
 }
 
-<div class="col-8 offset-2">
+<h1>Create Post</h1>
+<hr class="bg-secondary" />
 
-    <br />
-    <h1>Create Post</h1>
-    <hr class="bg-secondary" />
-
-    <form asp-controller="ForumPosts" asp-action="Create" method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <input asp-for="ForumCategoryId" value="@Model.ForumCategoryId" type="hidden">
-        </div>
-        <div class="form-group">
-            <label asp-for="Title" class="col-form-label"></label>
-            <input asp-for="Title" class="form-control" placeholder="Title of the post" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Text" class="col-form-label"></label>
-            <textarea asp-for="Text" class="form-control" placeholder="Post's text goes here"></textarea>
-            <span asp-validation-for="Text" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">Picture</label>
-            <input type="file" name="formFile" class="form-control-file" />
-        </div>
-        <button type="submit" class="btn btn-outline-dark">Create</button>
-    </form>
-</div>
-
-
-
+<form asp-controller="ForumPosts" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="ForumCategoryId" value="@Model.ForumCategoryId" type="hidden">
+    </div>
+    <div class="form-group">
+        <label asp-for="Title" class="col-form-label"></label>
+        <input asp-for="Title" class="form-control" placeholder="Title of the post" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Text" class="col-form-label"></label>
+        <textarea asp-for="Text" class="form-control" placeholder="Post's text goes here"></textarea>
+        <span asp-validation-for="Text" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Picture</label>
+        <input type="file" name="formFile" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-outline-dark">Create</button>
+</form>

@@ -3,51 +3,48 @@
     ViewData["Title"] = "Create Boulder";
 }
 
-<div class="offset-md-3 col-md-6">
-    <form asp-controller="Boulders" asp-action="Create" method="post" enctype="multipart/form-data">
-        <br />
-        <h1>Create Boulder</h1>
-        <hr class="bg-secondary" />
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Name" class="col-form-label"></label>
-            <input asp-for="Name" class="form-control" placeholder="Boulder name" />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">Country *</label>
-            <select onchange="fillCitySelect()" id="countrySelect" asp-items="Model.CountriesSelectItems" class="form-control">
-                <option></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">City *</label>
-            <select onchange="fillGymSelect()" id="citySelect" class="form-control">
-            </select>
-        </div>
-        <div class="form-group">
-            <label asp-for="GymId" class="col-form-label"></label>
-            <select asp-for="GymId" id="gymSelect" class="form-control"></select>
-            <span asp-validation-for="GymId" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="GradeId" class="col-form-label"></label>
-            <select asp-for="GradeId" asp-items="Model.GradesSelectItems" class="form-control"></select>
-            <span asp-validation-for="GradeId" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Description" class="col-form-label"></label>
-            <textarea asp-for="Description" class="form-control" placeholder="Short description of the boulder..."></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label class="col-form-label">Picture</label>
-            <input type="file" name="formFile" class="form-control-file" />
-        </div>
-        <p>* Required</p>
-        <button type="submit" class="btn btn-warning">Create</button>
-    </form>
-</div>
+<form asp-controller="Boulders" asp-action="Create" method="post" enctype="multipart/form-data">
+    <h1>Create Boulder</h1>
+    <hr class="bg-secondary" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="col-form-label"></label>
+        <input asp-for="Name" class="form-control" placeholder="Boulder name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Country *</label>
+        <select onchange="fillCitySelect()" id="countrySelect" asp-items="Model.CountriesSelectItems" class="form-control">
+            <option></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">City *</label>
+        <select onchange="fillGymSelect()" id="citySelect" class="form-control">
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="GymId" class="col-form-label"></label>
+        <select asp-for="GymId" id="gymSelect" class="form-control"></select>
+        <span asp-validation-for="GymId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GradeId" class="col-form-label"></label>
+        <select asp-for="GradeId" asp-items="Model.GradesSelectItems" class="form-control"></select>
+        <span asp-validation-for="GradeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="col-form-label"></label>
+        <textarea asp-for="Description" class="form-control" placeholder="Short description of the boulder..."></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Picture</label>
+        <input type="file" name="formFile" class="form-control-file" />
+    </div>
+    <p>* Required</p>
+    <button type="submit" class="btn btn-warning">Create</button>
+</form>
 
 <script>
     function fillCitySelect() {

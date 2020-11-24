@@ -4,32 +4,27 @@
     ViewData["Title"] = "Forum Categories";
 }
 
-<div class="col-8 offset-2">
+<h1>Forum Categories  <a asp-area="" asp-controller="ForumCategories" asp-action="Create" class="btn btn-outline-dark">Create Category</a></h1>
+<hr class="bg-secondary" />
 
-    <br />
-    <br />
-    <h1>Forum Categories  <a asp-area="" asp-controller="ForumCategories" asp-action="Create" class="btn btn-outline-dark">Create Category</a></h1>
-    <hr class="bg-secondary" />
-
-    <table class="table table-borderless">
-        <thead>
+<table class="table table-borderless">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Posts</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
             <tr>
-                <th>Category</th>
-                <th>Posts</th>
-                <th>Description</th>
-                <th></th>
+                <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></td>
+                <td>@category.ForumPostsCount</td>
+                <td>@category.Description</td>
+                <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id" class="btn btn-outline-dark">Details</a></td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var category in Model)
-            {
-                <tr>
-                    <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></td>
-                    <td>@category.ForumPostsCount</td>
-                    <td>@category.Description</td>
-                    <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id" class="btn btn-outline-dark">Details</a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>

@@ -5,46 +5,43 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="container col-md-6">
-    <br />
-    <br />
-    <h1>@ViewData["Title"]</h1>
+<h1>@ViewData["Title"]</h1>
 
-    <form id="account" method="post">
-        <hr class="bg-primary"/>
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Input.Username">Username *</label>
-            <input asp-for="Input.Username" class="form-control" />
-            <span asp-validation-for="Input.Username" class="text-danger"></span>
+<form id="account" method="post">
+    <hr class="bg-primary" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Input.Username">Username *</label>
+        <input asp-for="Input.Username" class="form-control" />
+        <span asp-validation-for="Input.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Password">Password *</label>
+        <input asp-for="Input.Password" class="form-control" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label asp-for="Input.RememberMe">
+                <input asp-for="Input.RememberMe" />
+                @Html.DisplayNameFor(m => m.Input.RememberMe)
+            </label>
         </div>
-        <div class="form-group">
-            <label asp-for="Input.Password">Password *</label>
-            <input asp-for="Input.Password" class="form-control" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <div class="checkbox">
-                <label asp-for="Input.RememberMe">
-                    <input asp-for="Input.RememberMe" />
-                    @Html.DisplayNameFor(m => m.Input.RememberMe)
-                </label>
-            </div>
-        </div>
-        <p>* Required</p>
-        <div class="form-group">
-            <button type="submit" class="btn btn-outline-dark">Log in</button>
-        </div>
-        <div class="form-group">
-            <p>
-                <a class="text-dark" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-            </p>
-            <p>
-                <a class="text-dark" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-            </p>
-        </div>
-    </form>
-</div>
+    </div>
+    <p>* Required</p>
+    <div class="form-group">
+        <button type="submit" class="btn btn-outline-dark">Log in</button>
+    </div>
+    <div class="form-group">
+        <p>
+            <a class="text-dark" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+        </p>
+        <p>
+            <a class="text-dark" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+        </p>
+    </div>
+</form>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

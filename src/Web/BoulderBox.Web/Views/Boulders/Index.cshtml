@@ -4,43 +4,39 @@
     ViewData["Title"] = "Boulders";
 }
 
-<div class="col-8 offset-2">
+<h1>Boulders <a asp-area="" asp-controller="Boulders" asp-action="Create" class="btn btn-outline-warning">Create</a></h1>
+<hr class="bg-secondary" />
 
-    <br />
-    <h1>Boulders <a asp-area="" asp-controller="Boulders" asp-action="Create" class="btn btn-outline-warning">Create</a></h1>
-    <hr class="bg-secondary" />
+<div class="container">
+    <div class="row justify-content-start">
+        @foreach (var boulder in Model)
+        {
+            <div class="card border-warning bg-light mb-3 col-lg-3">
+                <div class="card-header bg-warning text-dark">
+                    <a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a>,
+                    <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId" class="text-dark">@boulder.GymName</a>
+                </div>
+                <div class="card-body">
+                    @if (boulder.ImageSource != null)
+                    {
+                        <img src="@Url.Content(boulder.ImageSource)" style="padding:0px" class="card-img border border-warning col-lg-12 col-sm-12" />
+                    }
+                    else
+                    {
+                        <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-warning col-lg-12 col-sm-12" />
+                    }
+                    <br />
+                    <br />
 
-    <div class="container">
-        <div class="row justify-content-start">
-            @foreach (var boulder in Model)
-            {
-                <div class="card border-warning bg-light mb-3 col-lg-3">
-                    <div class="card-header bg-warning text-dark">
-                        <a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a>,
-                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId" class="text-dark">@boulder.GymName</a>
-                    </div>
-                    <div class="card-body">
-                        @if (boulder.ImageSource != null)
-                        {
-                            <img src="@Url.Content(boulder.ImageSource)" style="padding:0px" class="card-img border border-warning col-lg-12 col-sm-12" />
-                        }
-                        else
-                        {
-                            <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-warning col-lg-12 col-sm-12" />
-                        }
-                        <br />
-                        <br />
-
-                        <div class="row justify-content-end align-items-end">
-                            <a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="btn btn-outline-warning">Details</a>
-                            <span class="text-light">.</span>
-                            <a asp-area="" asp-controller="Boulders" asp-action="Delete" asp-route-id="@boulder.Id" class="btn btn-outline-danger">Delete</a>
-                        </div>
+                    <div class="row justify-content-end align-items-end">
+                        <a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="btn btn-outline-warning">Details</a>
+                        <span class="text-light">.</span>
+                        <a asp-area="" asp-controller="Boulders" asp-action="Delete" asp-route-id="@boulder.Id" class="btn btn-outline-danger">Delete</a>
                     </div>
                 </div>
+            </div>
 
-                <span class="text-light">...</span>
-            }
-        </div>
+            <span class="text-light">...</span>
+        }
     </div>
 </div>

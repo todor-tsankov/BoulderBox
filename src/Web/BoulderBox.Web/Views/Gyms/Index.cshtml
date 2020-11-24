@@ -3,43 +3,38 @@
     ViewData["Title"] = "Gyms";
 }
 
-<div class="col-8 offset-2">
+<h1>Gyms <a asp-area="" asp-controller="Gyms" asp-action="Create" class="btn btn-outline-success">Create</a></h1>
+<hr class="bg-secondary" />
 
-    <br />
-    <h1>Gyms <a asp-area="" asp-controller="Gyms" asp-action="Create" class="btn btn-outline-success">Create</a></h1>
-    <hr class="bg-secondary" />
-
-    <div class="container">
-        <div class="row justify-content-start">
-            @foreach (var gym in Model)
-            {
-                <div class="card border-success bg-light mb-3 col-lg-3">
-                    <div class="card-header bg-success text-light">
-                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-light">@gym.Name</a>,
-                        <a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@gym.CityId" class="text-light">@gym.CityName</a>
-                    </div>
-                    <div class="card-body">
-                        @if (gym.ImageSource != null)
-                        {
-                            <img src="@Url.Content(gym.ImageSource)" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
-                        }
-                        else
-                        {
-                            <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
-                        }
-                        <br />
-                        <br />
-                        <div class="row justify-content-end align-items-end">
-                            <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-success">Details</a>
-                            <span class="text-light">.</span>
-                            <a asp-area="" asp-controller="Gyms" asp-action="Delete" asp-route-id="@gym.Id" class="btn btn-outline-danger">Delete</a>
-                        </div>
+<div class="container">
+    <div class="row justify-content-start">
+        @foreach (var gym in Model)
+        {
+            <div class="card border-success bg-light mb-3 col-lg-3">
+                <div class="card-header bg-success text-light">
+                    <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-light">@gym.Name</a>,
+                    <a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@gym.CityId" class="text-light">@gym.CityName</a>
+                </div>
+                <div class="card-body">
+                    @if (gym.ImageSource != null)
+                    {
+                        <img src="@Url.Content(gym.ImageSource)" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
+                    }
+                    else
+                    {
+                        <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
+                    }
+                    <br />
+                    <br />
+                    <div class="row justify-content-end align-items-end">
+                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-success">Details</a>
+                        <span class="text-light">.</span>
+                        <a asp-area="" asp-controller="Gyms" asp-action="Delete" asp-route-id="@gym.Id" class="btn btn-outline-danger">Delete</a>
                     </div>
                 </div>
+            </div>
 
-                <span class="text-light">...</span>
-            }
-        </div>
+            <span class="text-light">...</span>
+        }
     </div>
 </div>
-

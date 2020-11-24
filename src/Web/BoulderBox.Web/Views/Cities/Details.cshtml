@@ -3,65 +3,61 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
-    <br />
-    <div class="row justify-content-center">
-        @if (Model.ImageSource != null)
-        {
-            <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="card-img border border-secondary col-1" />
-        }
-        <span class="text-light">....</span>
-        <h1>@Model.Name, @Model.CountryName</h1>
-    </div>
-    <hr class="bg-secondary" />
-    @if (Model.Description != null)
+<div class="row justify-content-center">
+    @if (Model.ImageSource != null)
     {
-        <p>@Model.Description</p>
-        <hr class="bg-secondary" />
+        <img src="@Url.Content(Model.ImageSource)" style="padding:0px" class="card-img border border-secondary col-1" />
     }
-    <br />
-    <h2>Gyms in @Model.Name</h2>
-    <br />
-    <table class="table table-primary border border-success table-sm">
-        <thead>
-            <tr>
-                <th scope="col">№</th>
-                <th scope="col">Gym Name</th>
-                <th scope="col">Ascents Count</th>
-                <th scope="col">Boulders Count</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody class="bg-light">
-
-            @{
-                var i = 1;
-            }
-
-            @if (!Model.Gyms.Any())
-            {
-                <tr>
-                    <td>@i</td>
-                    <td>No gyms in this city</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td><a class="btn btn-outline-primary text-muted">Details</a></td>
-                </tr>
-            }
-
-            @foreach (var gym in Model.Gyms)
-            {
-                <tr>
-                    <td>@i</td>
-                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-dark">@gym.Name</a></td>
-                    <td>@gym.AscentsCount</td>
-                    <td>@gym.BouldersCount</td>
-                    <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-primary">Details</a></td>
-                </tr>
-
-                i++;
-            }
-        </tbody>
-    </table>
+    <span class="text-light">....</span>
+    <h1>@Model.Name, @Model.CountryName</h1>
 </div>
+<hr class="bg-secondary" />
+@if (Model.Description != null)
+{
+    <p>@Model.Description</p>
+    <hr class="bg-secondary" />
+}
+<br />
+<h2>Gyms in @Model.Name</h2>
+<br />
+<table class="table table-primary border border-success table-sm">
+    <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Gym Name</th>
+            <th scope="col">Ascents Count</th>
+            <th scope="col">Boulders Count</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="bg-light">
 
+        @{
+            var i = 1;
+        }
+
+        @if (!Model.Gyms.Any())
+        {
+            <tr>
+                <td>@i</td>
+                <td>No gyms in this city</td>
+                <td>-</td>
+                <td>-</td>
+                <td><a class="btn btn-outline-primary text-muted">Details</a></td>
+            </tr>
+        }
+
+        @foreach (var gym in Model.Gyms)
+        {
+            <tr>
+                <td>@i</td>
+                <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-dark">@gym.Name</a></td>
+                <td>@gym.AscentsCount</td>
+                <td>@gym.BouldersCount</td>
+                <td><a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-primary">Details</a></td>
+            </tr>
+
+            i++;
+        }
+    </tbody>
+</table>

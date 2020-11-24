@@ -4,59 +4,56 @@
     ViewData["Title"] = "Create Ascent";
 }
 
-<div class="offset-md-3 col-md-6">
-    <form asp-controller="Ascents" asp-action="Create" method="post">
-        <br />
-        <h1>Create Ascent</h1>
-        <hr class="bg-secondary" />
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <input asp-for="BoulderId" value="@Model.BoulderId" type="hidden">
-        </div>
-        <div class="form-group">
-            <label asp-for="GradeId" class="col-form-label"></label>
-            <select asp-for="GradeId" asp-items="Model.GradesSelectListItems" class="form-control"></select>
-            <span asp-validation-for="GradeId" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="StyleId" class="col-form-label"></label>
-            @{
-                var i = 1;
-            }
-            @foreach (var style in Model.StylesSelectListItems)
-            {
-                <div class="custom-control custom-radio">
-                    <input asp-for="StyleId" type="radio" id="customRadio@(i)" class="custom-control-input" value="@style.Value" checked="@(i == 1)">
-                    <label class="custom-control-label" for="customRadio@(i)">@style.Text</label>
-                </div>
-
-                i++;
-            }
-            <span asp-validation-for="StyleId" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Date" class="col-form-label"></label>
-            <input asp-for="Date" value="" class="form-control">
-            <span asp-validation-for="Date" class="text-danger"></span>
-        </div>
-        <br />
-        <div class="form-group">
-            <div class="custom-control custom-switch">
-                <input asp-for="Recommend" type="checkbox" class="custom-control-input" id="customSwitch1">
-                <label asp-for="Recommend" class="custom-control-label" for="customSwitch1"></label>
+<form asp-controller="Ascents" asp-action="Create" method="post">
+    <h1>Create Ascent</h1>
+    <hr class="bg-secondary" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="BoulderId" value="@Model.BoulderId" type="hidden">
+    </div>
+    <div class="form-group">
+        <label asp-for="GradeId" class="col-form-label"></label>
+        <select asp-for="GradeId" asp-items="Model.GradesSelectListItems" class="form-control"></select>
+        <span asp-validation-for="GradeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StyleId" class="col-form-label"></label>
+        @{
+            var i = 1;
+        }
+        @foreach (var style in Model.StylesSelectListItems)
+        {
+            <div class="custom-control custom-radio">
+                <input asp-for="StyleId" type="radio" id="customRadio@(i)" class="custom-control-input" value="@style.Value" checked="@(i == 1)">
+                <label class="custom-control-label" for="customRadio@(i)">@style.Text</label>
             </div>
-            <span asp-validatkion-for="Recommend" class="text-danger"></span>
+
+            i++;
+        }
+        <span asp-validation-for="StyleId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Date" class="col-form-label"></label>
+        <input asp-for="Date" value="" class="form-control">
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            <input asp-for="Recommend" type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label asp-for="Recommend" class="custom-control-label" for="customSwitch1"></label>
         </div>
-        <div class="form-group">
-            <label asp-for="Stars" class="col-form-label"></label>
-            <input asp-for="Stars" class="form-control">
-            <span asp-validation-for="Stars" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Comment" class="col-form-label"></label>
-            <textarea asp-for="Comment" class="form-control"></textarea>
-            <span asp-validation-for="Comment" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-warning">Create</button>
-    </form>
-</div>
+        <span asp-validatkion-for="Recommend" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Stars" class="col-form-label"></label>
+        <input asp-for="Stars" class="form-control">
+        <span asp-validation-for="Stars" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment" class="col-form-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-warning">Create</button>
+</form>
