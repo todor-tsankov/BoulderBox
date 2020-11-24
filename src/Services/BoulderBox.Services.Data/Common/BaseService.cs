@@ -20,10 +20,8 @@ namespace BoulderBox.Services.Data.Common
             this.entityRepository = entityRepository;
         }
 
-        public int Count(Expression<Func<TModel, bool>> predicate)
+        public int Count(Expression<Func<TModel, bool>> predicate = null)
         {
-            this.NullCheck(predicate, nameof(predicate));
-
             var entities = this.entityRepository
                .AllAsNoTracking();
 

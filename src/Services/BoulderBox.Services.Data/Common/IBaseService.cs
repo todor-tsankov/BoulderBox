@@ -10,7 +10,7 @@ namespace BoulderBox.Services.Data.Common
     public interface IBaseService<TModel>
         where TModel : class, IDeletableEntity
     {
-        int Count(Expression<Func<TModel, bool>> predicate);
+        int Count(Expression<Func<TModel, bool>> predicate = null);
 
         bool Exists(Expression<Func<TModel, bool>> predicate);
 

@@ -1,0 +1,57 @@
+﻿@model BoulderBox.Web.ViewModels.ViewComponents.SideBarViewModel
+
+<h6>Latest Ascents:</h6>
+<table class="table table-sm table-borderless">
+    <tbody>
+        @foreach (var ascent in Model.LatestAscents)
+        {
+            var badgeClass = "badge badge-pill badge-info";
+
+            if (ascent.StyleShortText == "FL")
+            {
+                badgeClass = "badge badge-pill badge-warning";
+            }
+            else if (ascent.StyleShortText == "RP")
+            {
+                badgeClass = "badge badge-pill badge-danger";
+            }
+
+            <tr>
+                <td class="@badgeClass border border-dark mt-1">@ascent.StyleShortText.ToLower()</td>
+                <td>@ascent.GradeText</td>
+                <td><a asp-controller="Home" asp-action="Index">@ascent.ApplicationUserUserName</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h6>Latest Boulders:</h6>
+<table class="table table-sm table-borderless">
+    <tbody>
+        @foreach (var boulder in Model.LatestBoulders)
+        {
+            <tr>
+                <td>@boulder.GradeText</td>
+                <td><a asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id">@boulder.Name</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h6>BoulderBox Statistics:</h6>
+<table class="table table-sm table-borderless">
+    <tbody>
+        <tr>
+            <td>Members:</td>
+            <td>@Model.Statistics.MembersCount</td>
+        </tr>
+        <tr>
+            <td>Total Ascents:</td>
+            <td>@Model.Statistics.AscentsCount</td>
+        </tr>
+        <tr>
+            <td>Total Boulders:</td>
+            <td>@Model.Statistics.BouldersCount</td>
+        </tr>
+    </tbody>
+</table>

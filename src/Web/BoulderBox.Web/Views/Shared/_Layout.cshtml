@@ -32,9 +32,6 @@
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Ranking" asp-action="Index" class="nav-link">Ranking</a>
                     </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="ForumCategories" asp-action="Index" class="nav-link">Forum</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Explore</a>
                         <div class="dropdown-menu">
@@ -43,10 +40,16 @@
                             <a class="dropdown-item" asp-area="" asp-controller="Gyms" asp-action="Index">Gyms</a>
                         </div>
                     </li>
-                    <partial name="_LoginPartial" />
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="ForumCategories" asp-action="Index" class="nav-link">Forum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="ForumCategories" asp-action="Index" class="nav-link">Chat</a>
+                    </li>
+                    <partial name="_LoginPartialNavBar" />
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                    <input class="form-control mr-sm-2 mb-1" type="text" placeholder="Search">
                     <button class="btn btn-dark" type="submit">Search</button>
                 </form>
             </div>
@@ -58,27 +61,23 @@
     <main role="main" class="pb-3">
         <div class="container-fluid">
             <div class="row">
-                <div class="d-none d-lg-block col-lg-2">
-                    <br />
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
-                    <h1>Side</h1>
+                <div class="border-primary border-right border-bottom bg-light d-none d-lg-block col-lg-2">
+                    <div class="row ml-2 mr-2 mt-4 mb-4">
+                        <partial name="_LoginPartial" />
+                    </div>
+                    <vc:side-bar></vc:side-bar>
                 </div>
-                <div class="col-lg-10">
-                    <br />
+                <div class="col-lg-9 mt-3 ml-3">
                     @this.RenderBody()
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="footer text-light bg-primary">
-        <div>
+    <footer class="footer text-light bg-primary container-fluid">
+        <div class="container-fluid row">
+            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

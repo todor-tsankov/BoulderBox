@@ -4,31 +4,21 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-    @if (this.SignInManager.IsSignedIn(this.User))
+@if (this.SignInManager.IsSignedIn(this.User))
+{
+    if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-        <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
-        </li>
-        if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-light" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
-            </li>
-        }
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
-            </form>
-        </li>
+        <a class="btn btn-outline-primary text-dark m-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
     }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-    }
-</ul>
+
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-outline-success m-1">Profile</a>
+
+    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+        <button type="submit" class="btn btn-outline-primary m-1">Logout</button>
+    </form>
+}
+else
+{
+    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-success m-1">Login</a>
+    <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-primary m-1">Register</a>
+}
