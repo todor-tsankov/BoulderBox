@@ -30,7 +30,7 @@ namespace BoulderBox.Web.Controllers
         public IActionResult Index()
         {
             var ascents = this.ascentsService
-                .GetMany<AscentViewModel>();
+                .GetMany<AscentViewModel>(orderBySelector: x => x.Date, asc: false);
 
             return this.View(ascents);
         }
@@ -63,8 +63,8 @@ namespace BoulderBox.Web.Controllers
                 return this.View(ascentInput);
             }
 
-            ascentInput.ApplicationUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.ascentsService.Create(ascentInput);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await this.ascentsService.Create(ascentInput, userId);
 
             return this.RedirectToAction("Index");
         }

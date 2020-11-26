@@ -8,6 +8,6 @@ namespace BoulderBox.Services.Data.Boulders
 {
     public interface IAscentsService : IBaseService<Ascent>
     {
-        Task Create(AscentInputModel ascentInput);
+        Task Create(AscentInputModel ascentInput, string userId);
     }
 }

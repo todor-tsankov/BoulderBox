@@ -19,14 +19,16 @@ namespace BoulderBox.Services.Data.Boulders
             this.bouldersRepository = bouldersRepository;
         }
 
-        public async Task<bool> AddBoulderAsync(BoulderInputModel boulderInput, ImageInputModel imageInput)
+        public async Task<bool> AddBoulderAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
         {
             var mapper = AutoMapperConfig.MapperInstance;
 
             var image = mapper.Map<Image>(imageInput);
             var boulder = mapper.Map<Boulder>(boulderInput);
 
+            boulder.AuthorId = authorId;
             boulder.Image = image;
+
             await this.bouldersRepository.AddAsync(boulder);
             await this.bouldersRepository.SaveChangesAsync();
 

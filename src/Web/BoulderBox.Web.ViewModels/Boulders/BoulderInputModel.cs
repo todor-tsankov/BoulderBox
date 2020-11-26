@@ -31,8 +31,6 @@ namespace BoulderBox.Web.ViewModels.Boulders
         [Required(ErrorMessage = InvalidNameGymIdMessage)]
         public string GymId { get; set; }
 
-        public string AuthorId { get; set; }
-
         [Required]
         [MaxLength(1000)]
         public string Description { get; set; }

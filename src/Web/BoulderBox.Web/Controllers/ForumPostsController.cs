@@ -21,11 +21,6 @@ namespace BoulderBox.Web.Controllers
             this.forumCommentsService = forumCommentsService;
         }
 
-        public IActionResult Index()
-        {
-            return this.View();
-        }
-
         public IActionResult Details(string id)
         {
             var forumPostAndComment = new ForumPostAndCommentInputViewModel()
