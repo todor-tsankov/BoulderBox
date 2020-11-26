@@ -4,21 +4,22 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="row justify-content-center">
-    <h1>@Model.GradeText - @Model.Name</h1>
+<div class="row ml-2">
+    <h2>@Model.Name</h2>
+    <a asp-area="" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
 </div>
-<div class="row justify-content-center">
-    <h3>@Model.CreatedOn.ToString("dd:MM:yyy") at @Model.GymName</h3>
-</div>
-<div class="row justify-content-center">
-    <a asp-area="" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-warning">Add Ascent</a>
-</div>
-<hr class="bg-secondary" />
+
 @if (Model.Description != null)
 {
-    <p>@Model.Description</p>
-    <hr class="bg-secondary" />
+    <hr class="bg-secondary mt-4" />
+    <p class="text-break">@(Model.Description)</p>
 }
+
+<hr class="bg-secondary mb-4" />
+<h3>Gyms in @Model.Name</h3>
+
+
+
 
 <img src="@this.Url.Content(Model.ImageSource)" class="card-img" />
 <br />

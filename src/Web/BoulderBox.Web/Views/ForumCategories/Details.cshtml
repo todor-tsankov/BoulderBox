@@ -4,48 +4,48 @@
     ViewData["Title"] = "Category";
 }
 
-<h1>
-    @Model.Name
-    <a asp-area="" asp-controller="ForumPosts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-dark">Create Post</a>
-</h1>
-<hr class="bg-secondary" />
+<div class="row ml-2">
+    <h1>@Model.Name</h1>
+    <a asp-area="" asp-controller="ForumPosts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-3">Create Post</a>
+</div>
+
 @if (Model.Description != null)
 {
-    <p>@Model.Description</p>
-    <hr class="bg-secondary" />
+    <hr class="bg-secondary mt-2" />
+    <p class="text-break">@(Model.Description)</p>
 }
-<br />
-<h2>Posts in @Model.Name</h2>
-<br />
-<table class="table table-borderless text-dark">
-    <thead>
-        <tr>
-            <th scope="col">Subject</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Created On</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @if (!Model.ForumPosts.Any())
-        {
+<hr class="bg-secondary mb-4" />
+<h3>Posts in @Model.Name</h3>
+
+<div class="table-responsive mt-3">
+    <table class="table table-borderless table-hover table-striped">
+        <thead class="bg-primary text-light">
             <tr>
-                <td>No posts in this category</td>
-                <td>-</td>
-                <td>-</td>
-                <td><a class="btn btn-outline-dark text-muted">Details</a></td>
+                <th scope="col">Subject</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Created On</th>
             </tr>
-        }
+        </thead>
+        <tbody>
 
-        @foreach (var post in Model.ForumPosts)
-        {
-            <tr class="text-dark">
-                <td>@post.Title</td>
-                <td>@post.ApplicationUserUserName</td>
-                <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
-                <td><a asp-area="" asp-controller="ForumPosts" asp-action="Details" asp-route-id="@post.Id" class="btn btn-outline-dark">Details</a></td>
-            </tr>
-        }
-    </tbody>
-</table>
+            @if (!Model.ForumPosts.Any())
+            {
+                <tr>
+                    <td>No posts in this category</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            }
+
+            @foreach (var post in Model.ForumPosts)
+            {
+                <tr class="text-dark">
+                    <td><a asp-area="" asp-controller="ForumPosts" asp-action="Details" asp-route-id="@post.Id" class="text-dark">@post.Title</a></td>
+                    <td>@post.ApplicationUserUserName</td>
+                    <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

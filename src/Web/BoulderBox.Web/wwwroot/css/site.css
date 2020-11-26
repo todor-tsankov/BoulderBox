@@ -12,6 +12,7 @@ a.navbar-brand {
 html {
     font-size: 14px;
 }
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -21,6 +22,7 @@ html {
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
@@ -43,8 +45,9 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 0px;
+    margin-bottom: 100px;
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -54,3 +57,6 @@ body {
     height: 100px;
     line-height: 150px; /* Vertically center the text there */
 }
+
+/* Custom css
+-------------------------------------------------- */

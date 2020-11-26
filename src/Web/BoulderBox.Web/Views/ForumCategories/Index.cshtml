@@ -4,27 +4,31 @@
     ViewData["Title"] = "Forum Categories";
 }
 
-<h1>Forum Categories  <a asp-area="" asp-controller="ForumCategories" asp-action="Create" class="btn btn-outline-dark">Create Category</a></h1>
-<hr class="bg-secondary" />
+<div class="row ml-2">
+    <h2>Forum Categories</h2>
+    <a asp-area="" asp-controller="ForumCategories" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+</div>
 
-<table class="table table-borderless">
-    <thead>
-        <tr>
-            <th>Category</th>
-            <th>Posts</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var category in Model)
-        {
+<hr class="bg-secondary mb-4" />
+
+<div class="table-responsive mt-3">
+    <table class="table table-borderless table-hover table-striped">
+        <thead class="bg-primary text-light">
             <tr>
-                <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id">@category.Name</a></td>
-                <td>@category.ForumPostsCount</td>
-                <td>@category.Description</td>
-                <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id" class="btn btn-outline-dark">Details</a></td>
+                <th>Category</th>
+                <th>Posts</th>
+                <th>Description</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td><a asp-area="" asp-controller="ForumCategories" asp-action="Details" asp-route-id="@category.Id" class="text-dark">@category.Name</a></td>
+                    <td>@category.ForumPostsCount</td>
+                    <td>@category.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
