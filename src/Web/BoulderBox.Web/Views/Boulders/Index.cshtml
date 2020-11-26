@@ -14,7 +14,7 @@
     <div class="row justify-content-start">
         @foreach (var boulder in Model)
         {
-            <div class="col-lg-3 col-sm-10 offset-sm-1 offset-lg-0 mb-5">
+            <div class="col-lg-3 offset-lg-0 col-sm-8 offset-sm-2 mb-5">
                 <div class="card h-100 border-primary bg-light">
                     <div class="card-header bg-primary">
                         <h6 class="card-title">
@@ -39,7 +39,7 @@
                         <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId">@boulder.Id</a>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-end align-items-center">
-                        <div class="row" style="bottom: 0">
+                        <div class="row">
                             <a asp-area="" asp-controller="Ascents" asp-action="Create" asp-route-id="@boulder.Id" class="btn btn-success m-1">Add Ascent</a>
                             <a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="btn btn-primary m-1">Details</a>
                         </div>

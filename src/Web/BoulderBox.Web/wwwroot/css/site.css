@@ -43,7 +43,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    margin-bottom: 0px;
 }
 .footer {
     position: absolute;
@@ -51,6 +51,6 @@ body {
     width: 100%;
     white-space: nowrap;
     /* Set the fixed height of the footer here */
-    height: 150px;
+    height: 100px;
     line-height: 150px; /* Vertically center the text there */
 }

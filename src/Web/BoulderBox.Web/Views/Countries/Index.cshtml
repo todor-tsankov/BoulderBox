@@ -4,38 +4,41 @@
     ViewData["Title"] = "Countries";
 }
 
-<h1>Countries <a asp-area="" asp-controller="Countries" asp-action="Create" class="btn btn-outline-dark">Create</a></h1>
+<div class="row ml-2">
+    <h2>Countries</h2>
+    <a asp-area="" asp-controller="Countries" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+</div>
 <hr class="bg-secondary" />
 
 <div class="container">
     <div class="row justify-content-start">
         @foreach (var country in Model)
         {
-            <div class="card border-primary bg-light mb-3 col-lg-3">
-                <div class="card-header bg-primary text-light">
-                    <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id" class="text-light">@country.Name</a>,
-                    @country.CountryCode
-                </div>
-                <div class="card-body">
-                    @if (country.ImageSource != null)
-                    {
-                        <img src="@Url.Content(country.ImageSource)" style="padding:0px" class="card-img border border-secondary col-lg-12 col-sm-6" />
-                    }
-                    else
-                    {
-                        <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-secondary col-lg-12 col-sm-6" />
-                    }
-                    <br />
-                    <br />
-                    <div class="row justify-content-end align-items-end">
-                        <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id" class="btn btn-outline-dark">Details</a>
-                        <span class="text-light">.</span>
-                        <a asp-area="" asp-controller="Countries" asp-action="Delete" asp-route-id="@country.Id" class="btn btn-outline-danger">Delete</a>
+            <div class="col-lg-3 offset-lg-0 col-sm-8 offset-sm-2 mb-5">
+                <div class="card h-100 border-primary bg-light">
+                    <div class="card-header bg-primary">
+                        <h6 class="card-title">
+                            <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id" class="text-light">@country.Name (@country.CountryCode)</a>
+                        </h6>
+                    </div>
+                    <div class="border-bottom border-primary">
+                        @if (country.ImageSource != null)
+                        {
+                            <img src="@Url.Content(country.ImageSource)" class="card-img-top rounded-0" />
+                        }
+                        else
+                        {
+                            <img src="~/img/no-image-available.png" class="card-img-top" />
+                        }
+                    </div>
+
+                    <div class="card-body d-flex flex-column justify-content-end align-items-center">
+                        <div class="row">
+                            <a asp-area="" asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id" class="btn btn-primary m-1">Details</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <span class="text-light">...</span>
         }
     </div>
 </div>

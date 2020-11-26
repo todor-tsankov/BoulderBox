@@ -3,38 +3,42 @@
     ViewData["Title"] = "Gyms";
 }
 
-<h1>Gyms <a asp-area="" asp-controller="Gyms" asp-action="Create" class="btn btn-outline-primary">Create</a></h1>
+<div class="row ml-2">
+    <h2>Gyms</h2>
+    <a asp-area="" asp-controller="Gyms" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+</div>
 <hr class="bg-secondary" />
 
 <div class="container">
     <div class="row justify-content-start">
         @foreach (var gym in Model)
         {
-            <div class="card border-success bg-light mb-3 col-lg-3">
-                <div class="card-header bg-success text-light">
-                    <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-light">@gym.Name</a>,
-                    <a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@gym.CityId" class="text-light">@gym.CityName</a>
-                </div>
-                <div class="card-body">
-                    @if (gym.ImageSource != null)
-                    {
-                        <img src="@Url.Content(gym.ImageSource)" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
-                    }
-                    else
-                    {
-                        <img src="~/img/no-image-available.png" style="padding:0px" class="card-img border border-success col-lg-12 col-sm-6" />
-                    }
-                    <br />
-                    <br />
-                    <div class="row justify-content-end align-items-end">
-                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-outline-success">Details</a>
-                        <span class="text-light">.</span>
-                        <a asp-area="" asp-controller="Gyms" asp-action="Delete" asp-route-id="@gym.Id" class="btn btn-outline-danger">Delete</a>
+            <div class="col-lg-3 offset-lg-0 col-sm-8 offset-sm-2 mb-5">
+                <div class="card h-100 border-primary bg-light">
+                    <div class="card-header bg-primary">
+                        <h6 class="card-title text-light">
+                            <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="text-light">@gym.Name</a>
+                            (<a asp-area="" asp-controller="Cities" asp-action="Details" asp-route-id="@gym.CityId" class="text-light">@gym.CityName</a>)
+                        </h6>
+                    </div>
+                    <div class="border-bottom border-primary">
+                        @if (gym.ImageSource != null)
+                        {
+                            <img src="@Url.Content(gym.ImageSource)" class="card-img-top rounded-0" />
+                        }
+                        else
+                        {
+                            <img src="~/img/no-image-available.png" class="card-img-top rounded-0" />
+                        }
+                    </div>
+
+                    <div class="card-body d-flex flex-column justify-content-end align-items-center">
+                        <div class="row">
+                            <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@gym.Id" class="btn btn-primary m-1">Details</a>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <span class="text-light">...</span>
         }
     </div>
 </div>

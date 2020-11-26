@@ -4,64 +4,69 @@
     ViewData["Title"] = "Ascents";
 }
 
-<h1>Ascents</h1>
+<div class="row">
+    <h2 class="ml-2">Ascents</h2>
+</div>
 <hr class="bg-secondary" />
 
-<table class="table table-primary border border-success">
-    <thead>
-        <tr>
-            <th scope="col">User</th>
-            <th scope="col">Date</th>
-            <th scope="col">Style</th>
-            <th scope="col">Grade</th>
-            <th scope="col">Boulder</th>
-            <th scope="col">Comment</th>
-            <th scope="col">Stars</th>
-        </tr>
-    </thead>
-    <tbody class="bg-light">
-
-        @if (!Model.Any())
-        {
+<div class="table-responsive">
+    <table class="table table-borderless table-hover">
+        <thead class="bg-primary text-light">
             <tr>
-                <td>No ascents</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <th>User</th>
+                <th>Date</th>
+                <th>Style</th>
+                <th>Boulder</th>
+                <th>Comment</th>
+                <th>Stars</th>
             </tr>
-        }
+        </thead>
+        <tbody class="table-light">
 
-        @foreach (var ascent in Model)
-        {
-            var badge = "badge badge-danger";
-
-            if (ascent.StyleShortText == "OS")
+            @if (!Model.Any())
             {
-                badge = "badge badge-info";
-            }
-            else if (ascent.StyleShortText == "FL")
-            {
-                badge = "badge badge-warning";
-            }
-
-            <tr>
-                <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
-                <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
-                <td><span class="@badge">@ascent.StyleShortText</span></td>
-                <td>@ascent.GradeText</td>
-                <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
-                <td>@(ascent.Comment ?? "-")</td>
-                @if (ascent.Stars == null)
-                {
+                <tr>
+                    <td>No ascents</td>
                     <td>-</td>
-                }
-                else
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            }
+
+            @foreach (var ascent in Model)
+            {
+                var styleBadge = "badge badge-";
+
+                if (ascent.StyleShortText == "OS")
                 {
-                    <td>@ascent.Stars</td>
+                    styleBadge += "info";
                 }
-            </tr>
-        }
-    </tbody>
-</table>
+                else if (ascent.StyleShortText == "FL")
+                {
+                    styleBadge += "warning";
+                }
+                else if (ascent.StyleShortText == "RP")
+                {
+                    styleBadge += "danger";
+                }
+
+                <tr>
+                    <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
+                    <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
+                    <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
+                    <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a> (@ascent.GradeText)</td>
+                    <td>@(ascent.Comment ?? "-")</td>
+                    @if (ascent.Stars == null)
+                    {
+                        <td>-</td>
+                    }
+                    else
+                    {
+                        <td>@ascent.Stars</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

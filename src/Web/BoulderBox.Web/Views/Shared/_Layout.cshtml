@@ -59,7 +59,7 @@
     <partial name="_CookieConsentPartial" />
 
     <main role="main" class="pb-3">
-        <div class="container-fluid">
+        <div class="container col-12">
             <div class="row">
                 <div class="border-primary border-right border-bottom bg-light d-none d-lg-block col-lg-2">
                     <div class="row ml-2 mr-2 mt-4 mb-4">
@@ -67,8 +67,10 @@
                     </div>
                     <vc:side-bar></vc:side-bar>
                 </div>
-                <div class="col-lg-9 mt-3 ml-3">
-                    @this.RenderBody()
+                <div class="col-lg-10 mt-4">
+                    <div class="container">
+                        @this.RenderBody()
+                    </div>
                 </div>
             </div>
         </div>

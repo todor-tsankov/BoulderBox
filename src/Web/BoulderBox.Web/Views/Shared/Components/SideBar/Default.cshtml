@@ -1,24 +1,29 @@
 ﻿@model BoulderBox.Web.ViewModels.ViewComponents.SideBarViewModel
 
 <h6>Latest Ascents:</h6>
+
 <table class="table table-sm table-borderless">
     <tbody>
         @foreach (var ascent in Model.LatestAscents)
         {
-            var badgeClass = "badge badge-pill badge-info";
+            var badgeClass = "badge badge-";
 
-            if (ascent.StyleShortText == "FL")
+            if (ascent.StyleShortText == "OS")
             {
-                badgeClass = "badge badge-pill badge-warning";
+                badgeClass += "info";
+            }
+            else if (ascent.StyleShortText == "FL")
+            {
+                badgeClass += "warning";
             }
             else if (ascent.StyleShortText == "RP")
             {
-                badgeClass = "badge badge-pill badge-danger";
+                badgeClass += "danger";
             }
 
             <tr>
-                <td class="@badgeClass border border-dark mt-1">@ascent.StyleShortText.ToLower()</td>
-                <td>@ascent.GradeText</td>
+                <td class="@badgeClass mt-1">@ascent.StyleShortText</td>
+                <td><div class="row justify-content-center ml-1 mr-1">@ascent.GradeText</div></td>
                 <td><a asp-controller="Home" asp-action="Index">@ascent.ApplicationUserUserName</a></td>
             </tr>
         }
