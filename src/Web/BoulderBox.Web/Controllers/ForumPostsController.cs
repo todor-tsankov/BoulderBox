@@ -21,15 +21,26 @@ namespace BoulderBox.Web.Controllers
             this.forumCommentsService = forumCommentsService;
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, int pageId = 1)
         {
+            var itemsPerPage = 5;
+            var skip = itemsPerPage * (pageId - 1);
+
             var forumPostAndComment = new ForumPostAndCommentInputViewModel()
             {
                 Username = this.User.FindFirstValue(ClaimTypes.Name),
-                RedirectLink = this.Request.Path,
+                RedirectLink = $"{this.Request.Path}?pageId={pageId}",
                 ForumPost = this.forumPostsService.GetSingle<ForumPostDetailsViewModel>(x => x.Id == id),
                 ForumComments = this.forumCommentsService
-                    .GetMany<ForumPostDetailsForumCommentViewModel>(x => x.ForumPostId == id, x => x.CreatedOn)
+                    .GetMany<ForumPostDetailsForumCommentViewModel>(
+                        x => x.ForumPostId == id, 
+                        x => x.CreatedOn,
+                        true,
+                        skip,
+                        itemsPerPage),
+                CurrentPage = pageId,
+                ItemsPerPage = itemsPerPage,
+                ItemsCount = this.forumCommentsService.Count(x => x.ForumPostId == id),
             };
 
             return this.View(forumPostAndComment);
@@ -58,7 +69,7 @@ namespace BoulderBox.Web.Controllers
 
             await this.forumPostsService.Create(forumPostInput, image, userId);
 
-            return this.RedirectToAction("Index");
+            return this.Redirect($"/ForumCategories/Details/{forumPostInput.ForumCategoryId}");
         }
     }
 }

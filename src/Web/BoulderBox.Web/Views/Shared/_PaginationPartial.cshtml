@@ -1,0 +1,23 @@
+﻿@model BoulderBox.Web.ViewModels.Common.PaginationBaseViewModel
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(!Model.HasPrevoius ? "disabled" : string.Empty)">
+            <a class="page-link" asp-route-pageId="@(Model.PrevoiusPage)"><i class="fas fa-chevron-left"></i></a>
+        </li>
+
+        @for (int i = Model.CurrentPage - 2; i <= Model.CurrentPage + 2; i++)
+        {
+            if (i >= 1 && i <= this.Model.PagesCount)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : string.Empty)">
+                    <a class="page-link" asp-route-pageId="@i">@i</a>
+                </li>
+            }
+        }
+
+        <li class="page-item @(!Model.HasNext ? "disabled" : string.Empty)">
+            <a class="page-link" asp-route-pageId="@(Model.NextPage)"><i class="fas fa-chevron-right"></i></a>
+        </li>
+    </ul>
+</nav>

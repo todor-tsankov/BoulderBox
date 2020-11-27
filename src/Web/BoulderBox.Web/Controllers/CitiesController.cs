@@ -24,11 +24,24 @@ namespace BoulderBox.Web.Controllers
             this.imagesService = imagesService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageId = 1)
         {
-            var cities = this.citiesService.GetMany<CityViewModel>();
+            var itemsPerPage = 12;
+            var skip = itemsPerPage * (pageId - 1);
 
-            return this.View(cities);
+            var citiesViewModel = new CitiesViewModel()
+            {
+                Cities = this.citiesService
+                    .GetMany<CityViewModel>(
+                        orderBySelector: x => x.Name,
+                        skip: skip,
+                        take: itemsPerPage),
+                CurrentPage = pageId,
+                ItemsCount = this.citiesService.Count(),
+                ItemsPerPage = itemsPerPage,
+            };
+
+            return this.View(citiesViewModel);
         }
 
         public IActionResult Details(string id)
@@ -40,12 +53,13 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Create()
         {
-            var city = new CityInputModel();
-
-            city.CountriesSelectListItems = this.countriesService
+            var city = new CityInputModel
+            {
+                CountriesSelectListItems = this.countriesService
                 .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
                 .Select(x => new SelectListItem(x.Name, x.Id))
-                .ToList();
+                .ToList()
+            };
 
             return this.View(city);
         }

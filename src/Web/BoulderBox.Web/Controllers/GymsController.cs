@@ -21,11 +21,24 @@ namespace BoulderBox.Web.Controllers
             this.countriesService = countriesService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageId = 1)
         {
-            var gyms = this.gymsService.GetMany<GymViewModel>();
+            var itemsPerPage = 12;
+            var skip = itemsPerPage * (pageId - 1);
 
-            return this.View(gyms);
+            var gymsViewModel = new GymsViewModel()
+            {
+                Gyms = this.gymsService
+                    .GetMany<GymViewModel>(
+                        orderBySelector: x => x.Name,
+                        skip: skip,
+                        take: itemsPerPage),
+                CurrentPage = pageId,
+                ItemsCount = this.gymsService.Count(),
+                ItemsPerPage = itemsPerPage,
+            };
+
+            return this.View(gymsViewModel);
         }
 
         public IActionResult Details(string id)

@@ -13,12 +13,26 @@ namespace BoulderBox.Web.Controllers
             this.applicationUsersService = applicationUsersService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageId = 1)
         {
-            var users = this.applicationUsersService
-                .GetMany<RankingViewModel>(orderBySelector: x => x.Points.AllTime, asc: false);
+            var itemsPerPage = 12;
+            var skip = itemsPerPage * (pageId - 1);
 
-            return this.View(users);
+            var rankingsViewModel = new RankingsViewModel()
+            {
+                Ranking = this.applicationUsersService
+                    .GetMany<RankingViewModel>(
+                        orderBySelector: x => x.Points.Yearly,
+                        asc: false,
+                        skip: skip,
+                        take: itemsPerPage),
+                CurrentPage = pageId,
+                ItemsCount = this.applicationUsersService.Count(),
+                ItemsPerPage = itemsPerPage,
+                StartRank = skip + 1,
+            };
+
+            return this.View(rankingsViewModel);
         }
     }
 }

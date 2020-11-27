@@ -10,10 +10,12 @@ namespace BoulderBox.Web.Controllers
     public class ForumCategoriesController : BaseController
     {
         private readonly IForumCategoriesService forumCategoriesService;
+        private readonly IForumPostsService forumPostsService;
 
-        public ForumCategoriesController(IForumCategoriesService forumCategoriesService)
+        public ForumCategoriesController(IForumCategoriesService forumCategoriesService, IForumPostsService forumPostsService)
         {
             this.forumCategoriesService = forumCategoriesService;
+            this.forumPostsService = forumPostsService;
         }
 
         public IActionResult Index()
@@ -24,10 +26,25 @@ namespace BoulderBox.Web.Controllers
             return this.View(categories);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, int pageId = 1)
         {
+            var itemsPerPage = 12;
+            var skip = itemsPerPage * (pageId - 1);
+
             var category = this.forumCategoriesService
                 .GetSingle<ForumCategoryDetailsViewModel>(x => x.Id == id);
+
+            category.ForumPosts = this.forumPostsService
+                .GetMany<ForumCategoryDetailsForumPostViewModel>(
+                    x => x.ForumCategoryId == id,
+                    x => x.CreatedOn,
+                    false,
+                    skip,
+                    itemsPerPage);
+
+            category.CurrentPage = pageId;
+            category.ItemsPerPage = itemsPerPage;
+            category.ItemsCount = this.forumPostsService.Count(x => x.ForumCategoryId == id);
 
             return this.View(category);
         }

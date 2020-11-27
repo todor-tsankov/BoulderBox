@@ -30,12 +30,24 @@ namespace BoulderBox.Web.Controllers
             this.gradesService = gradesService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageId = 1)
         {
-            var boulders = this.bouldersService
-                .GetMany<BoulderViewModel>();
+            var itemsPerPage = 8;
+            var skip = itemsPerPage * (pageId - 1);
 
-            return this.View(boulders);
+            var bouldersViewModel = new BouldersViewModel()
+            {
+                Boulders = this.bouldersService
+                    .GetMany<BoulderViewModel>(
+                        orderBySelector: x => x.Name,
+                        skip: skip,
+                        take: itemsPerPage),
+                CurrentPage = pageId,
+                ItemsCount = this.bouldersService.Count(),
+                ItemsPerPage = itemsPerPage,
+            };
+
+            return this.View(bouldersViewModel);
         }
 
         public IActionResult Details(string id)

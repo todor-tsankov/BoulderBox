@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BoulderBox.Web.ViewModels.Cities.CityViewModel>
+﻿@model BoulderBox.Web.ViewModels.Cities.CitiesViewModel
 
 @{
     ViewData["Title"] = "Cities";
@@ -12,7 +12,7 @@
 
 <div class="container">
     <div class="row justify-content-start">
-        @foreach (var city in Model)
+        @foreach (var city in Model.Cities)
         {
             <div class="col-lg-3 offset-lg-0 col-sm-8 offset-sm-2 mb-5">
                 <div class="card h-100 border-primary bg-light">
@@ -41,5 +41,8 @@
                 </div>
             </div>
         }
+    </div>
+    <div class="row justify-content-center mt-4">
+        <partial name="_PaginationPartial" model="this.Model" />
     </div>
 </div>

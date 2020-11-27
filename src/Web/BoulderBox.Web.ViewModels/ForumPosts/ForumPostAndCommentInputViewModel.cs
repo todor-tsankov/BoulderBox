@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.ForumComments;
 
 namespace BoulderBox.Web.ViewModels.ForumPosts
 {
-    public class ForumPostAndCommentInputViewModel
+    public class ForumPostAndCommentInputViewModel : PaginationBaseViewModel
     {
         public string Username { get; set; }
 

@@ -27,12 +27,25 @@ namespace BoulderBox.Web.Controllers
             this.stylesService = stylesService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageId = 1)
         {
-            var ascents = this.ascentsService
-                .GetMany<AscentViewModel>(orderBySelector: x => x.Date, asc: false);
+            var itemsPerPage = 12;
+            var skip = itemsPerPage * (pageId - 1);
 
-            return this.View(ascents);
+            var ascentsViewModel = new AscentsViewModel()
+            {
+                Ascents = this.ascentsService
+                    .GetMany<AscentViewModel>(
+                        orderBySelector: x => x.Date,
+                        asc: false,
+                        skip: skip,
+                        take: itemsPerPage),
+                CurrentPage = pageId,
+                ItemsCount = this.ascentsService.Count(),
+                ItemsPerPage = itemsPerPage,
+            };
+
+            return this.View(ascentsViewModel);
         }
 
         public IActionResult Create(string id)

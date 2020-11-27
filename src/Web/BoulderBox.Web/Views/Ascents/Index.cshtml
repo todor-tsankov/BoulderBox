@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BoulderBox.Web.ViewModels.Ascents.AscentViewModel>
+﻿@model BoulderBox.Web.ViewModels.Ascents.AscentsViewModel
 
 @{
     ViewData["Title"] = "Ascents";
@@ -23,7 +23,7 @@
         </thead>
         <tbody class="table-light">
 
-            @if (!Model.Any())
+            @if (!Model.Ascents.Any())
             {
                 <tr>
                     <td>No ascents</td>
@@ -34,7 +34,7 @@
                 </tr>
             }
 
-            @foreach (var ascent in Model)
+            @foreach (var ascent in Model.Ascents)
             {
                 var styleBadge = "badge badge-";
 
@@ -69,4 +69,7 @@
             }
         </tbody>
     </table>
+</div>
+<div class="row justify-content-center mt-4">
+    <partial name="_PaginationPartial" model="this.Model" />
 </div>

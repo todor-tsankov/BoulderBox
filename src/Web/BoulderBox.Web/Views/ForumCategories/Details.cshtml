@@ -25,6 +25,7 @@
                 <th scope="col">Subject</th>
                 <th scope="col">UserName</th>
                 <th scope="col">Created On</th>
+                <th scope="col">Comments</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
             {
                 <tr>
                     <td>No posts in this category</td>
+                    <td>-</td>
                     <td>-</td>
                     <td>-</td>
                 </tr>
@@ -44,8 +46,13 @@
                     <td><a asp-area="" asp-controller="ForumPosts" asp-action="Details" asp-route-id="@post.Id" class="text-dark">@post.Title</a></td>
                     <td>@post.ApplicationUserUserName</td>
                     <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
+                    <td>@post.ForumCommentsCount</td>
                 </tr>
             }
         </tbody>
     </table>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <partial name="_PaginationPartial" model="this.Model" />
 </div>

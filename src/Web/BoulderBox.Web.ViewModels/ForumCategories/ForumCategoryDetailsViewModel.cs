@@ -2,10 +2,11 @@
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.ForumCategories
 {
-    public class ForumCategoryDetailsViewModel : IMapFrom<ForumCategory>
+    public class ForumCategoryDetailsViewModel : PaginationBaseViewModel, IMapFrom<ForumCategory>
     {
         public string Id { get; set; }
 
@@ -15,6 +16,7 @@ namespace BoulderBox.Web.ViewModels.ForumCategories
 
         public string ImageSource { get; set; }
 
-        public ICollection<ForumCategoryDetailsForumPostViewModel> ForumPosts { get; set; }
+        [AutoMapper.IgnoreMap]
+        public IEnumerable<ForumCategoryDetailsForumPostViewModel> ForumPosts { get; set; }
     }
 }
