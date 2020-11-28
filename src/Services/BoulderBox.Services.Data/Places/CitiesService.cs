@@ -23,10 +23,10 @@ namespace BoulderBox.Services.Data.Places
 
         public async Task AddCityAsync(CityInputModel cityInput, ImageInputModel imageInput)
         {
-            var city = this.mapper.Map<City>(cityInput);
-            var image = this.mapper.Map<Image>(imageInput);
+            this.NullCheck(cityInput, nameof(cityInput));
 
-            city.Image = image;
+            var city = this.mapper.Map<City>(cityInput);
+            city.Image = this.mapper.Map<Image>(imageInput);
 
             await this.citiesRepository.AddAsync(city);
             await this.citiesRepository.SaveChangesAsync();

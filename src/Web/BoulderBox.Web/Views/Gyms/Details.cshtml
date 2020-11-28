@@ -27,6 +27,7 @@
             <tr>
                 <th scope="col">Grade</th>
                 <th scope="col">Boulder Name</th>
+                <th scope="col">Created By</th>
                 <th scope="col">Created On</th>
                 <th scope="col">Ascents</th>
             </tr>
@@ -40,6 +41,7 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
                 </tr>
             }
 
@@ -48,6 +50,7 @@
                 <tr>
                     <td>@boulder.GradeText</td>
                     <td><a asp-area="" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a></td>
+                    <td><a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@boulder.AuthorId">@boulder.AuthorUserName</a></td>
                     <td>@boulder.CreatedOn.ToString("dd/MM/yyyy")</td>
                     <td>@boulder.AscentsCount</td>
                 </tr>

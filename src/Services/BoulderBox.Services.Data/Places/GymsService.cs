@@ -23,8 +23,9 @@ namespace BoulderBox.Services.Data.Places
 
         public async Task<bool> AddGymAsync(GymInputModel gymInput, ImageInputModel imageInput)
         {
-            var country = this.mapper.Map<Gym>(gymInput);
+            this.NullCheck(gymInput, nameof(gymInput));
 
+            var country = this.mapper.Map<Gym>(gymInput);
             country.Image = this.mapper.Map<Image>(imageInput);
 
             await this.gymsRepository.AddAsync(country);

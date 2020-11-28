@@ -23,8 +23,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index(int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var gymsViewModel = new GymsViewModel()
             {
@@ -32,10 +31,9 @@ namespace BoulderBox.Web.Controllers
                     .GetMany<GymViewModel>(
                         orderBySelector: x => x.Name,
                         skip: skip,
-                        take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.gymsService.Count(),
-                ItemsPerPage = itemsPerPage,
+                        take: DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.gymsService.Count()),
             };
 
             return this.View(gymsViewModel);
@@ -43,19 +41,21 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var gym = this.gymsService.GetSingle<GymDetailsViewModel>(x => x.Id == id);
+            var gym = this.gymsService
+                .GetSingle<GymDetailsViewModel>(x => x.Id == id);
 
             return this.View(gym);
         }
 
         public IActionResult Create()
         {
-            var gym = new GymInputModel();
-
-            gym.CountriesSelectListItems = this.countriesService
-                .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
-                .Select(x => new SelectListItem(x.Name, x.Id))
-                .ToList();
+            var gym = new GymInputModel()
+            {
+                CountriesSelectListItems = this.countriesService
+                    .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
+                    .Select(x => new SelectListItem(x.Name, x.Id))
+                    .ToList(),
+            };
 
             return this.View(gym);
         }
@@ -65,7 +65,15 @@ namespace BoulderBox.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                var gym = new GymInputModel()
+                {
+                    CountriesSelectListItems = this.countriesService
+                        .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
+                        .Select(x => new SelectListItem(x.Name, x.Id))
+                        .ToList(),
+                };
+
+                return this.View(gym);
             }
 
             var image = await this.SaveImageFileAsync(formFile);

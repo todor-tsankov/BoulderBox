@@ -13,7 +13,7 @@ namespace BoulderBox.Web.ViewModels.Gyms
 
         public string AuthorId { get; set; }
 
-        public string AuthorEmail { get; set; }
+        public string AuthorUserName { get; set; }
 
         public string GradeText { get; set; }
 

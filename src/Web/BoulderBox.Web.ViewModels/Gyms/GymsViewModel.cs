@@ -1,11 +1,13 @@
-﻿using BoulderBox.Web.ViewModels.Common;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
+using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.Gyms
 {
-    public class GymsViewModel : PaginationViewModel
+    public class GymsViewModel
     {
+        public PaginationViewModel Pagination { get; set; }
+
         public IEnumerable<GymViewModel> Gyms { get; set; }
     }
 }
