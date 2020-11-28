@@ -10,15 +10,16 @@ namespace BoulderBox.Web.ViewModels.Cities
     public class CityInputModel : IMapTo<City>
     {
         public const string NameDisplay = "Name *";
-        public const string CountryIdDisplay = "Country *";
+        public const string NameRequiredErrorMessage = "Name is required.";
+        public const string NameLengthErrorMessage = "Name must be between 2 and 50 characters long.";
 
-        public const string InvalidNameMessage = "City's Name must be between 2 and 50 characters long.";
-        public const string InvalidCountryIdMessage = "City's country is required.";
+        public const string CountryIdDisplay = "Country *";
+        public const string InvalidCountryIdMessage = "Country is required.";
 
         [Display(Name = NameDisplay)]
-        [Required]
-        [MinLength(2, ErrorMessage = InvalidNameMessage)]
-        [MaxLength(50, ErrorMessage = InvalidNameMessage)]
+        [Required(ErrorMessage = NameRequiredErrorMessage)]
+        [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
+        [MaxLength(50, ErrorMessage = NameLengthErrorMessage)]
         public string Name { get; set; }
 
         [Display(Name = CountryIdDisplay)]

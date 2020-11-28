@@ -15,7 +15,5 @@ namespace BoulderBox.Web.ViewModels.Cities
         public string CountryName { get; set; }
 
         public string ImageSource { get; set; }
-
-        public string Description { get; set; }
     }
 }

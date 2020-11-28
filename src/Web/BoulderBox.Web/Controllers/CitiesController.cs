@@ -15,19 +15,16 @@ namespace BoulderBox.Web.Controllers
     {
         private readonly ICitiesService citiesService;
         private readonly ICountriesService countriesService;
-        private readonly IImagesService imagesService;
 
-        public CitiesController(ICitiesService citiesService, ICountriesService countriesService, IImagesService imagesService)
+        public CitiesController(ICitiesService citiesService, ICountriesService countriesService)
         {
             this.citiesService = citiesService;
             this.countriesService = countriesService;
-            this.imagesService = imagesService;
         }
 
         public IActionResult Index(int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var citiesViewModel = new CitiesViewModel()
             {
@@ -35,10 +32,9 @@ namespace BoulderBox.Web.Controllers
                     .GetMany<CityViewModel>(
                         orderBySelector: x => x.Name,
                         skip: skip,
-                        take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.citiesService.Count(),
-                ItemsPerPage = itemsPerPage,
+                        take: DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.citiesService.Count()),
             };
 
             return this.View(citiesViewModel);
@@ -46,7 +42,8 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var city = this.citiesService.GetSingle<CityDetailsViewModel>(x => x.Id == id);
+            var city = this.citiesService
+                .GetSingle<CityDetailsViewModel>(x => x.Id == id);
 
             return this.View(city);
         }
@@ -56,9 +53,9 @@ namespace BoulderBox.Web.Controllers
             var city = new CityInputModel
             {
                 CountriesSelectListItems = this.countriesService
-                .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
-                .Select(x => new SelectListItem(x.Name, x.Id))
-                .ToList()
+                    .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
+                    .Select(x => new SelectListItem(x.Name, x.Id))
+                    .ToList(),
             };
 
             return this.View(city);
@@ -67,9 +64,19 @@ namespace BoulderBox.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CityInputModel cityInput, IFormFile formFile)
         {
-            if (!this.ModelState.IsValid)
+            var existCountry = this.countriesService.Exists(x => x.Id == cityInput.CountryId);
+
+            if (!this.ModelState.IsValid || !existCountry)
             {
-                return this.View();
+                var city = new CityInputModel
+                {
+                    CountriesSelectListItems = this.countriesService
+                        .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
+                        .Select(x => new SelectListItem(x.Name, x.Id))
+                        .ToList(),
+                };
+
+                return this.View(city);
             }
 
             var image = await this.SaveImageFileAsync(formFile);
