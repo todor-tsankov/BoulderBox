@@ -13,11 +13,16 @@ namespace BoulderBox.Web.Controllers
     public class GymsController : BaseController
     {
         private readonly IGymsService gymsService;
+        private readonly ICitiesService citiesService;
         private readonly ICountriesService countriesService;
 
-        public GymsController(IGymsService gymsService, ICountriesService countriesService)
+        public GymsController(
+            IGymsService gymsService,
+            ICitiesService citiesService,
+            ICountriesService countriesService)
         {
             this.gymsService = gymsService;
+            this.citiesService = citiesService;
             this.countriesService = countriesService;
         }
 
@@ -63,7 +68,9 @@ namespace BoulderBox.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(GymInputModel gymInput, IFormFile formFile)
         {
-            if (!this.ModelState.IsValid)
+            var cityExists = this.citiesService.Exists(x => x.Id == gymInput.CityId);
+
+            if (!this.ModelState.IsValid || !cityExists)
             {
                 var gym = new GymInputModel()
                 {
