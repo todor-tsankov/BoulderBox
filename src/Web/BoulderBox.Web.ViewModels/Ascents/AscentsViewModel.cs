@@ -4,7 +4,7 @@ using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.Ascents
 {
-    public class AscentsViewModel : PaginationBaseViewModel
+    public class AscentsViewModel : PaginationViewModel
     {
         public IEnumerable<AscentViewModel> Ascents { get; set; }
     }

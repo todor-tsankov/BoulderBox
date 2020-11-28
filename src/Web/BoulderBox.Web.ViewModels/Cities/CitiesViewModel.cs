@@ -4,7 +4,7 @@ using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.Cities
 {
-    public class CitiesViewModel : PaginationBaseViewModel
+    public class CitiesViewModel : PaginationViewModel
     {
         public IEnumerable<CityViewModel> Cities { get; set; }
     }

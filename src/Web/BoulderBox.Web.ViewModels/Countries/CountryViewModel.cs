@@ -13,8 +13,6 @@ namespace BoulderBox.Web.ViewModels.Countries
 
         public string CountryCode { get; set; }
 
-        public string Description { get; set; }
-
         public virtual string ImageSource { get; set; }
     }
 }

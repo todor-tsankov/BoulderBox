@@ -4,7 +4,7 @@ using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.Ranking
 {
-    public class RankingsViewModel : PaginationBaseViewModel
+    public class RankingsViewModel : PaginationViewModel
     {
         public int StartRank { get; set; }
 

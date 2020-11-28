@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 
 using BoulderBox.Services.Data.Places;
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Countries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +20,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index(int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var countriesViewModel = new CountriesViewModel()
             {
@@ -28,10 +28,9 @@ namespace BoulderBox.Web.Controllers
                     .GetMany<CountryViewModel>(
                         orderBySelector: x => x.Name,
                         skip: skip,
-                        take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.countriesService.Count(),
-                ItemsPerPage = itemsPerPage,
+                        take: DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.countriesService.Count()),
             };
 
             return this.View(countriesViewModel);
@@ -39,7 +38,8 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var country = this.countriesService.GetSingle<CountryDetailsViewModel>(x => x.Id == id);
+            var country = this.countriesService
+                .GetSingle<CountryDetailsViewModel>(x => x.Id == id);
 
             return this.View(country);
         }
@@ -54,7 +54,7 @@ namespace BoulderBox.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(countryInput);
             }
 
             var image = await this.SaveImageFileAsync(formFile);
