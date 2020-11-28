@@ -33,7 +33,7 @@ namespace BoulderBox.Web.Controllers
                 ForumPost = this.forumPostsService.GetSingle<ForumPostDetailsViewModel>(x => x.Id == id),
                 ForumComments = this.forumCommentsService
                     .GetMany<ForumPostDetailsForumCommentViewModel>(
-                        x => x.ForumPostId == id, 
+                        x => x.ForumPostId == id,
                         x => x.CreatedOn,
                         true,
                         skip,

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using AutoMapper;
 using BoulderBox.Data.Common.Models;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Services.Mapping;
@@ -14,10 +15,12 @@ namespace BoulderBox.Services.Data.Common
         where TModel : class, IDeletableEntity
     {
         private readonly IDeletableEntityRepository<TModel> entityRepository;
+        private readonly IMapper mapper;
 
-        public BaseService(IDeletableEntityRepository<TModel> entityRepository)
+        public BaseService(IDeletableEntityRepository<TModel> entityRepository, IMapper mapper)
         {
             this.entityRepository = entityRepository;
+            this.mapper = mapper;
         }
 
         public int Count(Expression<Func<TModel, bool>> predicate = null)
@@ -46,8 +49,7 @@ namespace BoulderBox.Services.Data.Common
 
         public async Task Create(object inputModel)
         {
-            var mapper = AutoMapperConfig.MapperInstance;
-            var entity = mapper.Map<TModel>(inputModel);
+            var entity = this.mapper.Map<TModel>(inputModel);
 
             await this.entityRepository.AddAsync(entity);
             await this.entityRepository.SaveChangesAsync();

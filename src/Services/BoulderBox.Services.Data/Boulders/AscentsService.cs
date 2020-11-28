@@ -3,10 +3,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.Ascents;
 
 namespace BoulderBox.Services.Data.Boulders
@@ -21,20 +21,22 @@ namespace BoulderBox.Services.Data.Boulders
 
         private readonly IDeletableEntityRepository<Ascent> ascentsRepository;
         private readonly IDeletableEntityRepository<Points> pointsRepository;
+        private readonly IMapper mapper;
 
         public AscentsService(
             IDeletableEntityRepository<Ascent> ascentsRepository,
-            IDeletableEntityRepository<Points> pointsRepository)
-            : base(ascentsRepository)
+            IDeletableEntityRepository<Points> pointsRepository,
+            IMapper mapper)
+            : base(ascentsRepository, mapper)
         {
             this.ascentsRepository = ascentsRepository;
             this.pointsRepository = pointsRepository;
+            this.mapper = mapper;
         }
 
         public async Task Create(AscentInputModel ascentInput, string userId)
         {
-            var mapper = AutoMapperConfig.MapperInstance;
-            var ascent = mapper.Map<Ascent>(ascentInput);
+            var ascent = this.mapper.Map<Ascent>(ascentInput);
 
             ascent.ApplicationUserId = userId;
 

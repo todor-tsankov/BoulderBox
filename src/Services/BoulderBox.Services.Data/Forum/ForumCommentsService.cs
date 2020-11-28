@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
+using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ForumComments;
 
 namespace BoulderBox.Services.Data.Forum
@@ -11,17 +11,18 @@ namespace BoulderBox.Services.Data.Forum
     public class ForumCommentsService : BaseService<ForumComment>, IForumCommentsService
     {
         private readonly IDeletableEntityRepository<ForumComment> forumCommentsRepository;
+        private readonly IMapper mapper;
 
-        public ForumCommentsService(IDeletableEntityRepository<ForumComment> forumCommentsRepository)
-            : base(forumCommentsRepository)
+        public ForumCommentsService(IDeletableEntityRepository<ForumComment> forumCommentsRepository, IMapper mapper)
+            : base(forumCommentsRepository, mapper)
         {
             this.forumCommentsRepository = forumCommentsRepository;
+            this.mapper = mapper;
         }
 
         public async Task Create(ForumCommentInputModel forumCommentInput, string userId)
         {
-            var mapper = AutoMapperConfig.MapperInstance;
-            var comment = mapper.Map<ForumComment>(forumCommentInput);
+            var comment = this.mapper.Map<ForumComment>(forumCommentInput);
 
             comment.ApplicationUserId = userId;
 

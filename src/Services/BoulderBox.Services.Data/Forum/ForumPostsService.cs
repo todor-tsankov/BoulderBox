@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
+using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ForumPosts;
 using BoulderBox.Web.ViewModels.Images;
 
@@ -12,11 +12,13 @@ namespace BoulderBox.Services.Data.Forum
     public class ForumPostsService : BaseService<ForumPost>, IForumPostsService
     {
         private readonly IDeletableEntityRepository<ForumPost> forumPostsRepository;
+        private readonly IMapper mapper;
 
-        public ForumPostsService(IDeletableEntityRepository<ForumPost> forumPostsRepository)
-            : base(forumPostsRepository)
+        public ForumPostsService(IDeletableEntityRepository<ForumPost> forumPostsRepository, IMapper mapper)
+            : base(forumPostsRepository, mapper)
         {
             this.forumPostsRepository = forumPostsRepository;
+            this.mapper = mapper;
         }
 
         public async Task Create(ForumPostInputModel forumPostInput, ImageInputModel imageInput, string userId)
@@ -24,10 +26,8 @@ namespace BoulderBox.Services.Data.Forum
             this.NullCheck(forumPostInput, nameof(forumPostInput));
             this.NullCheck(userId, nameof(userId));
 
-            var mapper = AutoMapperConfig.MapperInstance;
-
-            var image = mapper.Map<Image>(imageInput);
-            var forumPost = mapper.Map<ForumPost>(forumPostInput);
+            var image = this.mapper.Map<Image>(imageInput);
+            var forumPost = this.mapper.Map<ForumPost>(forumPostInput);
 
             forumPost.Image = image;
             forumPost.ApplicationUserId = userId;

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 
+using AutoMapper;
 using BoulderBox.Data;
 using BoulderBox.Data.Common;
 using BoulderBox.Data.Common.Repositories;
@@ -60,6 +61,7 @@ namespace BoulderBox.Web
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            services.AddAutoMapper(typeof(AutoMapperConfig));
             services.AddSingleton(this.configuration);
 
             // Data repositories

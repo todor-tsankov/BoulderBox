@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
+using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.Gyms;
 using BoulderBox.Web.ViewModels.Images;
 
@@ -12,19 +12,20 @@ namespace BoulderBox.Services.Data.Places
     public class GymsService : BaseService<Gym>, IGymsService
     {
         private readonly IDeletableEntityRepository<Gym> gymsRepository;
+        private readonly IMapper mapper;
 
-        public GymsService(IDeletableEntityRepository<Gym> gymsRepository)
-            : base(gymsRepository)
+        public GymsService(IDeletableEntityRepository<Gym> gymsRepository, IMapper mapper)
+            : base(gymsRepository, mapper)
         {
             this.gymsRepository = gymsRepository;
+            this.mapper = mapper;
         }
 
         public async Task<bool> AddGymAsync(GymInputModel gymInput, ImageInputModel imageInput)
         {
-            var mapper = AutoMapperConfig.MapperInstance;
-            var country = mapper.Map<Gym>(gymInput);
+            var country = this.mapper.Map<Gym>(gymInput);
 
-            country.Image = mapper.Map<Image>(imageInput);
+            country.Image = this.mapper.Map<Image>(imageInput);
 
             await this.gymsRepository.AddAsync(country);
             await this.gymsRepository.SaveChangesAsync();
