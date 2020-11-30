@@ -21,8 +21,6 @@ namespace BoulderBox.Web.ViewModels.Ascents
 
         public string StyleShortText { get; set; }
 
-        public bool Recommend { get; set; }
-
         public int? Stars { get; set; }
 
         public string Comment { get; set; }

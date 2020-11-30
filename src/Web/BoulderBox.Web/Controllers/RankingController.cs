@@ -15,8 +15,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index(int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var rankingsViewModel = new RankingsViewModel()
             {
@@ -25,11 +24,9 @@ namespace BoulderBox.Web.Controllers
                         orderBySelector: x => x.Points.Yearly,
                         asc: false,
                         skip: skip,
-                        take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.applicationUsersService.Count(),
-                ItemsPerPage = itemsPerPage,
-                StartRank = skip + 1,
+                        take: DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.applicationUsersService.Count()),
             };
 
             return this.View(rankingsViewModel);

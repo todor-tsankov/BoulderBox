@@ -50,13 +50,8 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Create()
         {
-            var city = new CityInputModel
-            {
-                CountriesSelectListItems = this.countriesService
-                    .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
-                    .Select(x => new SelectListItem(x.Name, x.Id))
-                    .ToList(),
-            };
+            var city = new CityInputModel();
+            this.SetListItems(city);
 
             return this.View(city);
         }
@@ -68,15 +63,8 @@ namespace BoulderBox.Web.Controllers
 
             if (!this.ModelState.IsValid || !existCountry)
             {
-                var city = new CityInputModel
-                {
-                    CountriesSelectListItems = this.countriesService
-                        .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
-                        .Select(x => new SelectListItem(x.Name, x.Id))
-                        .ToList(),
-                };
-
-                return this.View(city);
+                this.SetListItems(cityInput);
+                return this.View(cityInput);
             }
 
             var image = await this.SaveImageFileAsync(formFile);
@@ -90,6 +78,14 @@ namespace BoulderBox.Web.Controllers
             await this.citiesService.DeleteAsync(x => x.Id == id);
 
             return this.RedirectToAction("Index");
+        }
+
+        private void SetListItems(CityInputModel city)
+        {
+            city.CountriesSelectListItems = this.countriesService
+                                    .GetMany<CountryViewModel>(orderBySelector: x => x.Name)
+                                    .Select(x => new SelectListItem(x.Name, x.Id))
+                                    .ToList();
         }
     }
 }

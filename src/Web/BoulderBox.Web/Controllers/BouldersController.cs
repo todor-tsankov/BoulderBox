@@ -42,9 +42,8 @@ namespace BoulderBox.Web.Controllers
                         orderBySelector: x => x.Name,
                         skip: skip,
                         take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.bouldersService.Count(),
-                ItemsPerPage = itemsPerPage,
+
+                Pagination = this.GetPaginationModel(pageId, this.bouldersService.Count(), itemsPerPage),
             };
 
             return this.View(bouldersViewModel);
@@ -61,16 +60,7 @@ namespace BoulderBox.Web.Controllers
         public IActionResult Create()
         {
             var boulder = new BoulderInputModel();
-
-            boulder.CountriesSelectItems = this.countriesService
-                .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
-                .Select(x => new SelectListItem(x.Name, x.Id))
-                .ToList();
-
-            boulder.GradesSelectItems = this.gradesService
-                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
-                .Select(x => new SelectListItem(x.Text, x.Id))
-                .ToList();
+            this.SetListItems(boulder);
 
             return this.View(boulder);
         }
@@ -80,7 +70,8 @@ namespace BoulderBox.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                this.SetListItems(boulderInput);
+                return this.View(boulderInput);
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -96,6 +87,19 @@ namespace BoulderBox.Web.Controllers
             await this.bouldersService.DeleteAsync(x => x.Id == id);
 
             return this.RedirectToAction("Index");
+        }
+
+        private void SetListItems(BoulderInputModel boulder)
+        {
+            boulder.CountriesSelectItems = this.countriesService
+                            .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
+                            .Select(x => new SelectListItem(x.Name, x.Id))
+                            .ToList();
+
+            boulder.GradesSelectItems = this.gradesService
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem(x.Text, x.Id))
+                .ToList();
         }
     }
 }

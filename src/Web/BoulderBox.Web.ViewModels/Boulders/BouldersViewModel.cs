@@ -4,8 +4,10 @@ using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.Boulders
 {
-    public class BouldersViewModel : PaginationViewModel
+    public class BouldersViewModel
     {
+        public PaginationViewModel Pagination { get; set; }
+
         public IEnumerable<BoulderViewModel> Boulders { get; set; }
     }
 }

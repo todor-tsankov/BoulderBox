@@ -52,7 +52,9 @@ namespace BoulderBox.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CountryInputModel countryInput, IFormFile formFile)
         {
-            if (!this.ModelState.IsValid)
+            var existsCountry = this.countriesService.Exists(x => x.Name == countryInput.Name);
+
+            if (!this.ModelState.IsValid || existsCountry)
             {
                 return this.View(countryInput);
             }

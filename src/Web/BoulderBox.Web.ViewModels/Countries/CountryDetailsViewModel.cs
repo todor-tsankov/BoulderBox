@@ -10,8 +10,6 @@ namespace BoulderBox.Web.ViewModels.Countries
 {
     public class CountryDetailsViewModel : IMapFrom<Country>
     {
-        public string Id { get; set; }
-
         public string Name { get; set; }
 
         public string CountryCode { get; set; }

@@ -29,8 +29,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index(int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var ascentsViewModel = new AscentsViewModel()
             {
@@ -39,10 +38,9 @@ namespace BoulderBox.Web.Controllers
                         orderBySelector: x => x.Date,
                         asc: false,
                         skip: skip,
-                        take: itemsPerPage),
-                CurrentPage = pageId,
-                ItemsCount = this.ascentsService.Count(),
-                ItemsPerPage = itemsPerPage,
+                        take: DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.ascentsService.Count()),
             };
 
             return this.View(ascentsViewModel);
@@ -55,16 +53,7 @@ namespace BoulderBox.Web.Controllers
                 BoulderId = id,
             };
 
-            ascent.GradesSelectListItems = this.gradesService
-                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
-                .Select(x => new SelectListItem(x.Text, x.Id))
-                .ToList();
-
-            ascent.StylesSelectListItems = this.stylesService
-                .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
-                .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
-                .ToList();
-
+            this.SetListItems(ascent);
             return this.View(ascent);
         }
 
@@ -73,6 +62,7 @@ namespace BoulderBox.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
+                this.SetListItems(ascentInput);
                 return this.View(ascentInput);
             }
 
@@ -80,6 +70,19 @@ namespace BoulderBox.Web.Controllers
             await this.ascentsService.Create(ascentInput, userId);
 
             return this.RedirectToAction("Index");
+        }
+
+        private void SetListItems(AscentInputModel ascentInput)
+        {
+            ascentInput.GradesSelectListItems = this.gradesService
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem(x.Text, x.Id))
+                .ToList();
+
+            ascentInput.StylesSelectListItems = this.stylesService
+                .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
+                .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
+                .ToList();
         }
     }
 }

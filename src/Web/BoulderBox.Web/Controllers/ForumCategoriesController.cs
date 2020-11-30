@@ -28,8 +28,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id, int pageId = 1)
         {
-            var itemsPerPage = 12;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var category = this.forumCategoriesService
                 .GetSingle<ForumCategoryDetailsViewModel>(x => x.Id == id);
@@ -40,11 +39,9 @@ namespace BoulderBox.Web.Controllers
                     x => x.CreatedOn,
                     false,
                     skip,
-                    itemsPerPage);
+                    DefaultItemsPerPage);
 
-            category.CurrentPage = pageId;
-            category.ItemsPerPage = itemsPerPage;
-            category.ItemsCount = this.forumPostsService.Count(x => x.ForumCategoryId == id);
+            category.Pagination = this.GetPaginationModel(pageId, this.forumPostsService.Count(x => x.ForumCategoryId == id));
 
             return this.View(category);
         }

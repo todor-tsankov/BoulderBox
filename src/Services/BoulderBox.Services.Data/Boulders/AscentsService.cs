@@ -36,8 +36,10 @@ namespace BoulderBox.Services.Data.Boulders
 
         public async Task Create(AscentInputModel ascentInput, string userId)
         {
-            var ascent = this.mapper.Map<Ascent>(ascentInput);
+            this.NullCheck(ascentInput, nameof(ascentInput));
+            this.NullCheck(userId, nameof(userId));
 
+            var ascent = this.mapper.Map<Ascent>(ascentInput);
             ascent.ApplicationUserId = userId;
 
             var points = this.pointsRepository
@@ -56,7 +58,7 @@ namespace BoulderBox.Services.Data.Boulders
         private int CalculatePoints(string userId, Expression<Func<Ascent, bool>> filter)
         {
             var points = this.ascentsRepository
-                            .All()
+                            .AllAsNoTracking()
                             .Where(x => x.ApplicationUserId == userId)
                             .Where(filter)
                             .Select(x => x.Grade.Points + x.Style.BonusPoints)

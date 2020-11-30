@@ -17,10 +17,6 @@ namespace BoulderBox.Web.ViewModels.Boulders
 
         public string StyleShortText { get; set; }
 
-        public string StyleLongText { get; set; }
-
-        public bool? Recommend { get; set; }
-
         public int? Stars { get; set; }
 
         public string Comment { get; set; }

@@ -23,8 +23,8 @@ namespace BoulderBox.Web.ViewModels.Common
 
         public int PrevoiusPage => this.CurrentPage - DefaultPageStep;
 
-        public bool HasNext => this.CurrentPage <= this.LastPage + DefaultPageStep;
+        public bool HasNext => this.CurrentPage + DefaultPageStep <= this.LastPage;
 
-        public bool HasPrevoius => this.CurrentPage >= this.FirstPage - DefaultPageStep;
+        public bool HasPrevoius => this.CurrentPage - DefaultPageStep >= this.FirstPage;
     }
 }

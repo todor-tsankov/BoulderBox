@@ -22,6 +22,9 @@ namespace BoulderBox.Services.Data.Forum
 
         public async Task Create(ForumCommentInputModel forumCommentInput, string userId)
         {
+            this.NullCheck(forumCommentInput, nameof(forumCommentInput));
+            this.NullCheck(userId, nameof(userId));
+
             var comment = this.mapper.Map<ForumComment>(forumCommentInput);
 
             comment.ApplicationUserId = userId;

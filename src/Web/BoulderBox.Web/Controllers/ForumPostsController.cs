@@ -23,8 +23,7 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Details(string id, int pageId = 1)
         {
-            var itemsPerPage = 5;
-            var skip = itemsPerPage * (pageId - 1);
+            var skip = DefaultItemsPerPage * (pageId - 1);
 
             var forumPostAndComment = new ForumPostAndCommentInputViewModel()
             {
@@ -37,10 +36,9 @@ namespace BoulderBox.Web.Controllers
                         x => x.CreatedOn,
                         true,
                         skip,
-                        itemsPerPage),
-                CurrentPage = pageId,
-                ItemsPerPage = itemsPerPage,
-                ItemsCount = this.forumCommentsService.Count(x => x.ForumPostId == id),
+                        DefaultItemsPerPage),
+
+                Pagination = this.GetPaginationModel(pageId, this.forumCommentsService.Count(x => x.ForumPostId == id)),
             };
 
             return this.View(forumPostAndComment);

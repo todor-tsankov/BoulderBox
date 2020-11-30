@@ -33,10 +33,14 @@
                     </div>
 
                     <div class="container mt-2 justify-content-center">
-                        Gym:
-                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId">@boulder.GymName</a>
-                        By:
-                        <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId">@boulder.Id</a>
+                        <div class="row justify-content-center">
+                            Gym:
+                            <a asp-area="" asp-controller="Gyms" asp-action="Details" asp-route-id="@boulder.GymId" class="text-dark ml-2">@boulder.GymName</a>
+                        </div>
+                        <div class="row justify-content-center">
+                            By:
+                            <a asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@boulder.AuthorId" class="text-dark ml-2">@boulder.AuthorUserName</a>
+                        </div>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-end align-items-center">
                         <div class="row">
@@ -49,6 +53,6 @@
         }
     </div>
     <div class="row justify-content-center mt-4">
-        <partial name="_PaginationPartial" model="this.Model" />
+        <partial name="_PaginationPartial" model="this.Model.Pagination" />
     </div>
 </div>

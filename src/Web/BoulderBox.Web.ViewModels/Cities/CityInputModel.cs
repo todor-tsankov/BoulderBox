@@ -16,6 +16,8 @@ namespace BoulderBox.Web.ViewModels.Cities
         public const string CountryIdDisplay = "Country *";
         public const string InvalidCountryIdMessage = "Country is required.";
 
+        public const string DescriptionLengthErrorMessage = "Description can't be more than 1000 characters.";
+
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
         [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
@@ -26,7 +28,7 @@ namespace BoulderBox.Web.ViewModels.Cities
         [Required(ErrorMessage = InvalidCountryIdMessage)]
         public string CountryId { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength(1000, ErrorMessage = DescriptionLengthErrorMessage)]
         public string Description { get; set; }
 
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }

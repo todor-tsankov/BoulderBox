@@ -26,10 +26,9 @@ namespace BoulderBox.Services.Data.Forum
             this.NullCheck(forumPostInput, nameof(forumPostInput));
             this.NullCheck(userId, nameof(userId));
 
-            var image = this.mapper.Map<Image>(imageInput);
             var forumPost = this.mapper.Map<ForumPost>(forumPostInput);
+            forumPost.Image = this.mapper.Map<Image>(imageInput);
 
-            forumPost.Image = image;
             forumPost.ApplicationUserId = userId;
 
             await this.forumPostsRepository.AddAsync(forumPost);

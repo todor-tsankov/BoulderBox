@@ -21,7 +21,7 @@ namespace BoulderBox.Data.Models
         public virtual ForumPost ForumPost { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(10000)]
         public string Text { get; set; }
     }
 }

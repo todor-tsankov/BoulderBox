@@ -23,10 +23,10 @@ namespace BoulderBox.Services.Data.Forum
 
         public async Task Create(ForumCategoryInputModel forumCategoryInput, ImageInputModel imageInput)
         {
-            var forumCategory = this.mapper.Map<ForumCategory>(forumCategoryInput);
-            var image = this.mapper.Map<Image>(imageInput);
+            this.NullCheck(forumCategoryInput, nameof(forumCategoryInput));
 
-            forumCategory.Image = image;
+            var forumCategory = this.mapper.Map<ForumCategory>(forumCategoryInput);
+            forumCategory.Image = this.mapper.Map<Image>(imageInput);
 
             await this.forumCategoriesRepository.AddAsync(forumCategory);
             await this.forumCategoriesRepository.SaveChangesAsync();

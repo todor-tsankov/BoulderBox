@@ -6,8 +6,10 @@ using BoulderBox.Web.ViewModels.Common;
 
 namespace BoulderBox.Web.ViewModels.ForumCategories
 {
-    public class ForumCategoryDetailsViewModel : PaginationViewModel, IMapFrom<ForumCategory>
+    public class ForumCategoryDetailsViewModel : IMapFrom<ForumCategory>
     {
+        public PaginationViewModel Pagination { get; set; }
+
         public string Id { get; set; }
 
         public string Name { get; set; }

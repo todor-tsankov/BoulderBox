@@ -9,6 +9,10 @@ namespace BoulderBox.Web.ViewModels.Boulders
 
         public string Name { get; set; }
 
+        public string AuthorId { get; set; }
+
+        public string AuthorUserName { get; set; }
+
         public string GymId { get; set; }
 
         public string GymName { get; set; }

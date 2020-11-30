@@ -5,8 +5,10 @@ using BoulderBox.Web.ViewModels.ForumComments;
 
 namespace BoulderBox.Web.ViewModels.ForumPosts
 {
-    public class ForumPostAndCommentInputViewModel : PaginationViewModel
+    public class ForumPostAndCommentInputViewModel
     {
+        public PaginationViewModel Pagination { get; set; }
+
         public string Username { get; set; }
 
         public string RedirectLink { get; set; }

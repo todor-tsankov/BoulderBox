@@ -11,22 +11,26 @@ namespace BoulderBox.Web.ViewModels.Ascents
     public class AscentInputModel : IMapTo<Ascent>
     {
         public const string GradeIdDisplay = "Grade *";
+        public const string GradeIdRequiredErrorMessage = "Grade is required.";
+
         public const string StyleIdDisplay = "Style *";
+        public const string StyleIdRequiredErrorMessage = "Style is required.";
+
         public const string DateDisplay = "Date *";
+        public const string DateRequiredErrorMessage = "Date is required.";
+
         public const string StarsDisplay = "Stars (1-5)";
         public const string RecommendDisplay = "Recommend *";
-
-        public string ApplicationUserId { get; set; }
 
         [Required]
         public string BoulderId { get; set; }
 
         [Display(Name = GradeIdDisplay)]
-        [Required]
+        [Required(ErrorMessage = GradeIdRequiredErrorMessage)]
         public string GradeId { get; set; }
 
         [Display(Name = StyleIdDisplay)]
-        [Required]
+        [Required(ErrorMessage = StyleIdRequiredErrorMessage)]
         public string StyleId { get; set; }
 
         public bool Recommend { get; set; }
@@ -40,6 +44,7 @@ namespace BoulderBox.Web.ViewModels.Ascents
 
         [Display(Name = DateDisplay)]
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = DateRequiredErrorMessage)]
         public DateTime Date { get; set; }
 
         public IEnumerable<SelectListItem> GradesSelectListItems { get; set; }
