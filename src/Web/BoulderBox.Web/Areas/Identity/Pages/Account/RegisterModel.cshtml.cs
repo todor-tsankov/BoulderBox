@@ -47,8 +47,9 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage = "Username is required.")]
-            [MinLength(2)]
-            [MaxLength(50)]
+            [MinLength(2, ErrorMessage = "Username must be between 2 and 50 characters long.")]
+            [MaxLength(50, ErrorMessage = "Username must be between 2 and 50 characters long.")]
+            [Display(Name = "Username *")]
             public string Username { get; set; }
 
             [Required(ErrorMessage = "Email is required.")]
@@ -68,7 +69,7 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "Confirm password is required.")]
             public string ConfirmPassword { get; set; }
 
-            [MaxLength(1000)]
+            [MaxLength(1000, ErrorMessage = "Bio can't be more than 1000 characters long.")]
             public string Bio { get; set; }
         }
 

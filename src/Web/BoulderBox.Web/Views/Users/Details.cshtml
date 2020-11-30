@@ -4,40 +4,45 @@
     ViewData["Title"] = Model.UserName;
 }
 
-<div class="col-md-8 offset-md-2 col-xs-10 offset-xs-1">
-    <br />
-    <br />
-    <div class="row justify-content-center">
-        <img src="@Model.ImageSource" class="card-img"/>
-        <h1>@Model.UserName</h1>
-    </div>
-    <hr class="bg-secondary" />
-    @if (Model.Bio != null)
+<div class="row ml-2">
+    @if (Model.ImageSource != null)
     {
-        <p>@Model.Bio</p>
-        <hr class="bg-secondary" />
+        <img src="@Url.Content(Model.ImageSource)" class="card-img border border-secondary col-2 col-lg-1 p-0" />
     }
+    else
+    {
+        <i class="far fa-user-circle fa-5x"></i>
+    }
+    <h2 class="ml-3 mt-3">@Model.UserName</h2>
+</div>
 
-    <h2>Ascents of @Model.UserName</h2>
-    <br />
-    <table class="table border border-warning table-sm">
-        <thead class="bg-warning">
+@if (Model.Bio != null)
+{
+    <hr class="bg-secondary mt-4" />
+    <p class="text-break">@(Model.Bio)</p>
+}
+
+<hr class="bg-secondary mb-4" />
+
+<h3>Ascents Of @Model.UserName</h3>
+
+<div class="table-responsive mt-3">
+    <table class="table table-borderless table-hover table-striped">
+        <thead class="bg-primary text-light">
             <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Style</th>
-                <th scope="col">Grade</th>
-                <th scope="col">Boulder</th>
-                <th scope="col">Comment</th>
-                <th scope="col">Stars</th>
+                <th>Date</th>
+                <th>Style</th>
+                <th>Grade</th>
+                <th>Comment</th>
+                <th>Stars</th>
             </tr>
         </thead>
-        <tbody class="bg-light">
+        <tbody class="table-light">
 
             @if (!Model.Ascents.Any())
             {
                 <tr>
-                    <td>No ascents of this boulder</td>
-                    <td>-</td>
+                    <td>No ascents</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -47,22 +52,25 @@
 
             @foreach (var ascent in Model.Ascents)
             {
-                var badge = "badge badge-danger";
+                var styleBadge = "badge badge-";
 
                 if (ascent.StyleShortText == "OS")
                 {
-                    badge = "badge badge-info";
+                    styleBadge += "info";
                 }
                 else if (ascent.StyleShortText == "FL")
                 {
-                    badge = "badge badge-warning";
+                    styleBadge += "warning";
+                }
+                else if (ascent.StyleShortText == "RP")
+                {
+                    styleBadge += "danger";
                 }
 
                 <tr>
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
-                    <td><span class="@badge">@ascent.StyleShortText</span></td>
+                    <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                     <td>@ascent.GradeText</td>
-                    <td>@ascent.BoulderName</td>
                     <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
@@ -77,5 +85,3 @@
         </tbody>
     </table>
 </div>
-
-

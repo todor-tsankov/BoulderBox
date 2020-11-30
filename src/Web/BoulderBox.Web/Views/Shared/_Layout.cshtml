@@ -10,7 +10,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/theme.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -75,11 +75,25 @@
         </div>
     </main>
 
-    <footer class="footer text-light bg-primary container-fluid">
-        <div class="container-fluid row">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-light bg-primary">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-6 text-wrap">
+                    <h3>About BoulderBox:</h3>
+                    BoulderBox is an online system for climbers to keep track ascents in the gym.
+                    Open source project.
+                </div>
+                <div class="col-lg-6">
+                    <a href="https://github.com/todor-tsankov/BoulderBox" class="text-light">
+                        <i class="fab fa-github fa-3x"></i>
+                    </a>
+                </div>
+                <div class="col-12 mt-5">
+                    <p>
+                        &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a>
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 
