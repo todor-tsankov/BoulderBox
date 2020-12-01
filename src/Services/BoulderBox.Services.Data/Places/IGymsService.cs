@@ -2,8 +2,8 @@
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Web.ViewModels.Gyms;
-using BoulderBox.Web.ViewModels.Images;
+using BoulderBox.Web.ViewModels.Files.Images;
+using BoulderBox.Web.ViewModels.Places.Gyms;
 
 namespace BoulderBox.Services.Data.Places
 {

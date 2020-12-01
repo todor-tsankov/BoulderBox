@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BoulderBox.Web.ViewModels.Common;
-using BoulderBox.Web.ViewModels.Images;
+using BoulderBox.Web.ViewModels.Files.Images;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +35,7 @@ namespace BoulderBox.Web.Controllers
 
         protected async Task<ImageInputModel> SaveImageFileAsync(IFormFile formFile)
         {
-            if (!this.IsImage(formFile))
+            if (!IsImage(formFile))
             {
                 return null;
             }
@@ -58,7 +58,7 @@ namespace BoulderBox.Web.Controllers
             return imageInputModel;
         }
 
-        private bool IsImage(IFormFile formFile)
+        private static bool IsImage(IFormFile formFile)
         {
             try
             {

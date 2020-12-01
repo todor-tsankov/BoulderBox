@@ -1,0 +1,34 @@
+﻿@model IEnumerable<BoulderBox.Web.ViewModels.Forum.Categories.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Forum Categories";
+}
+
+<div class="row ml-2">
+    <h2>@ViewData["Title"]</h2>
+    <a asp-area="Forum" asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+</div>
+
+<hr class="bg-secondary mb-4" />
+
+<div class="table-responsive mt-3">
+    <table class="table table-borderless table-hover table-striped">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th>Category</th>
+                <th>Posts</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td><a asp-area="Forum" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" class="text-dark">@category.Name</a></td>
+                    <td>@category.PostsCount</td>
+                    <td>@category.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

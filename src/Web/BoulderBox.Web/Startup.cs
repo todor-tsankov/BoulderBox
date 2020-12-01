@@ -61,7 +61,9 @@ namespace BoulderBox.Web
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddAutoMapper(typeof(AutoMapperConfig));
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
+            services.AddSingleton(AutoMapperConfig.MapperInstance);
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -82,9 +84,9 @@ namespace BoulderBox.Web
             services.AddTransient<IImagesService, ImagesService>();
 
             // Forum - Application services
-            services.AddTransient<IForumCategoriesService, ForumCategoriesService>();
-            services.AddTransient<IForumCommentsService, ForumCommentsService>();
-            services.AddTransient<IForumPostsService, ForumPostsService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<IPostsService, PostsService>();
 
             // Places - Application services
             services.AddTransient<ICitiesService, CitiesService>();
@@ -98,8 +100,6 @@ namespace BoulderBox.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {

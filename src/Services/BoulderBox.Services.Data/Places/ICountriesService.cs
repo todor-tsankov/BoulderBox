@@ -2,8 +2,8 @@
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Web.ViewModels.Countries;
-using BoulderBox.Web.ViewModels.Images;
+using BoulderBox.Web.ViewModels.Files.Images;
+using BoulderBox.Web.ViewModels.Places.Countries;
 
 namespace BoulderBox.Services.Data.Places
 {

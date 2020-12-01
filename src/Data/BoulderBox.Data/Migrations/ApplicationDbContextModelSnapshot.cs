@@ -272,6 +272,44 @@ namespace BoulderBox.Data.Migrations
                     b.ToTable("Boulders");
                 });
 
+            modelBuilder.Entity("BoulderBox.Data.Models.Category", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("BoulderBox.Data.Models.City", b =>
                 {
                     b.Property<string>("Id")
@@ -316,6 +354,45 @@ namespace BoulderBox.Data.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("BoulderBox.Data.Models.Comment", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PostId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("BoulderBox.Data.Models.Country", b =>
                 {
                     b.Property<string>("Id")
@@ -357,133 +434,6 @@ namespace BoulderBox.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumCategory", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("ForumCategories");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumComment", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ForumPostId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ForumPostId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("ForumComments");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumPost", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ForumCategoryId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(10000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ForumCategoryId");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("ForumPosts");
                 });
 
             modelBuilder.Entity("BoulderBox.Data.Models.Grade", b =>
@@ -631,6 +581,56 @@ namespace BoulderBox.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Points");
+                });
+
+            modelBuilder.Entity("BoulderBox.Data.Models.Post", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("BoulderBox.Data.Models.Style", b =>
@@ -863,6 +863,15 @@ namespace BoulderBox.Data.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("BoulderBox.Data.Models.Category", b =>
+                {
+                    b.HasOne("BoulderBox.Data.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("BoulderBox.Data.Models.City", b =>
                 {
                     b.HasOne("BoulderBox.Data.Models.Country", "Country")
@@ -880,58 +889,26 @@ namespace BoulderBox.Data.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("BoulderBox.Data.Models.Country", b =>
-                {
-                    b.HasOne("BoulderBox.Data.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumCategory", b =>
-                {
-                    b.HasOne("BoulderBox.Data.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumComment", b =>
+            modelBuilder.Entity("BoulderBox.Data.Models.Comment", b =>
                 {
                     b.HasOne("BoulderBox.Data.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("ForumComments")
                         .HasForeignKey("ApplicationUserId");
 
-                    b.HasOne("BoulderBox.Data.Models.ForumPost", "ForumPost")
-                        .WithMany("ForumComments")
-                        .HasForeignKey("ForumPostId");
+                    b.HasOne("BoulderBox.Data.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId");
 
                     b.Navigation("ApplicationUser");
 
-                    b.Navigation("ForumPost");
+                    b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumPost", b =>
+            modelBuilder.Entity("BoulderBox.Data.Models.Country", b =>
                 {
-                    b.HasOne("BoulderBox.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ForumPosts")
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BoulderBox.Data.Models.ForumCategory", "ForumCategory")
-                        .WithMany("ForumPosts")
-                        .HasForeignKey("ForumCategoryId");
-
                     b.HasOne("BoulderBox.Data.Models.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId");
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("ForumCategory");
 
                     b.Navigation("Image");
                 });
@@ -949,6 +926,29 @@ namespace BoulderBox.Data.Migrations
                         .HasForeignKey("ImageId");
 
                     b.Navigation("City");
+
+                    b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("BoulderBox.Data.Models.Post", b =>
+                {
+                    b.HasOne("BoulderBox.Data.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("ForumPosts")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BoulderBox.Data.Models.Category", "Category")
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("BoulderBox.Data.Models.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Image");
                 });
@@ -1026,6 +1026,11 @@ namespace BoulderBox.Data.Migrations
                     b.Navigation("Ascents");
                 });
 
+            modelBuilder.Entity("BoulderBox.Data.Models.Category", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
             modelBuilder.Entity("BoulderBox.Data.Models.City", b =>
                 {
                     b.Navigation("Gyms");
@@ -1034,16 +1039,6 @@ namespace BoulderBox.Data.Migrations
             modelBuilder.Entity("BoulderBox.Data.Models.Country", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumCategory", b =>
-                {
-                    b.Navigation("ForumPosts");
-                });
-
-            modelBuilder.Entity("BoulderBox.Data.Models.ForumPost", b =>
-                {
-                    b.Navigation("ForumComments");
                 });
 
             modelBuilder.Entity("BoulderBox.Data.Models.Grade", b =>
@@ -1062,6 +1057,11 @@ namespace BoulderBox.Data.Migrations
                 {
                     b.Navigation("ApplicationUser")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BoulderBox.Data.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("BoulderBox.Data.Models.Style", b =>

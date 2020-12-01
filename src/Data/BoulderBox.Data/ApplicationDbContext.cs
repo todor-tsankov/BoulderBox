@@ -34,11 +34,11 @@ namespace BoulderBox.Data
 
         public DbSet<Country> Countries { get; set; }
 
-        public DbSet<ForumCategory> ForumCategories { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        public DbSet<ForumComment> ForumComments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<ForumPost> ForumPosts { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         public DbSet<Grade> Grades { get; set; }
 

@@ -2,7 +2,7 @@
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
-using BoulderBox.Web.ViewModels.Ascents;
+using BoulderBox.Web.ViewModels.Boulders.Ascents;
 
 namespace BoulderBox.Services.Data.Boulders
 {

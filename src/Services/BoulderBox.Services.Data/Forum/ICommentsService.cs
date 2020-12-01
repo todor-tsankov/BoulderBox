@@ -1,0 +1,13 @@
+﻿using System.Threading.Tasks;
+
+using BoulderBox.Data.Models;
+using BoulderBox.Services.Data.Common;
+using BoulderBox.Web.ViewModels.Forum.Comments;
+
+namespace BoulderBox.Services.Data.Forum
+{
+    public interface ICommentsService : IBaseService<Comment>
+    {
+        Task Create(CommentInputModel commentInput, string userId);
+    }
+}

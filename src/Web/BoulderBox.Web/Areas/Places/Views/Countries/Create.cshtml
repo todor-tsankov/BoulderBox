@@ -1,0 +1,35 @@
+﻿@model BoulderBox.Web.ViewModels.Places.Countries.CountryInputModel;
+
+@{
+    ViewData["Title"] = "Create Country";
+}
+
+<div class="row ml-2">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr class="bg-secondary" />
+
+<form asp-area="Places" asp-controller="Countries" asp-action="Create" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="col-form-label"></label>
+        <input asp-for="Name" class="form-control" placeholder="Country name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryCode" class="col-form-label"></label>
+        <input asp-for="CountryCode" class="form-control" placeholder="From AAA to ZZZ" />
+        <span asp-validation-for="CountryCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="col-form-label"></label>
+        <textarea asp-for="Description" class="form-control" placeholder="Short description of the country..."></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Picture</label>
+        <input type="file" name="formFile" class="form-control-file" />
+    </div>
+    <p>* Required</p>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>

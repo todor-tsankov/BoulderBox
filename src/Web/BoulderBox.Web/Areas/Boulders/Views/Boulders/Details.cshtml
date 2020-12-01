@@ -1,0 +1,85 @@
+﻿@model BoulderBox.Web.ViewModels.Boulders.Boulders.BoulderDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row ml-2">
+    <h2>@Model.Name (@Model.GradeText)</h2>
+    <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
+</div>
+
+@if (Model.Description != null)
+{
+    <hr class="bg-secondary mt-4" />
+    <p class="text-break">@(Model.Description)</p>
+}
+
+<hr class="bg-secondary mb-4" />
+
+<img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0"/>
+
+<h3>Ascents Of @Model.Name</h3>
+
+<div class="table-responsive mt-3">
+    <table class="table table-borderless table-hover table-striped">
+        <thead class="bg-primary text-light">
+            <tr>
+                <th>User</th>
+                <th>Date</th>
+                <th>Style</th>
+                <th>Grade</th>
+                <th>Comment</th>
+                <th>Stars</th>
+            </tr>
+        </thead>
+        <tbody class="table-light">
+
+            @if (!Model.Ascents.Any())
+            {
+                <tr>
+                    <td>No ascents</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            }
+
+            @foreach (var ascent in Model.Ascents)
+            {
+                var styleBadge = "badge badge-";
+
+                if (ascent.StyleShortText == "OS")
+                {
+                    styleBadge += "info";
+                }
+                else if (ascent.StyleShortText == "FL")
+                {
+                    styleBadge += "warning";
+                }
+                else if (ascent.StyleShortText == "RP")
+                {
+                    styleBadge += "danger";
+                }
+
+                <tr>
+                    <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUserName</a></td>
+                    <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
+                    <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
+                    <td>@ascent.GradeText</td>
+                    <td>@(ascent.Comment ?? "-")</td>
+                    @if (ascent.Stars == null)
+                    {
+                        <td>-</td>
+                    }
+                    else
+                    {
+                        <td>@ascent.Stars</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
