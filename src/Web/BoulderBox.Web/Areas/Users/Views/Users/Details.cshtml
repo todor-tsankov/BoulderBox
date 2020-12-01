@@ -32,15 +32,16 @@
             <tr>
                 <th>Date</th>
                 <th>Style</th>
-                <th>Grade</th>
+                <th>Boulder</th>
                 <th>Comment</th>
                 <th>Stars</th>
             </tr>
         </thead>
-        <tbody class="table-light">
 
-            @if (!Model.Ascents.Any())
-            {
+
+        @if (!Model.Ascents.Any())
+        {
+            <tbody class="table-light">
                 <tr>
                     <td>No ascents</td>
                     <td>-</td>
@@ -48,40 +49,55 @@
                     <td>-</td>
                     <td>-</td>
                 </tr>
-            }
+            </tbody>
+        }
 
-            @foreach (var ascent in Model.Ascents)
-            {
-                var styleBadge = "badge badge-";
-
-                if (ascent.StyleShortText == "OS")
-                {
-                    styleBadge += "info";
-                }
-                else if (ascent.StyleShortText == "FL")
-                {
-                    styleBadge += "warning";
-                }
-                else if (ascent.StyleShortText == "RP")
-                {
-                    styleBadge += "danger";
-                }
-
+        @foreach (var group in Model.Ascents)
+        {
+            <thead class="table-primary">
                 <tr>
-                    <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
-                    <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
-                    <td>@ascent.GradeText</td>
-                    <td>@(ascent.Comment ?? "-")</td>
-                    @if (ascent.Stars == null)
-                    {
-                        <td>-</td>
-                    }
-                    else
-                    {
-                        <td>@ascent.Stars</td>
-                    }
+                    <th>@group.Key</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
+            </thead>
+
+            <tbody class="table-light">
+                @foreach (var ascent in group.Ascents)
+                {
+                    var styleBadge = "badge badge-";
+
+                    if (ascent.StyleShortText == "OS")
+                    {
+                        styleBadge += "info";
+                    }
+                    else if (ascent.StyleShortText == "FL")
+                    {
+                        styleBadge += "warning";
+                    }
+                    else if (ascent.StyleShortText == "RP")
+                    {
+                        styleBadge += "danger";
+                    }
+
+                    <tr>
+                        <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
+                        <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
+                        <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
+                        <td>@(ascent.Comment ?? "-")</td>
+                        @if (ascent.Stars == null)
+                        {
+                            <td>-</td>
+                        }
+                        else
+                        {
+                            <td>@ascent.Stars</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        }
     </table>
 </div>

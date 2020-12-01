@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.Boulders.Ascents;
@@ -24,6 +24,7 @@ namespace BoulderBox.Web.ViewModels.Users.Users
 
         public string ImageSource { get; set; }
 
-        public virtual ICollection<AscentViewModel> Ascents { get; set; }
+        [IgnoreMap]
+        public virtual IEnumerable<AscentGroupViewModel> Ascents { get; set; }
     }
 }

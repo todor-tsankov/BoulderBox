@@ -20,6 +20,9 @@ namespace BoulderBox.Web.Areas.Users.Controllers
             var user = this.usersService
                 .GetSingle<UserDetailsViewModel>(x => x.Id == id);
 
+            user.Ascents = this.usersService
+                .GetGrouped(id);
+
             return this.View(user);
         }
     }

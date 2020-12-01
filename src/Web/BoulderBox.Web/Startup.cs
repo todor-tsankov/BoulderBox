@@ -61,9 +61,10 @@ namespace BoulderBox.Web
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            // Auto mapper
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-
             services.AddSingleton(AutoMapperConfig.MapperInstance);
+
             services.AddSingleton(this.configuration);
 
             // Data repositories
