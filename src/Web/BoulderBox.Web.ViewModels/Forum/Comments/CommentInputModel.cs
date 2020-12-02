@@ -7,12 +7,12 @@ namespace BoulderBox.Web.ViewModels.Forum.Comments
 {
     public class CommentInputModel : IMapTo<Comment>
     {
-        public const string ForumPostIdRequiredErrorMessage = "ForumPost is required.";
+        public const string PostIdRequiredErrorMessage = "ForumPost is required.";
 
         public const string TextRequiredErrorMessage = "Text is required.";
         public const string TextLengthErrorMessage = "Text must be between 2 and 10000 characters.";
 
-        [Required(ErrorMessage = ForumPostIdRequiredErrorMessage)]
+        [Required(ErrorMessage = PostIdRequiredErrorMessage)]
         public string PostId { get; set; }
 
         [Required(ErrorMessage = TextRequiredErrorMessage)]
