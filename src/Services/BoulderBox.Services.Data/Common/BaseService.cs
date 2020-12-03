@@ -19,6 +19,9 @@ namespace BoulderBox.Services.Data.Common
 
         public BaseService(IDeletableEntityRepository<TModel> entityRepository, IMapper mapper)
         {
+            this.NullCheck(entityRepository, nameof(entityRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.entityRepository = entityRepository;
             this.mapper = mapper;
         }
@@ -47,8 +50,10 @@ namespace BoulderBox.Services.Data.Common
             return exists;
         }
 
-        public async Task Create(object inputModel)
+        public async Task CreateAsync(object inputModel)
         {
+            this.NullCheck(inputModel, nameof(inputModel));
+
             var entity = this.mapper.Map<TModel>(inputModel);
 
             await this.entityRepository.AddAsync(entity);

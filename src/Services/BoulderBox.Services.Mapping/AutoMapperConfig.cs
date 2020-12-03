@@ -10,19 +10,10 @@ namespace BoulderBox.Services.Mapping
 {
     public static class AutoMapperConfig
     {
-        private static bool initialized;
-
         public static IMapper MapperInstance { get; set; }
 
         public static void RegisterMappings(params Assembly[] assemblies)
         {
-            if (initialized)
-            {
-                return;
-            }
-
-            initialized = true;
-
             var types = assemblies.SelectMany(a => a.GetExportedTypes()).ToList();
 
             var config = new MapperConfigurationExpression();
