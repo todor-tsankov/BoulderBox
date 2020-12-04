@@ -21,7 +21,7 @@ namespace BoulderBox.Services.Data.Places
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddGymAsync(GymInputModel gymInput, ImageInputModel imageInput)
+        public async Task<bool> AddAsync(GymInputModel gymInput, ImageInputModel imageInput)
         {
             this.NullCheck(gymInput, nameof(gymInput));
 

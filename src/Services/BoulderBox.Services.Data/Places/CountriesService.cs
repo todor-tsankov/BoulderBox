@@ -21,7 +21,7 @@ namespace BoulderBox.Services.Data.Places
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddCountryAsync(CountryInputModel countryInput, ImageInputModel imageInput = null)
+        public async Task<bool> AddAsync(CountryInputModel countryInput, ImageInputModel imageInput = null)
         {
             this.NullCheck(countryInput, nameof(countryInput));
 

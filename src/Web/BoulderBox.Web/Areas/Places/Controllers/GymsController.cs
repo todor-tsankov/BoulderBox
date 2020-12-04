@@ -86,7 +86,7 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             }
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.gymsService.AddGymAsync(gymInput, image);
+            await this.gymsService.AddAsync(gymInput, image);
 
             return this.Redirect("Index");
         }

@@ -28,7 +28,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 // Act
-                await baseSerivce.CreateAsync(null);
+                await baseSerivce.AddAsync(null);
             });
         }
 
@@ -60,7 +60,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var testViewModel = new TestViewModel(name, count);
 
             // Act
-            await baseSerivce.CreateAsync(testViewModel);
+            await baseSerivce.AddAsync(testViewModel);
 
             // Assert
             var exists = testData.Any(x => x.Name == name && x.Count == count);

@@ -22,7 +22,7 @@ namespace BoulderBox.Services.Data.Boulders
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddBoulderAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
+        public async Task<bool> AddAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
         {
             var image = this.mapper.Map<Image>(imageInput);
             var boulder = this.mapper.Map<Boulder>(boulderInput);

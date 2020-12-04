@@ -68,7 +68,7 @@ namespace BoulderBox.Web
             services.AddSingleton(this.configuration);
 
             // Data repositories
-            services.AddScoped(typeof(EfDeletableEntityRepository<>), typeof(Data.Repositories.EfDeletableEntityRepository<>));
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 

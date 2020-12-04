@@ -50,7 +50,7 @@ namespace BoulderBox.Services.Data.Common
             return exists;
         }
 
-        public async Task CreateAsync(object inputModel)
+        public async Task AddAsync(object inputModel)
         {
             this.NullCheck(inputModel, nameof(inputModel));
 

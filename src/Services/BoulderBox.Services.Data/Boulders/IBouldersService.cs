@@ -10,6 +10,6 @@ namespace BoulderBox.Services.Data.Boulders
 {
     public interface IBouldersService : IBaseService<Boulder>
     {
-        Task<bool> AddBoulderAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel image);
+        Task<bool> AddAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel image);
     }
 }

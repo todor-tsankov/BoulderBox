@@ -70,7 +70,7 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             }
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.citiesService.AddCityAsync(cityInput, image);
+            await this.citiesService.AddAsync(cityInput, image);
 
             return this.RedirectToAction("Index");
         }

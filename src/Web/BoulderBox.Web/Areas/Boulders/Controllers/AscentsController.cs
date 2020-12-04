@@ -69,7 +69,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.ascentsService.Create(ascentInput, userId);
+            await this.ascentsService.AddAsync(ascentInput, userId);
 
             return this.RedirectToAction("Index");
         }

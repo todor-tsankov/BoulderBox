@@ -20,7 +20,7 @@ namespace BoulderBox.Services.Data.Forum
             this.mapper = mapper;
         }
 
-        public async Task Create(CommentInputModel commentInput, string userId)
+        public async Task AddAsync(CommentInputModel commentInput, string userId)
         {
             this.NullCheck(commentInput, nameof(commentInput));
             this.NullCheck(userId, nameof(userId));

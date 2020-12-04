@@ -34,7 +34,7 @@ namespace BoulderBox.Services.Data.Boulders
             this.mapper = mapper;
         }
 
-        public async Task Create(AscentInputModel ascentInput, string userId)
+        public async Task AddAsync(AscentInputModel ascentInput, string userId)
         {
             this.NullCheck(ascentInput, nameof(ascentInput));
             this.NullCheck(userId, nameof(userId));

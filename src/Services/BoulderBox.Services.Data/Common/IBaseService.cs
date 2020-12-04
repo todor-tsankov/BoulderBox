@@ -23,7 +23,7 @@ namespace BoulderBox.Services.Data.Common
            int? skip = null,
            int? take = null);
 
-        Task CreateAsync(object inputModel);
+        Task AddAsync(object inputModel);
 
         Task<bool> DeleteAsync(Expression<Func<TModel, bool>> predicate);
     }

@@ -78,7 +78,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.bouldersService.AddBoulderAsync(boulderInput, userId, image);
+            await this.bouldersService.AddAsync(boulderInput, userId, image);
 
             return this.RedirectToAction("Index");
         }

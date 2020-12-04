@@ -21,7 +21,7 @@ namespace BoulderBox.Services.Data.Forum
             this.mapper = mapper;
         }
 
-        public async Task Create(PostInputModel postInput, ImageInputModel imageInput, string userId)
+        public async Task AddAsync(PostInputModel postInput, ImageInputModel imageInput, string userId)
         {
             this.NullCheck(postInput, nameof(postInput));
             this.NullCheck(userId, nameof(userId));

@@ -67,7 +67,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var image = await this.SaveImageFileAsync(formFile);
 
-            await this.postsService.Create(postInput, image, userId);
+            await this.postsService.AddAsync(postInput, image, userId);
 
             return this.RedirectToAction("Details", "Categories", new { id = postInput.CategoryId });
         }

@@ -27,7 +27,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            await this.commentsService.Create(commentInput, userId);
+            await this.commentsService.AddAsync(commentInput, userId);
 
             return this.Redirect(redirectLink);
         }

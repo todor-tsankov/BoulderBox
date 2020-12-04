@@ -62,7 +62,7 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             }
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.countriesService.AddCountryAsync(countryInput, image);
+            await this.countriesService.AddAsync(countryInput, image);
 
             return this.RedirectToAction("Index");
         }

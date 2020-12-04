@@ -62,7 +62,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             }
 
             var image = await this.SaveImageFileAsync(formFile);
-            await this.categoriesService.Create(categoryInput, image);
+            await this.categoriesService.AddAsync(categoryInput, image);
 
             return this.RedirectToAction("Index");
         }

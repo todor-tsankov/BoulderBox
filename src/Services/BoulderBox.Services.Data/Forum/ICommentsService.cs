@@ -8,6 +8,6 @@ namespace BoulderBox.Services.Data.Forum
 {
     public interface ICommentsService : IBaseService<Comment>
     {
-        Task Create(CommentInputModel commentInput, string userId);
+        Task AddAsync(CommentInputModel commentInput, string userId);
     }
 }
