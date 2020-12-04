@@ -24,6 +24,10 @@ namespace BoulderBox.Services.Data.Boulders
 
         public async Task<bool> AddAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
         {
+            this.NullCheck(boulderInput, nameof(boulderInput));
+            this.NullCheck(authorId, nameof(authorId));
+            this.NullCheck(imageInput, nameof(imageInput));
+
             var image = this.mapper.Map<Image>(imageInput);
             var boulder = this.mapper.Map<Boulder>(boulderInput);
 

@@ -29,6 +29,8 @@ namespace BoulderBox.Services.Data.Boulders
             IMapper mapper)
             : base(ascentsRepository, mapper)
         {
+            this.NullCheck(pointsRepository, nameof(pointsRepository));
+
             this.ascentsRepository = ascentsRepository;
             this.pointsRepository = pointsRepository;
             this.mapper = mapper;
