@@ -41,13 +41,11 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
         {
             // Arrange
             var predicate = DynamicExpressionParser.ParseLambda<Test, bool>(new ParsingConfig() { }, true, predicateStr);
-            var testData = GetTestData();
-
             var mapperMock = new Mock<IMapper>();
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
             repositoryMock.Setup(x => x.AllAsNoTracking())
-                .Returns(testData);
+                .Returns(GetTestData());
 
             var baseService = new BaseService<Test>(repositoryMock.Object, mapperMock.Object);
 

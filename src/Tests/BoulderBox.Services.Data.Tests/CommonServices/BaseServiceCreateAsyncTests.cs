@@ -42,15 +42,19 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
         {
             // Arrange
             AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
-
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
+
             var testData = GetTestData();
+            var saved = false;
 
             repositoryMock.Setup(x => x.AddAsync(It.IsAny<Test>()))
                 .Callback((Test test) =>
                 {
                     testData.Add(test);
                 });
+
+            repositoryMock.Setup(x => x.SaveChangesAsync())
+                .Callback(() => { saved = true; });
 
             var baseSerivce = new BaseService<Test>(repositoryMock.Object, AutoMapperConfig.MapperInstance);
             var testViewModel = new TestViewModel(name, count);
@@ -60,7 +64,9 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
 
             // Assert
             var exists = testData.Any(x => x.Name == name && x.Count == count);
+
             Assert.True(exists);
+            Assert.True(saved);
         }
 
         private static List<Test> GetTestData()

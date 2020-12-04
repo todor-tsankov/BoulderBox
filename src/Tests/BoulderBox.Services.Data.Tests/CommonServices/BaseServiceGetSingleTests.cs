@@ -55,8 +55,31 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var test = baseSerice.GetSingle<TestViewModel>(predicate);
 
             // Assert
-            Assert.Equal(expectedName, test?.Name);
-            Assert.Equal(expectedCount, test?.Count);
+            Assert.Equal(expectedName, test.Name);
+            Assert.Equal(expectedCount, test.Count);
+        }
+
+        [Theory]
+        [InlineData("x => false")]
+        [InlineData("x => x.Count < 0")]
+        [InlineData("x => x.Name == \"Toshko\"")]
+        public void DoesntFindTheEnitityAndReturnsNull(string predicateStr)
+        {
+            // Arrange
+            var predicate = DynamicExpressionParser.ParseLambda<Test, bool>(new ParsingConfig() { }, true, predicateStr);
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
+
+            repositoryMock.Setup(x => x.AllAsNoTracking())
+                .Returns(GetTestData());
+
+            var baseService = new BaseService<Test>(repositoryMock.Object, mapperMock.Object);
+
+            // Act
+            var test = baseService.GetSingle<TestViewModel>(predicate);
+
+            // Assert
+            Assert.Null(test);
         }
 
         private static IQueryable<Test> GetTestData()

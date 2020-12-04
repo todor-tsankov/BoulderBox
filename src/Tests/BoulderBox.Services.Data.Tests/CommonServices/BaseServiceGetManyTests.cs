@@ -48,7 +48,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             Assert.Equal(firstExpectedCount, tests[0].Count);
             Assert.Equal(secondExpectedName, tests[1].Name);
             Assert.Equal(secondExpectedCount, tests[1].Count);
-            Assert.Equal(expectedCountEntities, tests.Count());
+            Assert.Equal(expectedCountEntities, tests.Length);
         }
 
         [Theory]
@@ -84,7 +84,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             Assert.Equal(firstExpectedCount, tests[0].Count);
             Assert.Equal(secondExpectedName, tests[1].Name);
             Assert.Equal(secondExpectedCount, tests[1].Count);
-            Assert.Equal(expectedCountEntities, tests.Count());
+            Assert.Equal(expectedCountEntities, tests.Count);
         }
 
         [Theory]
@@ -119,7 +119,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             Assert.Equal(firstExpectedCount, tests[0].Count);
             Assert.Equal(secondExpectedName, tests[1].Name);
             Assert.Equal(secondExpectedCount, tests[1].Count);
-            Assert.Equal(expectedCountEntities, tests.Count());
+            Assert.Equal(expectedCountEntities, tests.Count);
         }
 
         [Theory]
@@ -196,7 +196,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             Assert.Equal(firstExpectedCount, tests[0].Count);
             Assert.Equal(secondExpectedName, tests[1].Name);
             Assert.Equal(secondExpectedCount, tests[1].Count);
-            Assert.Equal(expectedCountEntities, tests.Count());
+            Assert.Equal(expectedCountEntities, tests.Count);
         }
 
         private static IQueryable<Test> GetTestData()
