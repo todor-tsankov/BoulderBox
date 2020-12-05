@@ -44,6 +44,9 @@ namespace BoulderBox.Services.Data.Boulders
             var ascent = this.mapper.Map<Ascent>(ascentInput);
             ascent.ApplicationUserId = userId;
 
+            await this.ascentsRepository.AddAsync(ascent);
+            await this.ascentsRepository.SaveChangesAsync();
+
             var points = this.pointsRepository
                 .All()
                 .First(x => x.ApplicationUserId == userId);
@@ -53,7 +56,6 @@ namespace BoulderBox.Services.Data.Boulders
             points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(YearlyRankingYears) >= DateTime.UtcNow);
             points.AllTime = this.CalculatePoints(userId, x => true);
 
-            await this.ascentsRepository.AddAsync(ascent);
             await this.ascentsRepository.SaveChangesAsync();
         }
 
