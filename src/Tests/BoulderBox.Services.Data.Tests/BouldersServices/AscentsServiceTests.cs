@@ -40,13 +40,13 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             var ascentsRepoMock = new Mock<IDeletableEntityRepository<Ascent>>();
             var pointsRepoMock = new Mock<IDeletableEntityRepository<Points>>();
 
-            var bouldersService = new AscentsService(ascentsRepoMock.Object, pointsRepoMock.Object, mapperMock.Object);
+            var ascentsService = new AscentsService(ascentsRepoMock.Object, pointsRepoMock.Object, mapperMock.Object);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 // Act
-                await bouldersService.AddAsync(null, "validUserId");
+                await ascentsService.AddAsync(null, "validUserId");
             });
         }
 
@@ -58,13 +58,13 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             var ascentsRepoMock = new Mock<IDeletableEntityRepository<Ascent>>();
             var pointsRepoMock = new Mock<IDeletableEntityRepository<Points>>();
 
-            var bouldersService = new AscentsService(ascentsRepoMock.Object, pointsRepoMock.Object, mapperMock.Object);
+            var ascentsService = new AscentsService(ascentsRepoMock.Object, pointsRepoMock.Object, mapperMock.Object);
 
             // Assert
             await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 // Act
-                await bouldersService.AddAsync(new AscentInputModel(), null);
+                await ascentsService.AddAsync(new AscentInputModel(), null);
             });
         }
 
