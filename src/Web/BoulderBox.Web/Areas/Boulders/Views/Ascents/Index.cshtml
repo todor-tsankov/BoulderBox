@@ -9,7 +9,31 @@
 </div>
 <hr class="bg-secondary" />
 
-<div class="table-responsive">
+<form method="get" class="card border-secondary col-lg-8 mt-4">
+    <div class="row mt-2">
+        <div class="form-group col-lg-5">
+            <label asp-for="@Model.Common.Sorting.OrderBy" class="col-form-label">Order by</label>
+            <select asp-for="@Model.Common.Sorting.OrderBy" name="orderBy" class="form-control">
+                <option value="Date">Date</option>
+                <option value="Grade">Grade</option>
+                <option value="Stars">Stars</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-4">
+            <label asp-for="@Model.Common.Sorting.Ascending" class="col-form-label text-white d-none d-lg-block">.</label>
+            <select asp-for="@Model.Common.Sorting.Ascending" name="ascending" class="form-control">
+                <option value="true">Ascending</option>
+                <option value="false">Descending</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-3">
+            <label class="col-form-label text-white d-none d-lg-block">.</label>
+            <button type="submit" class="btn btn-success form-control">Search</button>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive mt-4">
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>

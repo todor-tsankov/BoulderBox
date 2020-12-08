@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
@@ -32,8 +34,18 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             this.gradesService = gradesService;
         }
 
-        public IActionResult Index(int pageId = 1)
+        public IActionResult Index(SortingInputModel sorting, int pageId = 1)
         {
+            if (sorting.OrderBy == null)
+            {
+                sorting = new SortingInputModel()
+                {
+                    OrderBy = "Date",
+                    Ascending = false,
+                };
+            }
+
+            var orderBySelector = GetOrderBySelector(sorting);
             var itemsPerPage = 8;
             var skip = itemsPerPage * (pageId - 1);
 
@@ -41,13 +53,15 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             {
                 Boulders = this.bouldersService
                     .GetMany<BoulderViewModel>(
-                        orderBySelector: x => x.Name,
+                        orderBySelector: orderBySelector,
+                        asc: sorting.Ascending,
                         skip: skip,
                         take: itemsPerPage),
 
                 Common = new CommonViewModel()
                 {
                     Pagination = this.GetPaginationModel(pageId, this.bouldersService.Count(), itemsPerPage),
+                    Sorting = sorting,
                 },
             };
 
@@ -105,6 +119,22 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
                 .Select(x => new SelectListItem(x.Text, x.Id))
                 .ToList();
+        }
+
+        private static Expression<Func<Boulder, object>> GetOrderBySelector(SortingInputModel sortingModel)
+        {
+            Expression<Func<Boulder, object>> orderBySelect;
+
+            orderBySelect = sortingModel.OrderBy switch
+            {
+                "Date" => x => x.CreatedOn,
+                "Grade" => x => x.Grade.Text,
+                "Name" => x => x.Name,
+                "AscentsCount" => x => x.Ascents.Count,
+                _ => x => x.CreatedOn,
+            };
+
+            return orderBySelect;
         }
     }
 }

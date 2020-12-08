@@ -1,8 +1,11 @@
-﻿using BoulderBox.Services.Data.Users;
+﻿using BoulderBox.Data.Models;
+using BoulderBox.Services.Data.Users;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Ranking;
 using BoulderBox.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq.Expressions;
 
 namespace BoulderBox.Web.Areas.Boulders.Controllers
 {
@@ -16,8 +19,17 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             this.applicationUsersService = applicationUsersService;
         }
 
-        public IActionResult Index(int pageId = 1)
+        public IActionResult Index(SortingInputModel sorting, int pageId = 1)
         {
+            if (sorting.OrderBy == null)
+            {
+                sorting = new SortingInputModel()
+                {
+                    OrderBy = "Date",
+                };
+            }
+
+            var orderBySelector = GetOrderBySelector(sorting);
             var skip = DefaultItemsPerPage * (pageId - 1);
 
             var rankingsViewModel = new RankingsViewModel()
@@ -26,7 +38,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
                 Ranking = this.applicationUsersService
                     .GetMany<RankingViewModel>(
-                        orderBySelector: x => x.Points.Yearly,
+                        orderBySelector: orderBySelector,
                         asc: false,
                         skip: skip,
                         take: DefaultItemsPerPage),
@@ -34,10 +46,28 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 Common = new CommonViewModel()
                 {
                     Pagination = this.GetPaginationModel(pageId, this.applicationUsersService.Count()),
+                    Sorting = sorting,
                 },
             };
 
             return this.View(rankingsViewModel);
+        }
+
+        private static Expression<Func<ApplicationUser, object>> GetOrderBySelector(SortingInputModel sortingModel)
+        {
+            Expression<Func<ApplicationUser, object>> orderBySelect;
+
+            orderBySelect = sortingModel.OrderBy switch
+            {
+                "Weekly" => x => x.Points.Weekly,
+                "Monthly" => x => x.Points.Monthly,
+                "Yearly" => x => x.Points.Yearly,
+                "AllTime" => x => x.Points.AllTime,
+
+                _ => x => x.Points.Weekly,
+            };
+
+            return orderBySelect;
         }
     }
 }

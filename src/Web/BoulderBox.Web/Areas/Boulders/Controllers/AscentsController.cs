@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Ascents;
@@ -30,22 +32,33 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             this.stylesService = stylesService;
         }
 
-        public IActionResult Index(int pageId = 1)
+        public IActionResult Index(SortingInputModel sorting, int pageId = 1)
         {
+            if (sorting.OrderBy == null)
+            {
+                sorting = new SortingInputModel()
+                {
+                    OrderBy = "Date",
+                    Ascending = false,
+                };
+            }
+
+            var orderBySelector = GetOrderBySelector(sorting);
             var skip = DefaultItemsPerPage * (pageId - 1);
 
             var ascentsViewModel = new AscentsViewModel()
             {
                 Ascents = this.ascentsService
                     .GetMany<AscentViewModel>(
-                        orderBySelector: x => x.Date,
-                        asc: false,
+                        orderBySelector: orderBySelector,
+                        asc: sorting.Ascending,
                         skip: skip,
                         take: DefaultItemsPerPage),
 
                 Common = new CommonViewModel()
                 {
                     Pagination = this.GetPaginationModel(pageId, this.ascentsService.Count()),
+                    Sorting = sorting,
                 },
             };
 
@@ -89,6 +102,21 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
                 .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
                 .ToList();
+        }
+
+        private static Expression<Func<Ascent, object>> GetOrderBySelector(SortingInputModel sortingModel)
+        {
+            Expression<Func<Ascent, object>> orderBySelect;
+
+            orderBySelect = sortingModel.OrderBy switch
+            {
+                "Date" => x => x.Date,
+                "Grade" => x => x.Grade.Text,
+                "Stars" => x => x.Stars,
+                _ => x => x.Date,
+            };
+
+            return orderBySelect;
         }
     }
 }

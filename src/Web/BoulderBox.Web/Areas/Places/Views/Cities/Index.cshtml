@@ -15,14 +15,14 @@
         <div class="row mt-2">
             <div class="form-group col-lg-5">
                 <label asp-for="@Model.Common.Sorting.OrderBy" class="col-form-label">Order by</label>
-                <select asp-for="@Model.Common.Sorting.OrderBy" name="OrderBy" class="form-control">
+                <select asp-for="@Model.Common.Sorting.OrderBy" name="orderBy" class="form-control">
                     <option value="Name">Name</option>
                     <option value="GymsCount">Gyms Count</option>
                 </select>
             </div>
             <div class="form-group col-lg-4">
                 <label asp-for="@Model.Common.Sorting.Ascending" class="col-form-label text-white d-none d-lg-block">.</label>
-                <select asp-for="@Model.Common.Sorting.Ascending" name="Ascending" class="form-control">
+                <select asp-for="@Model.Common.Sorting.Ascending" name="ascending" class="form-control">
                     <option value="true">Ascending</option>
                     <option value="false">Descending</option>
                 </select>
