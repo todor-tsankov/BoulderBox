@@ -9,7 +9,7 @@
 </div>
 <hr class="bg-secondary" />
 
-@if (Model.Pagination.CurrentPage == 1)
+@if (Model.Common.Pagination.CurrentPage == 1)
 {
     <div class="card h-100 border-primary bg-light mb-4">
         <div class="card-header text-light bg-primary">
@@ -55,7 +55,7 @@
     </div>
 }
 
-@if (Model.Pagination.CurrentPage == Model.Pagination.LastPage)
+@if (Model.Common.Pagination.CurrentPage == Model.Common.Pagination.LastPage)
 {
     <div class="card h-100 border-primary bg-light mb-4">
         <div class="card-header text-light bg-primary">
@@ -96,5 +96,5 @@
 }
 
 <div class="row justify-content-center mt-4">
-    <partial name="_PaginationPartial" model="this.Model.Pagination" />
+    <partial name="_PaginationPartial" model="this.Model.Common" />
 </div>

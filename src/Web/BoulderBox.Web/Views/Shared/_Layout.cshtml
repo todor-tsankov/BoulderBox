@@ -55,8 +55,6 @@
         </nav>
     </header>
 
-    <partial name="_CookieConsentPartial" />
-
     <main role="main" class="pb-3">
         <div class="container col-12">
             <div class="row">
@@ -64,10 +62,13 @@
                     <div class="row ml-2 mr-2 mt-4 mb-4">
                         <partial name="_LoginPartial" />
                     </div>
-                    <vc:side-bar></vc:side-bar>
+                    <cache expires-after="@TimeSpan.FromMinutes(1)">
+                        <vc:side-bar></vc:side-bar>
+                    </cache>
                 </div>
                 <div class="col-lg-10 mt-4">
                     <div class="container">
+                        <partial name="_CookieConsentPartial" />
                         @this.RenderBody()
                     </div>
                 </div>

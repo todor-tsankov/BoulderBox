@@ -6,7 +6,7 @@ namespace BoulderBox.Web.ViewModels.Places.Countries
 {
     public class CountriesViewModel
     {
-        public PaginationViewModel Pagination { get; set; }
+        public CommonViewModel Common { get; set; }
 
         public IEnumerable<CountryViewModel> Countries { get; set; }
     }

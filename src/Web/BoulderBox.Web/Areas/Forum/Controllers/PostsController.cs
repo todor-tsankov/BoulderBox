@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels;
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Forum.Comments;
 using BoulderBox.Web.ViewModels.Forum.Posts;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +41,10 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
                         skip,
                         DefaultItemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.commentsService.Count(x => x.PostId == id)),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.commentsService.Count(x => x.PostId == id)),
+                },
             };
 
             return this.View(postAndComment);

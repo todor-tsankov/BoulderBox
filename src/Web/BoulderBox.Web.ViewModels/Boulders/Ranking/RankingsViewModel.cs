@@ -6,7 +6,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Ranking
 {
     public class RankingsViewModel
     {
-        public PaginationViewModel Pagination { get; set; }
+        public CommonViewModel Common { get; set; }
 
         public int StartRank { get; set; }
 

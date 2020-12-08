@@ -13,6 +13,8 @@ namespace BoulderBox.Web.ViewModels.Common
             this.CurrentPage = currentPage;
         }
 
+        public SortingInputModel SortingInputModel { get; set; }
+
         public int FirstPage { get; set; }
 
         public int LastPage { get; set; }

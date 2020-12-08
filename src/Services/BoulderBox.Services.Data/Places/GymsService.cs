@@ -21,7 +21,7 @@ namespace BoulderBox.Services.Data.Places
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddAsync(GymInputModel gymInput, ImageInputModel imageInput)
+        public async Task AddAsync(GymInputModel gymInput, ImageInputModel imageInput)
         {
             this.NullCheck(gymInput, nameof(gymInput));
 
@@ -30,8 +30,6 @@ namespace BoulderBox.Services.Data.Places
 
             await this.gymsRepository.AddAsync(country);
             await this.gymsRepository.SaveChangesAsync();
-
-            return true;
         }
     }
 }

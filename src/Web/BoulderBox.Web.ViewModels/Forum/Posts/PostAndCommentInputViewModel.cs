@@ -7,7 +7,7 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
 {
     public class PostAndCommentInputViewModel
     {
-        public PaginationViewModel Pagination { get; set; }
+        public CommonViewModel Common { get; set; }
 
         public string Username { get; set; }
 

@@ -24,7 +24,7 @@
             <tr>
                 <td class="@badgeClass mt-1">@ascent.StyleShortText</td>
                 <td><div class="row justify-content-center ml-1 mr-1">@ascent.GradeText</div></td>
-                <td><a asp-controller="Home" asp-action="Index" class="text-dark">@ascent.ApplicationUserUserName</a></td>
+                <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUserName</a></td>
             </tr>
         }
     </tbody>

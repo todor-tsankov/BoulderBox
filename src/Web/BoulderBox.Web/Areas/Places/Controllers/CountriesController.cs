@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
+using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Common;
@@ -20,19 +22,35 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             this.countriesService = countriesService;
         }
 
-        public IActionResult Index(int pageId = 1)
+        [HttpGet]
+        public IActionResult Index(SortingInputModel sorting, int pageId = 1)
         {
+            if (sorting.OrderBy == null)
+            {
+                sorting = new SortingInputModel()
+                {
+                    Ascending = true,
+                    OrderBy = "Name",
+                };
+            }
+
+            var orderBySelector = GetOrderBySelector(sorting);
             var skip = DefaultItemsPerPage * (pageId - 1);
 
             var countriesViewModel = new CountriesViewModel()
             {
                 Countries = this.countriesService
                     .GetMany<CountryViewModel>(
-                        orderBySelector: x => x.Name,
+                        orderBySelector: orderBySelector,
+                        asc: sorting.Ascending,
                         skip: skip,
                         take: DefaultItemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.countriesService.Count()),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.countriesService.Count()),
+                    Sorting = sorting,
+                },
             };
 
             return this.View(countriesViewModel);
@@ -72,6 +90,25 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             await this.countriesService.DeleteAsync(x => x.Id == id);
 
             return this.RedirectToAction("Index");
+        }
+
+        private static Expression<Func<Country, object>> GetOrderBySelector(SortingInputModel sortingModel)
+        {
+            Expression<Func<Country, object>> orderBySelect;
+
+            orderBySelect = sortingModel.OrderBy switch
+            {
+                "Name" => x => x.Name,
+                "CountryCode" => x => x.CountryCode,
+                "CitiesCount" => x => x.Cities.Count,
+
+                // CountryOrderBy.GymsCount => x => x.Cities,
+                // CountryOrderBy.BouldersCount => x => x.Cities.SelectMany(y => y.Gyms).Select(y => y.Boulders.Count).ToArray().Sum(),
+                // CountryOrderBy.AscentsCount => x => x.Cities.SelectMany(y => y.Gyms).SelectMany(y => y.Boulders).Select(y => y.Ascents.Count).ToArray().Sum(),
+                _ => x => x.Name,
+            };
+
+            return orderBySelect;
         }
     }
 }

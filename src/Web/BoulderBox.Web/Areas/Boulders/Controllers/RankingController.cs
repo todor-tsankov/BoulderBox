@@ -1,6 +1,7 @@
 ﻿using BoulderBox.Services.Data.Users;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Ranking;
+using BoulderBox.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Areas.Boulders.Controllers
@@ -30,7 +31,10 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                         skip: skip,
                         take: DefaultItemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.applicationUsersService.Count()),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.applicationUsersService.Count()),
+                },
             };
 
             return this.View(rankingsViewModel);

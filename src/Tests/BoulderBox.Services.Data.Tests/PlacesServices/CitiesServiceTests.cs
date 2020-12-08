@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
@@ -7,11 +11,6 @@ using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Files.Images;
 using BoulderBox.Web.ViewModels.Places.Cities;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BoulderBox.Services.Data.Tests.PlacesServices

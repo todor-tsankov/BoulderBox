@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BoulderBox.Services.Data.Files;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Places.Cities;
 using BoulderBox.Web.ViewModels.Places.Countries;
 using Microsoft.AspNetCore.Http;
@@ -36,7 +37,10 @@ namespace BoulderBox.Web.Areas.Places.Controllers
                         skip: skip,
                         take: DefaultItemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.citiesService.Count()),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.citiesService.Count()),
+                },
             };
 
             return this.View(citiesViewModel);

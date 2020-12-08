@@ -1,29 +1,29 @@
-﻿@model BoulderBox.Web.ViewModels.Common.PaginationViewModel
+﻿@model BoulderBox.Web.ViewModels.Common.CommonViewModel
 
 <nav>
     <ul class="pagination">
-        <li class="page-item @(!Model.HasPrevoius ? "disabled" : string.Empty)">
-            <a class="page-link" asp-route-pageId="@(Model.FirstPage)"><i class="fas fa-angle-double-left"></i></a>
+        <li class="page-item @(!Model.Pagination.HasPrevoius ? "disabled" : string.Empty)">
+            <a class="page-link" asp-all-route-data="Model.Sorting.GetAllRouteData(Model.Pagination.FirstPage)" ><i class="fas fa-angle-double-left"></i></a>
         </li>
-        <li class="page-item @(!Model.HasPrevoius ? "disabled" : string.Empty)">
-            <a class="page-link" asp-route-pageId="@(Model.PrevoiusPage)"><i class="fas fa-angle-left"></i></a>
+        <li class="page-item @(!Model.Pagination.HasPrevoius ? "disabled" : string.Empty)">
+            <a class="page-link" asp-all-route-data="Model.Sorting.GetAllRouteData(Model.Pagination.PrevoiusPage)"><i class="fas fa-angle-left"></i></a>
         </li>
 
-        @for (int i = Model.CurrentPage - 2; i <= Model.CurrentPage + 2; i++)
+        @for (int i = Model.Pagination.CurrentPage - 2; i <= Model.Pagination.CurrentPage + 2; i++)
         {
-            if (i >= 1 && i <= this.Model.LastPage)
+            if (i >= 1 && i <= this.Model.Pagination.LastPage)
             {
-                <li class="page-item @(i == Model.CurrentPage ? "active" : string.Empty)">
-                    <a class="page-link" asp-route-pageId="@i">@i</a>
+                <li class="page-item @(i == Model.Pagination.CurrentPage ? "active" : string.Empty)">
+                    <a class="page-link" asp-all-route-data="Model.Sorting.GetAllRouteData(i)">@i</a>
                 </li>
             }
         }
 
-        <li class="page-item @(!Model.HasNext ? "disabled" : string.Empty)">
-            <a class="page-link" asp-route-pageId="@(Model.NextPage)"><i class="fas fa-angle-right"></i></a>
+        <li class="page-item @(!Model.Pagination.HasNext ? "disabled" : string.Empty)">
+            <a class="page-link" asp-all-route-data="Model.Sorting.GetAllRouteData(Model.Pagination.NextPage)"><i class="fas fa-angle-right"></i></a>
         </li>
-        <li class="page-item @(!Model.HasNext ? "disabled" : string.Empty)">
-            <a class="page-link" asp-route-pageId="@(Model.LastPage)"><i class="fas fa-angle-double-right"></i></a>
+        <li class="page-item @(!Model.Pagination.HasNext ? "disabled" : string.Empty)">
+            <a class="page-link" asp-all-route-data="Model.Sorting.GetAllRouteData(Model.Pagination.LastPage)"><i class="fas fa-angle-double-right"></i></a>
         </li>
     </ul>
 </nav>

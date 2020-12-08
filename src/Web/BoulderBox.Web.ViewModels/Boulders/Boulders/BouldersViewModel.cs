@@ -6,7 +6,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
 {
     public class BouldersViewModel
     {
-        public PaginationViewModel Pagination { get; set; }
+        public CommonViewModel Common { get; set; }
 
         public IEnumerable<BoulderViewModel> Boulders { get; set; }
     }

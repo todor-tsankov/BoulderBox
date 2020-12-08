@@ -7,6 +7,7 @@ using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Boulders;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Places.Countries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -44,7 +45,10 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                         skip: skip,
                         take: itemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.bouldersService.Count(), itemsPerPage),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.bouldersService.Count(), itemsPerPage),
+                },
             };
 
             return this.View(bouldersViewModel);

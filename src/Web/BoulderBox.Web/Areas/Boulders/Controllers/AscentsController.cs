@@ -7,6 +7,7 @@ using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Ascents;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
 using BoulderBox.Web.ViewModels.Boulders.Styles;
+using BoulderBox.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -42,7 +43,10 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                         skip: skip,
                         take: DefaultItemsPerPage),
 
-                Pagination = this.GetPaginationModel(pageId, this.ascentsService.Count()),
+                Common = new CommonViewModel()
+                {
+                    Pagination = this.GetPaginationModel(pageId, this.ascentsService.Count()),
+                },
             };
 
             return this.View(ascentsViewModel);
