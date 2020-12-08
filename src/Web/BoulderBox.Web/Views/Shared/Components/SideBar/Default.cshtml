@@ -37,7 +37,7 @@
         {
             <tr>
                 <td>@boulder.GradeText</td>
-                <td><a asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a></td>
+                <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a></td>
             </tr>
         }
     </tbody>
