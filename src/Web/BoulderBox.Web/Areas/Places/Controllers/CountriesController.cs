@@ -101,10 +101,6 @@ namespace BoulderBox.Web.Areas.Places.Controllers
                 "Name" => x => x.Name,
                 "CountryCode" => x => x.CountryCode,
                 "CitiesCount" => x => x.Cities.Count,
-
-                // CountryOrderBy.GymsCount => x => x.Cities,
-                // CountryOrderBy.BouldersCount => x => x.Cities.SelectMany(y => y.Gyms).Select(y => y.Boulders.Count).ToArray().Sum(),
-                // CountryOrderBy.AscentsCount => x => x.Cities.SelectMany(y => y.Gyms).SelectMany(y => y.Boulders).Select(y => y.Ascents.Count).ToArray().Sum(),
                 _ => x => x.Name,
             };
 
