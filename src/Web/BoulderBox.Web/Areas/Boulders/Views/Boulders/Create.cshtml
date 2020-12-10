@@ -76,7 +76,7 @@
         var yourSelect = document.getElementById("countrySelect");
         var countryId = yourSelect.selectedOptions[0].value;
 
-        xhttp.open("GET", "/api/Cities?countryId=" + countryId, true);
+        xhttp.open("GET", "/api/Cities?countryId=" + countryId + "&withGyms=true", true);
         xhttp.send();
     }
 
