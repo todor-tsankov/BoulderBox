@@ -1,0 +1,40 @@
+﻿@model BoulderBox.Web.ViewModels.Places.Countries.CountryEditViewModel;
+
+@{
+    ViewData["Title"] = "Edit Country";
+}
+
+<div class="row ml-2">
+    <div class="row">
+        <h2>@ViewData["Title"]</h2>
+        <form asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">
+            <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
+        </form>
+    </div>
+</div>
+<hr class="bg-secondary" />
+
+<form asp-area="Administration" asp-controller="Countries" asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="CountryInput.Name" class="col-form-label"></label>
+        <input asp-for="CountryInput.Name" class="form-control" placeholder="Country name" />
+        <span asp-validation-for="CountryInput.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryInput.CountryCode" class="col-form-label"></label>
+        <input asp-for="CountryInput.CountryCode" class="form-control" placeholder="From AAA to ZZZ" />
+        <span asp-validation-for="CountryInput.CountryCode" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryInput.Description" class="col-form-label"></label>
+        <textarea asp-for="CountryInput.Description" class="form-control" placeholder="Short description of the country..."></textarea>
+        <span asp-validation-for="CountryInput.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label">Picture</label>
+        <input type="file" name="formFile" class="form-control-file" />
+    </div>
+    <p>* Required</p>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

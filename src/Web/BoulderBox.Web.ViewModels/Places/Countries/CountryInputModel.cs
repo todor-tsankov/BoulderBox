@@ -5,7 +5,7 @@ using BoulderBox.Services.Mapping;
 
 namespace BoulderBox.Web.ViewModels.Places.Countries
 {
-    public class CountryInputModel : IMapTo<Country>
+    public class CountryInputModel : IMapTo<Country>, IMapFrom<Country>
     {
         public const string NameDisplay = "Name *";
         public const string NameRequiredErrorMessage = "Name is required.";

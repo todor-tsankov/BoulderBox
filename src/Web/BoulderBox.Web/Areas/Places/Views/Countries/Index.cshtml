@@ -57,6 +57,10 @@
 
                     <div class="card-body d-flex flex-column justify-content-end align-items-center">
                         <div class="row">
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a asp-area="Administration" asp-controller="Countries" asp-action="Edit" asp-route-id="@country.Id" class="btn btn-success m-1">Edit</a>
+                            }
                             <a asp-area="Places" asp-controller="Countries" asp-action="Details" asp-route-id="@country.Id" class="btn btn-primary m-1">Details</a>
                         </div>
                     </div>

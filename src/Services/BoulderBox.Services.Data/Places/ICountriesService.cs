@@ -10,5 +10,7 @@ namespace BoulderBox.Services.Data.Places
     public interface ICountriesService : IBaseService<Country>
     {
         Task<bool> AddAsync(CountryInputModel countryInput, ImageInputModel imageInput = null);
+
+        Task EditAsync(string id, CountryInputModel countryInput, ImageInputModel imageInput);
     }
 }
