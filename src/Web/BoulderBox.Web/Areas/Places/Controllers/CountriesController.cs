@@ -64,34 +64,6 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             return this.View(country);
         }
 
-        public IActionResult Create()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CountryInputModel countryInput, IFormFile formFile)
-        {
-            var existsCountry = this.countriesService.Exists(x => x.Name == countryInput.Name);
-
-            if (!this.ModelState.IsValid || existsCountry)
-            {
-                return this.View(countryInput);
-            }
-
-            var image = await this.SaveImageFileAsync(formFile);
-            await this.countriesService.AddAsync(countryInput, image);
-
-            return this.RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> Delete(string id)
-        {
-            await this.countriesService.DeleteAsync(x => x.Id == id);
-
-            return this.RedirectToAction("Index");
-        }
-
         private static Expression<Func<Country, object>> GetOrderBySelector(SortingInputModel sortingModel)
         {
             Expression<Func<Country, object>> orderBySelect;

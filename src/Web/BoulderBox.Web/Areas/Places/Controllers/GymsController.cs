@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
+
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Common;
-using BoulderBox.Web.ViewModels.Places.Countries;
 using BoulderBox.Web.ViewModels.Places.Gyms;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.Areas.Places.Controllers
 {
@@ -70,50 +66,6 @@ namespace BoulderBox.Web.Areas.Places.Controllers
                 .GetSingle<GymDetailsViewModel>(x => x.Id == id);
 
             return this.View(gym);
-        }
-
-        public IActionResult Create()
-        {
-            var gym = new GymInputModel()
-            {
-                CountriesSelectListItems = this.countriesService
-                    .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
-                    .Select(x => new SelectListItem(x.Name, x.Id))
-                    .ToList(),
-            };
-
-            return this.View(gym);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(GymInputModel gymInput, IFormFile formFile)
-        {
-            var cityExists = this.citiesService.Exists(x => x.Id == gymInput.CityId);
-
-            if (!this.ModelState.IsValid || !cityExists)
-            {
-                var gym = new GymInputModel()
-                {
-                    CountriesSelectListItems = this.countriesService
-                        .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
-                        .Select(x => new SelectListItem(x.Name, x.Id))
-                        .ToList(),
-                };
-
-                return this.View(gym);
-            }
-
-            var image = await this.SaveImageFileAsync(formFile);
-            await this.gymsService.AddAsync(gymInput, image);
-
-            return this.Redirect("Index");
-        }
-
-        public async Task<IActionResult> Delete(string id)
-        {
-            await this.gymsService.DeleteAsync(x => x.Id == id);
-
-            return this.RedirectToAction("Index");
         }
 
         private static Expression<Func<Gym, object>> GetOrderBySelector(SortingInputModel sortingModel)

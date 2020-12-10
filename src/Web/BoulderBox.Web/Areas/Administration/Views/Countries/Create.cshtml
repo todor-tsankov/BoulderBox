@@ -1,7 +1,7 @@
-﻿@model BoulderBox.Web.ViewModels.Places.Cities.CityInputModel
+﻿@model BoulderBox.Web.ViewModels.Places.Countries.CountryInputModel;
 
 @{
-    ViewData["Title"] = "Create City";
+    ViewData["Title"] = "Create Country";
 }
 
 <div class="row ml-2">
@@ -9,21 +9,21 @@
 </div>
 <hr class="bg-secondary" />
 
-<form asp-area="Places" asp-controller="Cities" asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-area="Administration" asp-controller="Countries" asp-action="Create" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Name" class="col-form-label"></label>
-        <input asp-for="Name" class="form-control" placeholder="City name" />
+        <input asp-for="Name" class="form-control" placeholder="Country name" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="CountryId" class="col-form-label"></label>
-        <select asp-for="CountryId" asp-items="Model.CountriesSelectListItems" class="form-control"></select>
-        <span asp-validation-for="CountryId" class="text-danger"></span>
+        <label asp-for="CountryCode" class="col-form-label"></label>
+        <input asp-for="CountryCode" class="form-control" placeholder="From AAA to ZZZ" />
+        <span asp-validation-for="CountryCode" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Description" class="col-form-label"></label>
-        <textarea asp-for="Description" class="form-control" placeholder="Short description of the city..."></textarea>
+        <textarea asp-for="Description" class="form-control" placeholder="Short description of the country..."></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -33,4 +33,3 @@
     <p>* Required</p>
     <button type="submit" class="btn btn-success">Create</button>
 </form>
-

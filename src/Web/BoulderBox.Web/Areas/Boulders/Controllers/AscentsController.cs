@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Web.Controllers;
@@ -91,19 +92,6 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.RedirectToAction("Index");
         }
 
-        private void SetListItems(AscentInputModel ascentInput)
-        {
-            ascentInput.GradesSelectListItems = this.gradesService
-                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
-                .Select(x => new SelectListItem(x.Text, x.Id))
-                .ToList();
-
-            ascentInput.StylesSelectListItems = this.stylesService
-                .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
-                .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
-                .ToList();
-        }
-
         private static Expression<Func<Ascent, object>> GetOrderBySelector(SortingInputModel sortingModel)
         {
             Expression<Func<Ascent, object>> orderBySelect;
@@ -118,5 +106,19 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
             return orderBySelect;
         }
+
+        private void SetListItems(AscentInputModel ascentInput)
+        {
+            ascentInput.GradesSelectListItems = this.gradesService
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem(x.Text, x.Id))
+                .ToList();
+
+            ascentInput.StylesSelectListItems = this.stylesService
+                .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
+                .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
+                .ToList();
+        }
+
     }
 }

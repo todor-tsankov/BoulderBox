@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Places;
@@ -108,19 +109,6 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.RedirectToAction("Index");
         }
 
-        private void SetListItems(BoulderInputModel boulder)
-        {
-            boulder.CountriesSelectItems = this.countriesService
-                            .GetMany<CountryViewModel>(x => x.Cities.Any(), x => x.Name)
-                            .Select(x => new SelectListItem(x.Name, x.Id))
-                            .ToList();
-
-            boulder.GradesSelectItems = this.gradesService
-                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
-                .Select(x => new SelectListItem(x.Text, x.Id))
-                .ToList();
-        }
-
         private static Expression<Func<Boulder, object>> GetOrderBySelector(SortingInputModel sortingModel)
         {
             Expression<Func<Boulder, object>> orderBySelect;
@@ -135,6 +123,19 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             };
 
             return orderBySelect;
+        }
+
+        private void SetListItems(BoulderInputModel boulder)
+        {
+            boulder.CountriesSelectItems = this.countriesService
+                            .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
+                            .Select(x => new SelectListItem(x.Name, x.Id))
+                            .ToList();
+
+            boulder.GradesSelectItems = this.gradesService
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem(x.Text, x.Id))
+                .ToList();
         }
     }
 }

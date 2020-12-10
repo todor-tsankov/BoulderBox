@@ -1,11 +1,12 @@
-﻿using BoulderBox.Data.Models;
+﻿using System;
+using System.Linq.Expressions;
+
+using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Users;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Ranking;
 using BoulderBox.Web.ViewModels.Common;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq.Expressions;
 
 namespace BoulderBox.Web.Areas.Boulders.Controllers
 {

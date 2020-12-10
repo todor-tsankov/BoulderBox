@@ -57,7 +57,6 @@
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
 
-                document.getElementById("countrySelect").innerHTML = document.getElementById("countrySelect").innerHTML.replace('<option></option>', '');
                 document.getElementById("citySelect").innerHTML = '';
                 document.getElementById("gymSelect").innerHTML = '';
 
@@ -74,7 +73,7 @@
         };
 
         var yourSelect = document.getElementById("countrySelect");
-        var countryId = yourSelect.selectedOptions[0].value;
+        var countryId = yourSelect.options[yourSelect.selectedIndex].value;
 
         xhttp.open("GET", "/api/Cities?countryId=" + countryId + "&withGyms=true", true);
         xhttp.send();
@@ -100,7 +99,7 @@
         };
 
         var yourSelect = document.getElementById("citySelect");
-        var gymId = yourSelect.selectedOptions[0].value;
+        var gymId = yourSelect.options[yourSelect.selectedIndex].value
 
         xhttp.open("GET", "/api/Gyms?cityId=" + gymId, true);
         xhttp.send();
