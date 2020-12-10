@@ -119,6 +119,5 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
                 .ToList();
         }
-
     }
 }

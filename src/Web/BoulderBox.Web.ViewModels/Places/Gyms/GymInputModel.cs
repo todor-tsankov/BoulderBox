@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Gyms
 {
-    public class GymInputModel : IMapTo<Gym>
+    public class GymInputModel : IMapTo<Gym>, IMapFrom<Gym>, IHaveCustomMappings
     {
         public const string NameDisplay = "Name *";
         public const string NameRequiredErrorMessage = "Name is required.";
@@ -15,6 +16,9 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
 
         public const string CityIdDisplay = "City *";
         public const string CityIdRequiredErrorMessage = "City is required.";
+
+        public const string CountryIdDisplay = "Country *";
+        public const string CountryIdRequiredErrorMessage = "Country is required.";
 
         public const string InvalidDescriptionMessage = "Description can't be more than 1000 characters.";
 
@@ -31,6 +35,18 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
         [MaxLength(1000, ErrorMessage = InvalidDescriptionMessage)]
         public string Description { get; set; }
 
+        [Display(Name = CountryIdDisplay)]
+        [Required(ErrorMessage = CountryIdRequiredErrorMessage)]
+        public string CountryId { get; set; }
+
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
+
+        public IEnumerable<SelectListItem> CitiesSelectListItems { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Gym, GymInputModel>()
+                .ForMember(x => x.CountryId, x => x.MapFrom(y => y.City.CountryId));
+        }
     }
 }

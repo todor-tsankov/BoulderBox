@@ -1,37 +1,40 @@
-﻿@model BoulderBox.Web.ViewModels.Places.Gyms.GymInputModel
+﻿@model BoulderBox.Web.ViewModels.Places.Gyms.GymEditViewModel
 
 @{
-    ViewData["Title"] = "Create Gym";
+    ViewData["Title"] = "Edit Gym";
 }
 
 <div class="row ml-2">
-    <h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <h2>@ViewData["Title"]</h2>
+        <form asp-area="Administration" asp-controller="Gyms" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
+        </form>
+    </div>
 </div>
 <hr class="bg-secondary" />
 
 <form asp-area="Administration" asp-controller="Gyms" asp-action="Create" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name" class="col-form-label"></label>
-        <input asp-for="Name" class="form-control" placeholder="Gym name" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="GymInput.Name" class="col-form-label"></label>
+        <input asp-for="GymInput.Name" class="form-control" placeholder="Gym name" />
+        <span asp-validation-for="GymInput.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="col-form-label">Country *</label>
-        <select onchange="fillCitySelect()" id="countrySelect" asp-for="CountryId" asp-items="Model.CountriesSelectListItems" class="form-control">
-            <option></option>
-        </select>
-        <span asp-validation-for="CountryId" class="text-danger"></span>
+        <select onchange="fillCitySelect()" id="countrySelect" asp-for="GymInput.CountryId" asp-items="Model.GymInput.CountriesSelectListItems" class="form-control"></select>
+        <span asp-validation-for="GymInput.CountryId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="CityId" class="col-form-label"></label>
-        <select id="citySelect" asp-for="CityId" class="form-control"></select>
-        <span asp-validation-for="CityId" class="text-danger"></span>
+        <label asp-for="GymInput.CityId" class="col-form-label"></label>
+        <select id="citySelect" asp-for="GymInput.CityId" asp-items="Model.GymInput.CitiesSelectListItems" class="form-control"></select>
+        <span asp-validation-for="GymInput.CityId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Description" class="col-form-label"></label>
-        <textarea asp-for="Description" class="form-control" placeholder="Short description of the gym..."></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+        <label asp-for="GymInput.Description" class="col-form-label"></label>
+        <textarea asp-for="GymInput.Description" class="form-control" placeholder="Short description of the gym..."></textarea>
+        <span asp-validation-for="GymInput.Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="col-form-label">Picture</label>

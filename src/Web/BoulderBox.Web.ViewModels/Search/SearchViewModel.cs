@@ -40,7 +40,7 @@ namespace BoulderBox.Web.ViewModels.Search
             var index = this.Name
                 .IndexOf(text, StringComparison.InvariantCultureIgnoreCase);
 
-            var result = this.Name.Substring(index + text.Length);
+            var result = this.Name[(index + text.Length)..];
 
             return result;
         }

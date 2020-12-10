@@ -10,5 +10,7 @@ namespace BoulderBox.Services.Data.Places
     public interface IGymsService : IBaseService<Gym>
     {
         Task AddAsync(GymInputModel gymInput, ImageInputModel image);
+
+        Task EditAsync(string id, GymInputModel gymInput, ImageInputModel imageInput);
     }
 }
