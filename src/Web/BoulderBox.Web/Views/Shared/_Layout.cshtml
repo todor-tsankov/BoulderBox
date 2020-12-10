@@ -47,8 +47,8 @@
                     </li>
                     <partial name="_LoginPartialNavBar" />
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2 mb-1" type="text" placeholder="Search">
+                <form asp-area="" asp-controller="Search" asp-action="Index" method="get" class="form-inline my-2 my-lg-0">
+                    <input name="text" class="form-control mr-sm-2 mb-1" type="text" placeholder="Search">
                     <button class="btn btn-dark" type="submit">Search</button>
                 </form>
             </div>

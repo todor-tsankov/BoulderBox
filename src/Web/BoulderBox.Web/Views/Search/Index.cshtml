@@ -1,0 +1,55 @@
+﻿@model BoulderBox.Web.ViewModels.Search.SearchResultsViewModel
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+
+<div class="row ml-2">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr class="bg-secondary" />
+
+<div class="col-lg-10">
+    @if (!Model.Results.Any())
+    {
+        <h5 class="mt-4">Nothing found for "<span class="text-danger">@Model.Text</span>", here are some friendly suggestions where to go:</h5>
+    }
+    <ul class="list-group list-group-flush mt-4">
+        @foreach (var result in Model.Results)
+        {
+            <li class="list-group-item">
+                <a asp-area="@result.Area" asp-controller="@result.Controller" , asp-action="@result.Action" asp-route-id="@result.Id">
+                    <span class="m-0">@result.GetBeoreText(Model.Text)</span><span class="text-danger p-0 m-0">@Model.Text</span><span class="m-0 mr-2">@result.GetAfterText(Model.Text)</span>
+                </a>
+                ( @result.Category )
+            </li>
+        }
+        @if (!Model.Results.Any())
+        {
+            <li class="list-group-item">
+                <h5>Chat: </h5>
+                <a asp-area="Forum" asp-controller="Categories" class="btn btn-outline-primary mt-1">Chat</a>
+            </li>
+
+            <li class="list-group-item">
+                <h5>Forum: </h5>
+                <a asp-area="Forum" asp-controller="Categories" class="btn btn-outline-primary  mt-1">Forum Categories</a>
+            </li>
+
+            <li class="list-group-item">
+                <h5>Places: </h5>
+                <a asp-area="Places" asp-controller="Countries" class="btn btn-outline-primary  mt-1">Countries</a>
+                <a asp-area="Places" asp-controller="Cities" class="btn btn-outline-success  mt-1">Cities</a>
+                <a asp-area="Places" asp-controller="Gyms" class="btn btn-outline-primary  mt-1">Gyms</a>
+            </li>
+
+            <li class="list-group-item">
+                <h5>Boulders: </h5>
+                <a asp-area="Boulders" asp-controller="Ascents" class="btn btn-outline-success mt-1">Ascents</a>
+                <a asp-area="Boulders" asp-controller="Boulders" class="btn btn-outline-primary mt-1">Boulders</a>
+                <a asp-area="Boulders" asp-controller="Ranking" class="btn btn-outline-success mt-1">Ranking</a>
+            </li>
+        }
+    </ul>
+</div>

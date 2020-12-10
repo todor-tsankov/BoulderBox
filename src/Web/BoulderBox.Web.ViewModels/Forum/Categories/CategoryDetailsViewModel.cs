@@ -8,7 +8,7 @@ namespace BoulderBox.Web.ViewModels.Forum.Categories
 {
     public class CategoryDetailsViewModel : IMapFrom<Category>
     {
-        public PaginationViewModel Pagination { get; set; }
+        public CommonViewModel Common { get; set; }
 
         public string Id { get; set; }
 

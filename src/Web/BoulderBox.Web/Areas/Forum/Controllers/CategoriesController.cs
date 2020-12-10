@@ -2,6 +2,7 @@
 
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Controllers;
+using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Forum.Categories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,10 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
                     skip,
                     DefaultItemsPerPage);
 
-            category.Pagination = this.GetPaginationModel(pageId, this.postsService.Count(x => x.CategoryId == id));
+            category.Common = new CommonViewModel()
+            {
+                Pagination = this.GetPaginationModel(pageId, this.postsService.Count(x => x.CategoryId == id)),
+            };
 
             return this.View(category);
         }
