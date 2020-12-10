@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Cities
 {
-    public class CityInputModel : IMapTo<City>
+    public class CityInputModel : IMapTo<City>, IMapFrom<City>
     {
         public const string NameDisplay = "Name *";
         public const string NameRequiredErrorMessage = "Name is required.";

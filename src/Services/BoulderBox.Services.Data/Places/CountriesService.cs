@@ -37,6 +37,9 @@ namespace BoulderBox.Services.Data.Places
 
         public async Task EditAsync(string id, CountryInputModel countryInput, ImageInputModel imageInput)
         {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(countryInput, nameof(countryInput));
+
             var country = this.countriesRepository
                 .All()
                 .FirstOrDefault(x => x.Id == id);

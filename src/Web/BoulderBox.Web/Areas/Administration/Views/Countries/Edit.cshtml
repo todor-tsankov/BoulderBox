@@ -7,7 +7,7 @@
 <div class="row ml-2">
     <div class="row">
         <h2>@ViewData["Title"]</h2>
-        <form asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id">
+        <form asp-area="Administration" asp-controller="Countries" asp-action="Delete" asp-route-id="@Model.Id" method="post">
             <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
         </form>
     </div>

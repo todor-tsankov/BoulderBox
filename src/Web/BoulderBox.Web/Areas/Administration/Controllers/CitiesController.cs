@@ -47,6 +47,45 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             return this.RedirectToAction("Index", "Cities", new { area = "Places" });
         }
 
+        public IActionResult Edit(string id)
+        {
+            var city = new CityEditViewModel()
+            {
+                Id = id,
+                CityInput = this.citiesService
+                    .GetSingle<CityInputModel>(x => x.Id == id),
+            };
+
+            this.SetListItems(city.CityInput);
+
+            return this.View(city);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, CityInputModel cityInput, IFormFile formFile)
+        {
+            var existsCity = this.citiesService
+                .Exists(x => x.Id != id && x.Name == cityInput.Name && x.CountryId == cityInput.CountryId);
+
+            if (!this.ModelState.IsValid || existsCity)
+            {
+                var city = new CityEditViewModel()
+                {
+                    Id = id,
+                    CityInput = cityInput,
+                };
+
+                this.SetListItems(city.CityInput);
+
+                return this.View(city);
+            }
+
+            var image = await this.SaveImageFileAsync(formFile);
+            await this.citiesService.EditAsync(id, cityInput, image);
+
+            return this.RedirectToAction("Index", "Cities", new { area = "Places" });
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
             await this.citiesService.DeleteAsync(x => x.Id == id);

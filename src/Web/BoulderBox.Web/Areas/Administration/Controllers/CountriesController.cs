@@ -58,7 +58,13 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
             if (!this.ModelState.IsValid || existsCountry)
             {
-                return this.View(countryInput);
+                var country = new CountryEditViewModel()
+                {
+                    Id = id,
+                    CountryInput = countryInput,
+                };
+
+                return this.View(country);
             }
 
             var image = await this.SaveImageFileAsync(formFile);

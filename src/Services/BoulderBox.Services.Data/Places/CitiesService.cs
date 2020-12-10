@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
@@ -29,6 +30,29 @@ namespace BoulderBox.Services.Data.Places
             city.Image = this.mapper.Map<Image>(imageInput);
 
             await this.citiesRepository.AddAsync(city);
+            await this.citiesRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(string id, CityInputModel cityInput, ImageInputModel imageInput)
+        {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(cityInput, nameof(cityInput));
+
+            var city = this.citiesRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (imageInput != null)
+            {
+                var image = this.mapper.Map<Image>(imageInput);
+
+                city.Image = image;
+            }
+
+            city.Name = cityInput.Name;
+            city.CountryId = cityInput.CountryId;
+            city.Description = cityInput.Description;
+
             await this.citiesRepository.SaveChangesAsync();
         }
     }

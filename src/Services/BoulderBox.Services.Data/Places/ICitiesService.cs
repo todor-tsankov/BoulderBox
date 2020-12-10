@@ -10,5 +10,7 @@ namespace BoulderBox.Services.Data.Places
     public interface ICitiesService : IBaseService<City>
     {
         Task AddAsync(CityInputModel cityInput, ImageInputModel imageInput);
+
+        Task EditAsync(string id, CityInputModel cityInput, ImageInputModel imageInput);
     }
 }
