@@ -7,6 +7,7 @@ using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Forum.Comments;
 using BoulderBox.Web.ViewModels.Forum.Posts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,6 +51,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             return this.View(postAndComment);
         }
 
+        [Authorize]
         public IActionResult Create(string id)
         {
             var post = new PostInputModel()
@@ -60,6 +62,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             return this.View(post);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(PostInputModel postInput, IFormFile formFile)
         {

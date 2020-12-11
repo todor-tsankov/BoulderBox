@@ -2,10 +2,12 @@
 
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.ViewModels.Places.Gyms;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Areas.Places.Controllers
 {
+    [Authorize]
     [Area("Api")]
     [Route("api/Gyms")]
     [ApiController]

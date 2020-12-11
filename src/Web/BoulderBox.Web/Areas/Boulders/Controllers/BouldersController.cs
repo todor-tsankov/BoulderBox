@@ -12,6 +12,7 @@ using BoulderBox.Web.ViewModels.Boulders.Boulders;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
 using BoulderBox.Web.ViewModels.Common;
 using BoulderBox.Web.ViewModels.Places.Countries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -77,6 +78,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.View(boulder);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             var boulder = new BoulderInputModel();
@@ -85,6 +87,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.View(boulder);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(BoulderInputModel boulderInput, IFormFile formFile)
         {

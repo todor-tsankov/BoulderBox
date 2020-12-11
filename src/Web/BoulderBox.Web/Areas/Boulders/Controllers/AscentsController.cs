@@ -11,6 +11,7 @@ using BoulderBox.Web.ViewModels.Boulders.Ascents;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
 using BoulderBox.Web.ViewModels.Boulders.Styles;
 using BoulderBox.Web.ViewModels.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -66,6 +67,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.View(ascentsViewModel);
         }
 
+        [Authorize]
         public IActionResult Create(string id)
         {
             var ascent = new AscentInputModel()
@@ -77,6 +79,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.View(ascent);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(AscentInputModel ascentInput)
         {

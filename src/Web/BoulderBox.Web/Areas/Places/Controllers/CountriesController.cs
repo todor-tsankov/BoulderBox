@@ -22,7 +22,6 @@ namespace BoulderBox.Web.Areas.Places.Controllers
             this.countriesService = countriesService;
         }
 
-        [HttpGet]
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)
         {
             if (sorting.OrderBy == null)

@@ -6,10 +6,12 @@ using System.Linq.Expressions;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.ViewModels.Places.Cities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Areas.Places.Controllers
 {
+    [Authorize]
     [Area("Api")]
     [Route("api/Cities")]
     [ApiController]
