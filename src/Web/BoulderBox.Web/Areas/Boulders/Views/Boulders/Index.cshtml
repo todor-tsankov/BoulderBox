@@ -67,6 +67,10 @@
                         </div>
                     </div>
                     <div class="card-body d-flex flex-column justify-content-end align-items-center">
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <a asp-area="Administration" asp-controller="Boulders" asp-action="Edit" asp-route-id="@boulder.Id" class="btn btn-outline-primary m-1">Edit</a>
+                        }
                         <div class="row">
                             <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@boulder.Id" class="btn btn-success m-1">Add Ascent</a>
                             <a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="btn btn-primary m-1">Details</a>

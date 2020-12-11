@@ -1,52 +1,57 @@
-﻿@model BoulderBox.Web.ViewModels.Boulders.Boulders.BoulderInputModel
+﻿@model BoulderBox.Web.ViewModels.Boulders.Boulders.BoulderEditViewModel
 @{
-    ViewData["Title"] = "Create Boulder";
+    ViewData["Title"] = "Edit Boulder";
 }
 
 <div class="row ml-2">
-    <h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <h2>@ViewData["Title"]</h2>
+        <form asp-area="Administration" asp-controller="Boulders" asp-action="Delete" method="post">
+            <input type="hidden" name="id" value="@Model.Id"/>
+            <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
+        </form>
+    </div>
 </div>
 <hr class="bg-secondary" />
 
-<form asp-area="Boulders" asp-controller="Boulders" asp-action="Create" method="post" enctype="multipart/form-data">
+<form asp-area="Administration" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Name" class="col-form-label"></label>
-        <input asp-for="Name" class="form-control" placeholder="Boulder name" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="BoulderInput.Name" class="col-form-label"></label>
+        <input asp-for="BoulderInput.Name" class="form-control" placeholder="Boulder name" />
+        <span asp-validation-for="BoulderInput.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="col-form-label">Country *</label>
-        <select onchange="fillCitySelect()" id="countrySelect" asp-for="CountryId" asp-items="Model.CountriesSelectItems" class="form-control">
-            <option></option>
-        </select>
+        <select asp-for="BoulderInput.CountryId" onchange="fillCitySelect()" id="countrySelect" asp-items="Model.BoulderInput.CountriesSelectItems" class="form-control"></select>
+        <span asp-validation-for="BoulderInput.CountryId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="col-form-label">City *</label>
-        <select onchange="fillGymSelect()" id="citySelect" class="form-control" asp-for="CityId">
-        </select>
+        <select asp-for="BoulderInput.CityId" asp-items="Model.BoulderInput.CitiesSelectItems" onchange="fillGymSelect()" id="citySelect" class="form-control"></select>
+        <span asp-validation-for="BoulderInput.CityId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="GymId" class="col-form-label"></label>
-        <select asp-for="GymId" id="gymSelect" class="form-control"></select>
-        <span asp-validation-for="GymId" class="text-danger"></span>
+        <label asp-for="BoulderInput.GymId" class="col-form-label"></label>
+        <select asp-for="BoulderInput.GymId" asp-items="Model.BoulderInput.GymsSelectItems" id="gymSelect" class="form-control"></select>
+        <span asp-validation-for="BoulderInput.GymId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="GradeId" class="col-form-label"></label>
-        <select asp-for="GradeId" asp-items="Model.GradesSelectItems" class="form-control"></select>
-        <span asp-validation-for="GradeId" class="text-danger"></span>
+        <label asp-for="BoulderInput.GradeId" class="col-form-label"></label>
+        <select asp-for="BoulderInput.GradeId" asp-items="Model.BoulderInput.GradesSelectItems" class="form-control"></select>
+        <span asp-validation-for="BoulderInput.GradeId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Description" class="col-form-label"></label>
-        <textarea asp-for="Description" class="form-control" placeholder="Short description of the boulder..."></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
+        <label asp-for="BoulderInput.Description" class="col-form-label"></label>
+        <textarea asp-for="BoulderInput.Description" class="form-control" placeholder="Short description of the boulder..."></textarea>
+        <span asp-validation-for="BoulderInput.Description" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label class="col-form-label">Picture</label>
         <input type="file" name="formFile" class="form-control-file" />
     </div>
     <p>* Required</p>
-    <button type="submit" class="btn btn-success">Create</button>
+    <button type="submit" class="btn btn-success">Save</button>
 </form>
 
 <script>

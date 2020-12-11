@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
@@ -38,6 +39,28 @@ namespace BoulderBox.Services.Data.Boulders
             await this.bouldersRepository.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task EditAsync(string id, BoulderInputModel boulderInput, ImageInputModel imageInput)
+        {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(boulderInput, nameof(boulderInput));
+
+            var boulder = this.bouldersRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (imageInput != null)
+            {
+                boulder.Image = this.mapper.Map<Image>(imageInput);
+            }
+
+            boulder.Name = boulderInput.Name;
+            boulder.Description = boulderInput.Description;
+            boulder.GradeId = boulderInput.GradeId;
+            boulder.GymId = boulderInput.GymId;
+
+            await this.bouldersRepository.SaveChangesAsync();
         }
     }
 }

@@ -7,6 +7,10 @@
 <div class="row ml-2">
     <h2>@Model.Name (@Model.GradeText)</h2>
     <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
+    @if (this.User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.AuthorId)
+    {
+        <a asp-area="Boulders" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
+    }
 </div>
 
 @if (Model.Description != null)

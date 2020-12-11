@@ -11,9 +11,12 @@ using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Boulders.Boulders;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
 using BoulderBox.Web.ViewModels.Common;
+using BoulderBox.Web.ViewModels.Places.Cities;
 using BoulderBox.Web.ViewModels.Places.Countries;
+using BoulderBox.Web.ViewModels.Places.Gyms;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -24,15 +27,21 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
     {
         private readonly IBouldersService bouldersService;
         private readonly ICountriesService countriesService;
+        private readonly ICitiesService citiesService;
+        private readonly IGymsService gymsService;
         private readonly IGradesService gradesService;
 
         public BouldersController(
             IBouldersService bouldersService,
             ICountriesService countriesService,
+            ICitiesService citiesService,
+            IGymsService gymsService,
             IGradesService gradesService)
         {
             this.bouldersService = bouldersService;
             this.countriesService = countriesService;
+            this.citiesService = citiesService;
+            this.gymsService = gymsService;
             this.gradesService = gradesService;
         }
 
@@ -82,7 +91,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         public IActionResult Create()
         {
             var boulder = new BoulderInputModel();
-            this.SetListItems(boulder);
+            this.SetCreateListItems(boulder);
 
             return this.View(boulder);
         }
@@ -93,7 +102,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                this.SetListItems(boulderInput);
+                this.SetCreateListItems(boulderInput);
                 return this.View(boulderInput);
             }
 
@@ -105,11 +114,77 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.RedirectToAction("Index");
         }
 
+        public IActionResult Edit(string id)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var valid = this.bouldersService
+                .Exists(x => x.Id == id && x.AuthorId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
+            var boulder = new BoulderEditViewModel()
+            {
+                Id = id,
+                BoulderInput = this.bouldersService
+                    .GetSingle<BoulderInputModel>(x => x.Id == id),
+            };
+
+            this.SetEditListItems(boulder.BoulderInput);
+
+            return this.View(boulder);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput, IFormFile formFile)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var valid = this.bouldersService
+                .Exists(x => x.Id == id && x.AuthorId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                var boulder = new BoulderEditViewModel()
+                {
+                    Id = id,
+                    BoulderInput = boulderInput,
+                };
+
+                this.SetEditListItems(boulder.BoulderInput);
+
+                return this.View(boulder);
+            }
+
+            var image = await this.SaveImageFileAsync(formFile);
+            await this.bouldersService.EditAsync(id, boulderInput, image);
+
+            return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var valid = this.bouldersService
+                .Exists(x => x.Id == id && x.AuthorId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
             await this.bouldersService.DeleteAsync(x => x.Id == id);
 
-            return this.RedirectToAction("Index");
+            return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }
 
         private static Expression<Func<Boulder, object>> GetOrderBySelector(SortingInputModel sortingModel)
@@ -128,7 +203,46 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return orderBySelect;
         }
 
-        private void SetListItems(BoulderInputModel boulder)
+        private void SetEditListItems(BoulderInputModel boulder)
+        {
+            boulder.CountriesSelectItems = this.countriesService
+                            .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
+                            .Select(x => new SelectListItem()
+                            {
+                                Value = x.Id,
+                                Text = x.Name,
+                            })
+                            .ToList();
+
+            boulder.CitiesSelectItems = this.citiesService
+                .GetMany<CityViewModel>(x => x.CountryId == boulder.CountryId && x.Gyms.Any(), x => x.Name)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.Name,
+                })
+                .ToList();
+
+            boulder.GymsSelectItems = this.gymsService
+               .GetMany<GymViewModel>(x => x.CityId == boulder.CityId, x => x.Name)
+               .Select(x => new SelectListItem()
+               {
+                   Value = x.Id,
+                   Text = x.Name,
+               })
+               .ToList();
+
+            boulder.GradesSelectItems = this.gradesService
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.Text,
+                })
+                .ToList();
+        }
+
+        private void SetCreateListItems(BoulderInputModel boulder)
         {
             boulder.CountriesSelectItems = this.countriesService
                             .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
