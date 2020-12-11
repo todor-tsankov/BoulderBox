@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
@@ -29,6 +30,21 @@ namespace BoulderBox.Services.Data.Forum
             category.Image = this.mapper.Map<Image>(imageInput);
 
             await this.categoriesRepository.AddAsync(category);
+            await this.categoriesRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(string id, CategoryInputModel categoryInput)
+        {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(categoryInput, nameof(categoryInput));
+
+            var category = this.categoriesRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            category.Name = categoryInput.Name;
+            category.Description = categoryInput.Description;
+
             await this.categoriesRepository.SaveChangesAsync();
         }
     }

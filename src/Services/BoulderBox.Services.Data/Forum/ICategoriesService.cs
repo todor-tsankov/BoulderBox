@@ -10,5 +10,7 @@ namespace BoulderBox.Services.Data.Forum
     public interface ICategoriesService : IBaseService<Category>
     {
         Task AddAsync(CategoryInputModel categoryInput, ImageInputModel imageInput);
+
+        Task EditAsync(string id, CategoryInputModel categoryInput);
     }
 }

@@ -5,7 +5,7 @@ using BoulderBox.Services.Mapping;
 
 namespace BoulderBox.Web.ViewModels.Forum.Categories
 {
-    public class CategoryInputModel : IMapTo<Category>
+    public class CategoryInputModel : IMapTo<Category>, IMapFrom<Category>
     {
         [Display(Name = "Name *")]
         [Required(ErrorMessage = "Name is required.")]

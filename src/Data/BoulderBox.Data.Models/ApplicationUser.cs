@@ -18,8 +18,8 @@ namespace BoulderBox.Data.Models
 
             this.Ascents = new HashSet<Ascent>();
             this.Boulders = new HashSet<Boulder>();
-            this.ForumPosts = new HashSet<Post>();
-            this.ForumComments = new HashSet<Comment>();
+            this.Posts = new HashSet<Post>();
+            this.Comments = new HashSet<Comment>();
 
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
@@ -43,9 +43,9 @@ namespace BoulderBox.Data.Models
 
         public virtual ICollection<Boulder> Boulders { get; set; }
 
-        public virtual ICollection<Post> ForumPosts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
 
-        public virtual ICollection<Comment> ForumComments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

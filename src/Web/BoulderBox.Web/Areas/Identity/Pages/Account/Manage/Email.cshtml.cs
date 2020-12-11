@@ -82,7 +82,7 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
                 var callbackUrl = this.Url.Page(
                     "/Account/ConfirmEmailChange",
                     pageHandler: null,
-                    values: new { userId = userId, email = this.Input.NewEmail, code = code },
+                    values: (userId, email: this.Input.NewEmail, code),
                     protocol: this.Request.Scheme);
                 await this.emailSender.SendEmailAsync(
                     this.Input.NewEmail,
@@ -118,7 +118,7 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
             var callbackUrl = this.Url.Page(
                 "/Account/ConfirmEmail",
                 pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code },
+                values: new { area = "Identity", userId, code },
                 protocol: this.Request.Scheme);
             await this.emailSender.SendEmailAsync(
                 email,

@@ -51,24 +51,5 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
 
             return this.View(category);
         }
-
-        public IActionResult Create()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CategoryInputModel categoryInput, IFormFile formFile)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View();
-            }
-
-            var image = await this.SaveImageFileAsync(formFile);
-            await this.categoriesService.AddAsync(categoryInput, image);
-
-            return this.RedirectToAction("Index");
-        }
     }
 }

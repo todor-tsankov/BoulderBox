@@ -6,7 +6,10 @@
 
 <div class="row ml-2">
     <h2>@ViewData["Title"]</h2>
-    <a asp-area="Forum" asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+    }
 </div>
 
 <hr class="bg-secondary mb-4" />
@@ -18,15 +21,25 @@
                 <th>Category</th>
                 <th>Posts</th>
                 <th>Description</th>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <th></th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach (var category in Model)
             {
                 <tr>
-                    <td><a asp-area="Forum" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" class="text-dark">@category.Name</a></td>
+                    <td  class="text-nowrap"><a asp-area="Forum" asp-controller="Categories" asp-action="Details" asp-route-id="@category.Id" class="text-dark">@category.Name</a></td>
                     <td>@category.PostsCount</td>
                     <td>@category.Description</td>
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    {
+                        <td>
+                            <a asp-area="Administration" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id" class="btn btn-primary">Edit</a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
