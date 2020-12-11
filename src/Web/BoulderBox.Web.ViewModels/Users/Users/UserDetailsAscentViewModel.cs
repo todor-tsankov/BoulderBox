@@ -7,6 +7,8 @@ namespace BoulderBox.Web.ViewModels.Users.Users
 {
     public class UserDetailsAscentViewModel : IMapFrom<Ascent>
     {
+        public string Id { get; set; }
+
         public string BoulderId { get; set; }
 
         public string BoulderName { get; set; }

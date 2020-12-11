@@ -46,6 +46,7 @@ namespace BoulderBox.Services.Data.Users
                     Key = x.Key,
                     Ascents = x.ToList().Select(x => new UserDetailsAscentViewModel()
                     {
+                        Id = x.Id,
                         GradeText = x.Grade.Text,
                         Stars = x.Stars,
                         StyleShortText = x.Style.ShortText,

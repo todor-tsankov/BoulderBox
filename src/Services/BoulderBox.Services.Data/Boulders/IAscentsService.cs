@@ -9,5 +9,7 @@ namespace BoulderBox.Services.Data.Boulders
     public interface IAscentsService : IBaseService<Ascent>
     {
         Task AddAsync(AscentInputModel ascentInput, string userId);
+
+        Task EditAsync(string id, AscentInputModel ascentInput);
     }
 }

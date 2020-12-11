@@ -43,6 +43,10 @@
                 <th>Boulder</th>
                 <th>Comment</th>
                 <th>Stars</th>
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+                    <th></th>
+                }
             </tr>
         </thead>
         <tbody class="table-light">
@@ -51,6 +55,7 @@
             {
                 <tr>
                     <td>No ascents</td>
+                    <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -88,6 +93,12 @@
                     else
                     {
                         <td>@ascent.Stars</td>
+                    }
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    {
+                        <td>
+                            <a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a>
+                        </td>
                     }
                 </tr>
             }

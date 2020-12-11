@@ -75,7 +75,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 BoulderId = id,
             };
 
-            this.SetListItems(ascent);
+            this.SetCreateListItems(ascent);
             return this.View(ascent);
         }
 
@@ -85,7 +85,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                this.SetListItems(ascentInput);
+                this.SetCreateListItems(ascentInput);
                 return this.View(ascentInput);
             }
 
@@ -93,6 +93,79 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             await this.ascentsService.AddAsync(ascentInput, userId);
 
             return this.RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var valid = this.ascentsService
+                .Exists(x => x.Id == id && x.ApplicationUserId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
+            var ascent = new AscentEditViewModel()
+            {
+                Id = id,
+                AscentInput = this.ascentsService
+                    .GetSingle<AscentInputModel>(x => x.Id == id),
+            };
+
+            this.SetEditListItems(ascent.AscentInput);
+
+            return this.View(ascent);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, AscentInputModel ascentInput)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var valid = this.ascentsService
+                .Exists(x => x.Id == id && x.ApplicationUserId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                var ascent = new AscentEditViewModel()
+                {
+                    Id = id,
+                    AscentInput = ascentInput,
+                };
+
+                this.SetEditListItems(ascent.AscentInput);
+
+                return this.View(ascent);
+            }
+
+            await this.ascentsService.EditAsync(id, ascentInput);
+
+            return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var valid = this.ascentsService
+                .Exists(x => x.Id == id && x.ApplicationUserId == userId);
+
+            if (!valid)
+            {
+                return this.Forbid();
+            }
+
+            await this.ascentsService.DeleteAsync(x => x.Id == id);
+
+            return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }
 
         private static Expression<Func<Ascent, object>> GetOrderBySelector(SortingInputModel sortingModel)
@@ -110,7 +183,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return orderBySelect;
         }
 
-        private void SetListItems(AscentInputModel ascentInput)
+        private void SetCreateListItems(AscentInputModel ascentInput)
         {
             ascentInput.GradesSelectListItems = this.gradesService
                 .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
@@ -120,6 +193,27 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             ascentInput.StylesSelectListItems = this.stylesService
                 .GetMany<StyleViewModel>(orderBySelector: x => x.CreatedOn)
                 .Select(x => new SelectListItem($"{x.LongText} ({x.ShortText})", x.Id))
+                .ToList();
+        }
+
+        private void SetEditListItems(AscentInputModel ascent)
+        {
+            ascent.GradesSelectListItems = this.gradesService
+                                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                                .Select(x => new SelectListItem()
+                                {
+                                    Value = x.Id,
+                                    Text = x.Text,
+                                })
+                                .ToList();
+
+            ascent.StylesSelectListItems = this.stylesService
+                .GetMany<StyleViewModel>()
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.LongText,
+                })
                 .ToList();
         }
     }

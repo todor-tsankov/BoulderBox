@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Boulders.Ascents
 {
-    public class AscentInputModel : IMapTo<Ascent>
+    public class AscentInputModel : IMapTo<Ascent>, IMapFrom<Ascent>
     {
         public const string GradeIdDisplay = "Grade *";
         public const string GradeIdRequiredErrorMessage = "Grade is required.";

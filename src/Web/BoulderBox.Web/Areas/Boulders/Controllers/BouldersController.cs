@@ -114,6 +114,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult Edit(string id)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -138,6 +139,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.View(boulder);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput, IFormFile formFile)
         {
@@ -170,6 +172,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;

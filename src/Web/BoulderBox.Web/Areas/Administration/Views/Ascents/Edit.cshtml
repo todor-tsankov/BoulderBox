@@ -1,0 +1,68 @@
+﻿@model BoulderBox.Web.ViewModels.Boulders.Ascents.AscentEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Ascent";
+}
+
+<div class="row ml-2">
+    <div class="row">
+        <h2>@ViewData["Title"]</h2>
+        <form asp-area="Administration" asp-controller="Ascents" asp-action="Delete" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
+        </form>
+    </div>
+</div>
+<hr class="bg-secondary" />
+
+<form asp-area="Administration" asp-controller="Ascents" asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="AscentInput.BoulderId" value="@Model.AscentInput.BoulderId" type="hidden">
+    </div>
+    <div class="form-group">
+        <label asp-for="AscentInput.GradeId" class="col-form-label"></label>
+        <select asp-for="AscentInput.GradeId" asp-items="Model.AscentInput.GradesSelectListItems" class="form-control"></select>
+        <span asp-validation-for="AscentInput.GradeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AscentInput.StyleId" class="col-form-label"></label>
+        @{
+            var i = 1;
+        }
+        @foreach (var style in Model.AscentInput.StylesSelectListItems)
+        {
+            <div class="custom-control custom-radio">
+                <input asp-for="AscentInput.StyleId" type="radio" id="customRadio@(i)" class="custom-control-input" value="@style.Value" checked="@(style.Value.ToString() == Model.AscentInput.StyleId)">
+                <label class="custom-control-label" for="customRadio@(i)">@style.Text</label>
+            </div>
+
+            i++;
+        }
+        <span asp-validation-for="AscentInput.StyleId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AscentInput.Date" class="col-form-label"></label>
+        <input asp-for="AscentInput.Date" class="form-control">
+        <span asp-validation-for="AscentInput.Date" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group col-12">
+        <div class="custom-control custom-switch">
+            <input asp-for="AscentInput.Recommend" type="checkbox" class="custom-control-input" id="customSwitch1">
+            <label asp-for="AscentInput.Recommend" class="custom-control-label" for="customSwitch1"></label>
+        </div>
+        <span asp-validatkion-for="Recommend" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AscentInput.Stars" class="col-form-label"></label>
+        <input asp-for="AscentInput.Stars" class="form-control">
+        <span asp-validation-for="AscentInput.Stars" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AscentInput.Comment" class="col-form-label"></label>
+        <textarea asp-for="AscentInput.Comment" class="form-control"></textarea>
+        <span asp-validation-for="AscentInput.Comment" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

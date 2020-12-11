@@ -59,6 +59,25 @@ namespace BoulderBox.Services.Data.Boulders
             await this.ascentsRepository.SaveChangesAsync();
         }
 
+        public async Task EditAsync(string id, AscentInputModel ascentInput)
+        {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(ascentInput, nameof(ascentInput));
+
+            var ascent = this.ascentsRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            ascent.GradeId = ascentInput.GradeId;
+            ascent.Recommend = ascentInput.Recommend;
+            ascent.Stars = ascentInput.Stars;
+            ascent.StyleId = ascentInput.StyleId;
+            ascent.Comment = ascentInput.Comment;
+            ascent.Date = ascentInput.Date;
+
+            await this.ascentsRepository.SaveChangesAsync();
+        }
+
         private int CalculatePoints(string userId, Expression<Func<Ascent, bool>> filter)
         {
             var points = this.ascentsRepository

@@ -27,7 +27,7 @@
 <h3>Ascents Of @Model.UserName</h3>
 
 <div class="table-responsive mt-3">
-    <table class="table table-borderless table-hover">
+    <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
                 <th>Date</th>
@@ -35,10 +35,12 @@
                 <th>Boulder</th>
                 <th>Comment</th>
                 <th>Stars</th>
-                <th></th>
+                @if (this.User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.Id)
+                {
+                    <th></th>
+                }
             </tr>
         </thead>
-
 
         @if (!Model.Ascents.Any())
         {
@@ -55,7 +57,7 @@
 
         @foreach (var group in Model.Ascents)
         {
-            <thead class="bg-secondary">
+            <thead class="table-secondary">
                 <tr>
                     <th>@group.Key</th>
                     <th></th>
@@ -66,7 +68,7 @@
                 </tr>
             </thead>
 
-            <tbody class="table-warning">
+            <tbody class="table-light">
                 @foreach (var ascent in group.Ascents)
                 {
                     var styleBadge = "badge badge-";
@@ -97,7 +99,10 @@
                         {
                             <td>@ascent.Stars</td>
                         }
-                        <td><a class="btn btn-outline-primary">Edit</a></td>
+                        @if (this.User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.Id)
+                        {
+                            <td><a asp-area="Boulders" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
+                        }
                     </tr>
                 }
             </tbody>
