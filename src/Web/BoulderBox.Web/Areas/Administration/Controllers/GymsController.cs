@@ -93,6 +93,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
             await this.gymsService.DeleteAsync(x => x.Id == id);
