@@ -2,7 +2,7 @@
 
 namespace BoulderBox.Services.Data.Tests.CommonServices.TestClasses
 {
-    public class TestViewModel : IMapTo<Test>
+    public class TestViewModel : IMapTo<Test>, IMapFrom<Test>
     {
         public TestViewModel(string name, int count)
         {

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
+using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Boulders.Boulders;
@@ -81,7 +83,7 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             string imageSource,
             string authorId)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Boulder>>();
             var testData = new List<Boulder>();
@@ -131,6 +133,146 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             Assert.Equal(gymId, boulder.GymId);
             Assert.Equal(imageInput.Id, boulder.Image.Id);
             Assert.Equal(imageInput.Source, boulder.Image.Source);
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenIdIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Boulder>>();
+
+            var bouldersService = new BouldersService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await bouldersService.EditAsync(null, new BoulderInputModel(), new ImageInputModel());
+            });
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenTheInputModelIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Boulder>>();
+
+            var bouldersService = new BouldersService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await bouldersService.EditAsync("validId", null, new ImageInputModel());
+            });
+        }
+
+        [Theory]
+        [InlineData("name1", "desc1", "gradeId1", "gymId1", "newName1", "newDesc1", "newGradeId1", "newGymId1", false, "imageId1", "imageSource1", "newImageId1", "newImageSource1")]
+        [InlineData("name2", "",      "gradeId2", "gymId2", "newName2", "newDesc2", "newGradeId2", "newGymId2", false, "imageId2", "imageSource2", "newImageId2", "newImageSource2")]
+        [InlineData("name3", null,    "gradeId3", "gymId3", "newName3", "newDesc3", "newGradeId3", "newGymId3", false, "imageId3", "imageSource3", "newImageId3", "newImageSource3")]
+        [InlineData("name4", "desc4", "gradeId4", "gymId4", "newName4", "newDesc4", "newGradeId4", "newGymId4", true,  null, null, null, null)]
+        [InlineData("name5", "",      "gradeId5", "gymId5", "newName5", "newDesc5", "newGradeId5", "newGymId5", true,  null, null, null, null)]
+        [InlineData("name6", null,    "gradeId6", "gymId6", "newName6", "newDesc6", "newGradeId6", "newGymId6", true,  null, null, null, null)]
+        public async Task EditAsyncEditsThePorpertiesAndSavesTheChanges(
+            string name,
+            string description,
+            string gradeId,
+            string gymId,
+            string newName,
+            string newDescription,
+            string newGradeId,
+            string newGymId,
+            bool imageNull,
+            string imageId,
+            string imageSource,
+            string newImageId,
+            string newImageSource)
+        {
+            // Arrange
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
+            var saved = true;
+
+            var boulder = new Boulder()
+            {
+                Name = name,
+                Description = description,
+                GradeId = gradeId,
+                GymId = gymId,
+                Image = new Image()
+                {
+                    Id = imageId,
+                    Source = imageSource,
+                },
+            };
+
+            var bouldersList = new List<Boulder>()
+            {
+                new Boulder(),
+                new Boulder(),
+                new Boulder(),
+                boulder,
+                new Boulder(),
+                new Boulder(),
+            };
+
+            var repositoryMock = new Mock<IDeletableEntityRepository<Boulder>>();
+
+            repositoryMock.Setup(x => x.All())
+                .Returns(bouldersList.AsQueryable());
+
+            repositoryMock.Setup(x => x.SaveChangesAsync())
+                .Callback(() =>
+                {
+                    saved = true;
+                });
+
+            var boulderEditModel = new BoulderInputModel()
+            {
+                Name = newName,
+                Description = newDescription,
+                GymId = newGymId,
+                GradeId = newGradeId,
+            };
+
+            var imageEditModel = new ImageInputModel()
+            {
+                Id = newImageId,
+                Source = newImageSource,
+            };
+
+            if (imageNull)
+            {
+                imageEditModel = null;
+            }
+
+            var bouldersService = new BouldersService(repositoryMock.Object, AutoMapperConfig.MapperInstance);
+
+            // Act
+            await bouldersService.EditAsync(boulder.Id, boulderEditModel, imageEditModel);
+
+            // Assert
+            Assert.True(saved);
+
+            Assert.Equal(newName, boulder.Name);
+            Assert.Equal(newDescription, boulder.Description);
+            Assert.Equal(newGradeId, boulder.GradeId);
+            Assert.Equal(newGymId, boulder.GymId);
+
+            var actualImage = boulder.Image;
+
+            if (imageNull)
+            {
+                Assert.Equal(imageId, actualImage.Id);
+                Assert.Equal(imageSource, actualImage.Source);
+            }
+            else
+            {
+                Assert.Equal(newImageId, actualImage.Id);
+                Assert.Equal(newImageSource, actualImage.Source);
+            }
         }
     }
 }

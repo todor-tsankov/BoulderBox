@@ -6,6 +6,7 @@ using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Services.Data.Common;
 using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels;
 using Moq;
 using Xunit;
 
@@ -68,7 +69,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var orderBy = DynamicExpressionParser.ParseLambda<Test, object>(new ParsingConfig() { }, true, orderByStr);
             var testData = GetTestData();
 
-            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
             repositoryMock.Setup(x => x.AllAsNoTracking())
@@ -103,7 +104,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             // Arrange
             var testData = GetTestData();
 
-            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
             repositoryMock.Setup(x => x.AllAsNoTracking())
@@ -138,7 +139,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             // Arrange
             var testData = GetTestData();
 
-            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
             repositoryMock.Setup(x => x.AllAsNoTracking())
@@ -180,7 +181,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var orderBy = DynamicExpressionParser.ParseLambda<Test, object>(new ParsingConfig() { }, true, orderByStr);
             var testData = GetTestData();
 
-            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
             repositoryMock.Setup(x => x.AllAsNoTracking())

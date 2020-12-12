@@ -12,6 +12,7 @@ using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Files;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Services.Data.Places;
+using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Data.Users;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Services.Messaging;
@@ -62,7 +63,7 @@ namespace BoulderBox.Web
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             // Auto mapper
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly, typeof(Test).Assembly);
             services.AddSingleton(AutoMapperConfig.MapperInstance);
 
             services.AddSingleton(this.configuration);

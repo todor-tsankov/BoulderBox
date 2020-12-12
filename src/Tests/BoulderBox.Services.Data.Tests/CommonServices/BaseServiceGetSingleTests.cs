@@ -8,6 +8,7 @@ using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Services.Data.Common;
 using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels;
 using Moq;
 using Xunit;
 
@@ -43,7 +44,7 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var predicate = DynamicExpressionParser.ParseLambda<Test, bool>(new ParsingConfig() { }, true, predicateStr);
             var testData = GetTestData();
 
-            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var repository = new Mock<IDeletableEntityRepository<Test>>();
             repository.Setup(x => x.AllAsNoTracking())

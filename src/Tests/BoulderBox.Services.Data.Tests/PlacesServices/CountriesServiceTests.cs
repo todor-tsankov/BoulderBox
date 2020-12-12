@@ -7,6 +7,7 @@ using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
+using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Files.Images;
@@ -51,7 +52,7 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
             string imageSource)
         {
             // Arrange
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
 
             var saved = true;
             var countriesList = new List<Country>();
@@ -169,7 +170,7 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
             string newImageSource)
         {
             // Arrange
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
             var saved = true;
 
             var country = new Country()
