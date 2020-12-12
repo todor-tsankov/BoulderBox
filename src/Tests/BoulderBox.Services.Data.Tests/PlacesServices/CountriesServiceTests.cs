@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AutoMapper;
@@ -110,6 +111,139 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
             {
                 Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
+            }
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenTheIdIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Country>>();
+
+            var countriesService = new CountriesService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await countriesService.EditAsync(null, new CountryInputModel(), new ImageInputModel());
+            });
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenTheInputModelIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Country>>();
+
+            var countriesService = new CountriesService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await countriesService.EditAsync("validId", null, new ImageInputModel());
+            });
+        }
+
+        [Theory]
+        [InlineData("countryName1", "desc1", "AAA", "editedName1", "editedDesc1", "CCC", false, "imageId1", "imageSrc1", "editedImageId1", "editedImageSrc1")]
+        [InlineData("countryName2", "",      "BBB", "editedName2", "editedDesc2", "AAA", false, "imageId2", "imageSrc2", "editedImageId2", "editedImageSrc2")]
+        [InlineData("countryName4", null,    "CCC", "editedName2", "editedDesc2", "DDD", false, "imageId3", "imageSrc3", "editedImageId3", "editedImageSrc3")]
+        [InlineData("countryName4", "desc4", "DDD", "editedName3", "editedDesc3", "BBB", true, "imageId4",  "imageSrc4", null, null)]
+        [InlineData("countryName5", "desc5", "EEE", "editedName4", "",            "FFF", true, "imageId5",  "imageSrc5", null, null)]
+        [InlineData("countryName6", "desc6", "FFF", "editedName4", null,          "EEE", true, "imageId6",  "imageSrc6", null, null)]
+        public async Task EditEditsTheCorrectPropertiesAndSavesTheResult(
+            string countryName,
+            string description,
+            string countryCode,
+            string newCountryName,
+            string newDescription,
+            string newCountryCode,
+            bool imageNull,
+            string imageId,
+            string imageSource,
+            string newImageId,
+            string newImageSource)
+        {
+            // Arrange
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+            var saved = true;
+
+            var country = new Country()
+            {
+                Name = countryName,
+                CountryCode = countryCode,
+                Description = description,
+                Image = new Image()
+                {
+                    Id = imageId,
+                    Source = imageSource
+                },
+            };
+
+            var countriesList = new List<Country>()
+            {
+                new Country(),
+                new Country(),
+                country,
+                new Country(),
+            };
+
+            var repositoryMock = new Mock<IDeletableEntityRepository<Country>>();
+
+            repositoryMock.Setup(x => x.All())
+                .Returns(countriesList.AsQueryable());
+
+            repositoryMock.Setup(x => x.SaveChangesAsync())
+                .Callback(() =>
+                {
+                    saved = true;
+                });
+
+            var countriesService = new CountriesService(repositoryMock.Object, AutoMapperConfig.MapperInstance);
+
+            var editInputModel = new CountryInputModel()
+            {
+                Name = newCountryName,
+                CountryCode = newCountryCode,
+                Description = newDescription,
+            };
+
+            var imageInputModel = new ImageInputModel()
+            {
+                Id = newImageId,
+                Source = newImageSource,
+            };
+
+            if (imageNull)
+            {
+                imageInputModel = null;
+            }
+
+            // Act
+            await countriesService.EditAsync(country.Id, editInputModel, imageInputModel);
+
+            // Assert
+            Assert.True(saved);
+
+            Assert.Equal(newCountryName, country.Name);
+            Assert.Equal(newCountryCode, country.CountryCode);
+            Assert.Equal(newDescription, country.Description);
+
+            var actualImage = country.Image;
+
+            if (imageNull)
+            {
+                Assert.Equal(imageId, actualImage.Id);
+                Assert.Equal(imageSource, actualImage.Source);
+            }
+            else
+            {
+                Assert.Equal(newImageId, actualImage.Id);
+                Assert.Equal(newImageSource, actualImage.Source);
             }
         }
     }

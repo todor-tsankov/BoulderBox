@@ -53,7 +53,7 @@ namespace BoulderBox.Services.Data.Places
 
             country.Name = countryInput.Name;
             country.CountryCode = countryInput.CountryCode;
-            countryInput.Description = countryInput.Description;
+            country.Description = countryInput.Description;
 
             await this.countriesRepository.SaveChangesAsync();
         }
