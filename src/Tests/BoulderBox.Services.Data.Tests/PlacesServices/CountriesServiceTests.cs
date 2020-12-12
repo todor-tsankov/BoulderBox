@@ -155,7 +155,7 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
         [InlineData("countryName4", "desc4", "DDD", "editedName3", "editedDesc3", "BBB", true, "imageId4",  "imageSrc4", null, null)]
         [InlineData("countryName5", "desc5", "EEE", "editedName4", "",            "FFF", true, "imageId5",  "imageSrc5", null, null)]
         [InlineData("countryName6", "desc6", "FFF", "editedName4", null,          "EEE", true, "imageId6",  "imageSrc6", null, null)]
-        public async Task EditEditsTheCorrectPropertiesAndSavesTheResult(
+        public async Task EditAsyncEditsTheCorrectPropertiesAndSavesTheResult(
             string countryName,
             string description,
             string countryCode,
