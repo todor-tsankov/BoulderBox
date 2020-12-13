@@ -892,7 +892,7 @@ namespace BoulderBox.Data.Migrations
             modelBuilder.Entity("BoulderBox.Data.Models.Comment", b =>
                 {
                     b.HasOne("BoulderBox.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ForumComments")
+                        .WithMany("Comments")
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("BoulderBox.Data.Models.Post", "Post")
@@ -933,7 +933,7 @@ namespace BoulderBox.Data.Migrations
             modelBuilder.Entity("BoulderBox.Data.Models.Post", b =>
                 {
                     b.HasOne("BoulderBox.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("ForumPosts")
+                        .WithMany("Posts")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1012,11 +1012,11 @@ namespace BoulderBox.Data.Migrations
 
                     b.Navigation("Claims");
 
-                    b.Navigation("ForumComments");
-
-                    b.Navigation("ForumPosts");
+                    b.Navigation("Comments");
 
                     b.Navigation("Logins");
+
+                    b.Navigation("Posts");
 
                     b.Navigation("Roles");
                 });

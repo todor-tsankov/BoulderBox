@@ -6,10 +6,10 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 using BoulderBox.Data.Models;
+using BoulderBox.Services.Messaging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
@@ -100,9 +100,11 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account
                         protocol: this.Request.Scheme);
 
                     await this.emailSender.SendEmailAsync(
+                        "info.boulderbox@gmail.com",
+                        "Todor Tsankov",
                         this.Input.Email,
                         "Confirm your email",
-                        htmlMessage: $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (this.userManager.Options.SignIn.RequireConfirmedAccount)
                     {
