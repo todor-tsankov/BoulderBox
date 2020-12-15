@@ -170,7 +170,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 return this.View(boulder);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.EditAsync(id, boulderInput, image);
 
             return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });

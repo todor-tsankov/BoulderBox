@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Cities
@@ -18,6 +20,8 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
 
         public const string DescriptionLengthErrorMessage = "Description can't be more than 1000 characters.";
 
+        public const string FormFileDisplay = "Image";
+
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
         [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
@@ -31,6 +35,7 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
         [MaxLength(1000, ErrorMessage = DescriptionLengthErrorMessage)]
         public string Description { get; set; }
 
+        [Display(Name = FormFileDisplay)]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 

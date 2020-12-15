@@ -24,6 +24,8 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
 
         public const string InvalidDescriptionMessage = "Description can't be more than 1000 characters.";
 
+        public const string FormFileDisplay = "Image";
+
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
         [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
@@ -41,6 +43,7 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
         [Required(ErrorMessage = CountryIdRequiredErrorMessage)]
         public string CountryId { get; set; }
 
+        [Display(Name = FormFileDisplay)]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 

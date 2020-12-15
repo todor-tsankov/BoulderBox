@@ -18,6 +18,8 @@ namespace BoulderBox.Web.ViewModels.Places.Countries
         public const string CountryCodeRequiredErrorMessage = "Country Code is required.";
         public const string CountryCodeInvalidErrorMessage = "Country Code must consist of three capital letters.";
 
+        public const string FormFileDisplay = "Image";
+
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
         [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
@@ -32,6 +34,7 @@ namespace BoulderBox.Web.ViewModels.Places.Countries
         [MaxLength(1000)]
         public string Description { get; set; }
 
+        [Display(Name = FormFileDisplay)]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
     }

@@ -32,6 +32,8 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
         public const string DescriptionRequiredErrorMessage = "Description is Required.";
         public const string DescriptionLengthErrorMessage = "Description must be between 5 and 1000 characters.";
 
+        public const string FormFileDisplay = "Image *";
+
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
         [MinLength(2, ErrorMessage = NameLengthErrorMessage)]
@@ -58,6 +60,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
         [Required]
         public string CityId { get; set; }
 
+        [Display(Name = FormFileDisplay)]
         [Required]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
