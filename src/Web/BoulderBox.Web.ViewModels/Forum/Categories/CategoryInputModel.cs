@@ -2,6 +2,8 @@
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
+using Microsoft.AspNetCore.Http;
 
 namespace BoulderBox.Web.ViewModels.Forum.Categories
 {
@@ -15,5 +17,8 @@ namespace BoulderBox.Web.ViewModels.Forum.Categories
 
         [MaxLength(1000)]
         public string Description { get; set; }
+
+        [ImageAttribute]
+        public IFormFile FormFile { get; set; }
     }
 }

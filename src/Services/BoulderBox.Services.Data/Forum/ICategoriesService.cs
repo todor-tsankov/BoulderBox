@@ -11,6 +11,6 @@ namespace BoulderBox.Services.Data.Forum
     {
         Task AddAsync(CategoryInputModel categoryInput, ImageInputModel imageInput);
 
-        Task EditAsync(string id, CategoryInputModel categoryInput);
+        Task EditAsync(string id, CategoryInputModel categoryInput, ImageInputModel imageInput);
     }
 }

@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Gyms
@@ -38,6 +40,9 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
         [Display(Name = CountryIdDisplay)]
         [Required(ErrorMessage = CountryIdRequiredErrorMessage)]
         public string CountryId { get; set; }
+
+        [ImageAttribute]
+        public IFormFile FormFile { get; set; }
 
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
 

@@ -37,11 +37,11 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
 
         [Theory]
         [InlineData("name1", "desc1", false, "/img/imageId1.jpg")]
-        [InlineData("name2", "", false, "/img/imageId2.jpg")]
-        [InlineData("name3", null, false, "/img/imageId3.jpg")]
+        [InlineData("name2", "",      false, "/img/imageId2.jpg")]
+        [InlineData("name3", null,    false, "/img/imageId3.jpg")]
         [InlineData("name4", "desc4", true, null)]
-        [InlineData("name5", "", true, null)]
-        [InlineData("name6", null, true, null)]
+        [InlineData("name5", "",      true, null)]
+        [InlineData("name6", null,    true, null)]
         public async Task AddAsyncMapsTheInputModelAndAddsItToTheRepository(
             string name,
             string description,

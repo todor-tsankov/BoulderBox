@@ -70,7 +70,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(PostInputModel postInput, IFormFile formFile)
+        public async Task<IActionResult> Create(PostInputModel postInput)
         {
             if (!this.ModelState.IsValid)
             {
@@ -78,8 +78,8 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
 
+            var image = await this.cloudinaryService.SaveImageAsync(postInput.FormFile);
             await this.postsService.AddAsync(postInput, image, userId);
 
             return this.RedirectToAction("Details", "Categories", new { id = postInput.CategoryId });

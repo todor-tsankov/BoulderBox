@@ -31,6 +31,9 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
         [MaxLength(1000, ErrorMessage = DescriptionLengthErrorMessage)]
         public string Description { get; set; }
 
+        [ImageAttribute]
+        public IFormFile FormFile { get; set; }
+
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
     }
 }

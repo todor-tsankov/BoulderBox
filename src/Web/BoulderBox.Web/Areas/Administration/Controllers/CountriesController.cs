@@ -26,7 +26,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CountryInputModel countryInput, IFormFile formFile)
+        public async Task<IActionResult> Create(CountryInputModel countryInput)
         {
             var existsCountry = this.countriesService.Exists(x => x.Name == countryInput.Name);
 
@@ -35,7 +35,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(countryInput);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(countryInput.FormFile);
             await this.countriesService.AddAsync(countryInput, image);
 
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });
@@ -54,7 +54,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, CountryInputModel countryInput, IFormFile formFile)
+        public async Task<IActionResult> Edit(string id, CountryInputModel countryInput)
         {
             var existsCountry = this.countriesService
                 .Exists(x => x.Id != id && (x.Name == countryInput.Name || x.CountryCode == countryInput.CountryCode));
@@ -70,7 +70,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(country);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(countryInput.FormFile);
             await this.countriesService.EditAsync(id, countryInput, image);
 
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });

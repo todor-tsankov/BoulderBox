@@ -33,7 +33,7 @@ namespace BoulderBox.Services.Data.Forum
             await this.categoriesRepository.SaveChangesAsync();
         }
 
-        public async Task EditAsync(string id, CategoryInputModel categoryInput)
+        public async Task EditAsync(string id, CategoryInputModel categoryInput, ImageInputModel imageInput)
         {
             this.NullCheck(id, nameof(id));
             this.NullCheck(categoryInput, nameof(categoryInput));
@@ -41,6 +41,11 @@ namespace BoulderBox.Services.Data.Forum
             var category = this.categoriesRepository
                 .All()
                 .FirstOrDefault(x => x.Id == id);
+
+            if (imageInput != null)
+            {
+                category.Image = this.mapper.Map<Image>(imageInput);
+            }
 
             category.Name = categoryInput.Name;
             category.Description = categoryInput.Description;

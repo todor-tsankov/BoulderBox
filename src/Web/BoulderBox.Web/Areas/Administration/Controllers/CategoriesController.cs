@@ -26,14 +26,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryInputModel categoryInput, IFormFile formFile)
+        public async Task<IActionResult> Create(CategoryInputModel categoryInput)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(categoryInput);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(categoryInput.FormFile);
             await this.categoriesService.AddAsync(categoryInput, image);
 
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
@@ -69,7 +69,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(category);
             }
 
-            await this.categoriesService.EditAsync(id, categoryInput);
+            var image = await this.cloudinaryService.SaveImageAsync(categoryInput.FormFile);
+            await this.categoriesService.EditAsync(id, categoryInput, image);
 
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
         }

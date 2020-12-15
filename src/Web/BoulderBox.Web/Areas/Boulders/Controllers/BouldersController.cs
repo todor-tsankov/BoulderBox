@@ -102,7 +102,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(BoulderInputModel boulderInput, IFormFile formFile)
+        public async Task<IActionResult> Create(BoulderInputModel boulderInput)
         {
             if (!this.ModelState.IsValid)
             {
@@ -112,7 +112,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.AddAsync(boulderInput, userId, image);
 
             return this.RedirectToAction("Index");
@@ -145,7 +145,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput, IFormFile formFile)
+        public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 

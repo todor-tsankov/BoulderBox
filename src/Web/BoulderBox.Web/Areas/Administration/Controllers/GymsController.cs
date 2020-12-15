@@ -40,7 +40,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(GymInputModel gymInput, IFormFile formFile)
+        public async Task<IActionResult> Create(GymInputModel gymInput)
         {
             var cityExists = this.citiesService.Exists(x => x.Id == gymInput.CityId);
 
@@ -52,7 +52,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(gym);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.AddAsync(gymInput, image);
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
@@ -74,7 +74,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, GymInputModel gymInput, IFormFile formFile)
+        public async Task<IActionResult> Edit(string id, GymInputModel gymInput)
         {
             if (!this.ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(gym);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.EditAsync(id, gymInput, image);
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
