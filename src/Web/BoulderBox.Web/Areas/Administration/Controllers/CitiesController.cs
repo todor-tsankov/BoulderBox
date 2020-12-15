@@ -86,7 +86,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(city);
             }
 
-            var image = await this.cloudinaryService.SaveImageAsync(cityInput.FormFil);
+            var image = await this.cloudinaryService.SaveImageAsync(cityInput.FormFile);
             await this.citiesService.EditAsync(id, cityInput, image);
 
             return this.RedirectToAction("Index", "Cities", new { area = "Places" });

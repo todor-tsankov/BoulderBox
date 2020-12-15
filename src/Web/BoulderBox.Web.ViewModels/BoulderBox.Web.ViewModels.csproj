@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -22,6 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\BoulderBox.Data.Models\BoulderBox.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Mapping\BoulderBox.Services.Mapping.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Administration\" />
   </ItemGroup>
 
 </Project>

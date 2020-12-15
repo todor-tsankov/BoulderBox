@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Places;
@@ -36,6 +37,12 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
             var cities = this.citiesService
                 .GetMany<CityViewModel>(predicate);
+
+            foreach (var city in cities)
+            {
+                city.Name = HttpUtility.HtmlEncode(city.Name);
+                city.CountryName = HttpUtility.HtmlEncode(city.CountryName);
+            }
 
             return cities;
         }
