@@ -7,6 +7,7 @@ using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Data.Repositories;
 using BoulderBox.Data.Seeding;
+using BoulderBox.Services;
 using BoulderBox.Services.Data;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Files;
@@ -97,6 +98,12 @@ namespace BoulderBox.Web
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
+            services.AddTransient<IStaticFilesService, StaticFilesService>();
+            services.AddTransient<ICloudinaryService>(_ => new CloudinaryService(
+                this.configuration["Cloudinary:CloudName"],
+                this.configuration["Cloudinary:ApiKey"],
+                this.configuration["Cloudinary:ApiSecret"]));
+
             services.AddTransient<IEmailSender>(_ => new SendGridEmailSender(this.configuration["SendGrid:ApiKey"]));
 
             // Boulders - Application services

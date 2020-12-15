@@ -53,16 +53,15 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
         }
 
         [Theory]
-        [InlineData("categoryId1", "text1", "title1", false, "imageId1", "imageSource1", "userId1")]
-        [InlineData("categoryId2", "text2", "title2", false, "imageId2", "imageSource2", "userId2")]
-        [InlineData("categoryId3", "text3", "title3", true, null, null, "userId3")]
-        [InlineData("categoryId4", "text4", "title4", true, null, null, "userId4")]
+        [InlineData("categoryId1", "text1", "title1", false, "imageSource1", "userId1")]
+        [InlineData("categoryId2", "text2", "title2", false, "imageSource2", "userId2")]
+        [InlineData("categoryId3", "text3", "title3", true, null, "userId3")]
+        [InlineData("categoryId4", "text4", "title4", true, null, "userId4")]
         public async Task AddMapsTheInputModelsSetsUserIdAndAddsToTheRepository(
             string categoryId,
             string text,
             string title,
             bool nullImage,
-            string imageId,
             string imageSource,
             string userId)
         {
@@ -97,7 +96,6 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
 
             var imageInputModel = new ImageInputModel()
             {
-               Id = imageId,
                Source = imageSource,
             };
 
@@ -126,7 +124,6 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
             }
             else
             {
-                Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
+using BoulderBox.Services;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels;
@@ -18,11 +19,16 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
     {
         private readonly IPostsService postsService;
         private readonly ICommentsService commentsService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public PostsController(IPostsService postsService, ICommentsService commentsService)
+        public PostsController(
+            IPostsService postsService,
+            ICommentsService commentsService,
+            ICloudinaryService cloudinaryService)
         {
             this.postsService = postsService;
             this.commentsService = commentsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Details(string id, int pageId = 1)
@@ -72,7 +78,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             }
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
 
             await this.postsService.AddAsync(postInput, image, userId);
 

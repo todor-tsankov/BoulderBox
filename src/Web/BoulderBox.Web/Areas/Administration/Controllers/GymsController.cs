@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using BoulderBox.Services;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
 using BoulderBox.Web.ViewModels.Places.Cities;
@@ -17,15 +18,18 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         private readonly ICountriesService countriesService;
         private readonly ICitiesService citiesService;
         private readonly IGymsService gymsService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public GymsController(
             ICountriesService countriesService,
             ICitiesService citiesService,
-            IGymsService gymsService)
+            IGymsService gymsService,
+            ICloudinaryService cloudinaryService)
         {
             this.countriesService = countriesService;
             this.citiesService = citiesService;
             this.gymsService = gymsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Create()
@@ -48,7 +52,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(gym);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.gymsService.AddAsync(gymInput, image);
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
@@ -87,7 +91,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(gym);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.gymsService.EditAsync(id, gymInput, image);
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });

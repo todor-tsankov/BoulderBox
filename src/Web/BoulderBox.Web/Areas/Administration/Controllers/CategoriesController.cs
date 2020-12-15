@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using BoulderBox.Services;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
 using BoulderBox.Web.ViewModels.Forum.Categories;
@@ -11,10 +12,12 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
     public class CategoriesController : AdministrationController
     {
         private readonly ICategoriesService categoriesService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public CategoriesController(ICategoriesService categoriesService)
+        public CategoriesController(ICategoriesService categoriesService, ICloudinaryService cloudinaryService)
         {
             this.categoriesService = categoriesService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Create()
@@ -30,7 +33,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(categoryInput);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.categoriesService.AddAsync(categoryInput, image);
 
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });

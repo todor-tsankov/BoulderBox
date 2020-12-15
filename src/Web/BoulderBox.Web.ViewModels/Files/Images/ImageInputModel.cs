@@ -5,8 +5,6 @@ namespace BoulderBox.Web.ViewModels.Files.Images
 {
     public class ImageInputModel : IMapTo<Image>
     {
-        public string Id { get; set; }
-
         public string Source { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using BoulderBox.Services;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
 using BoulderBox.Web.ViewModels.Places.Countries;
@@ -11,10 +12,12 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
     public class CountriesController : AdministrationController
     {
         private readonly ICountriesService countriesService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public CountriesController(ICountriesService countriesService)
+        public CountriesController(ICountriesService countriesService, ICloudinaryService cloudinaryService)
         {
             this.countriesService = countriesService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Create()
@@ -32,7 +35,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(countryInput);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.countriesService.AddAsync(countryInput, image);
 
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });
@@ -67,7 +70,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(country);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.countriesService.EditAsync(id, countryInput, image);
 
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });

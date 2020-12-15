@@ -36,17 +36,16 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
         }
 
         [Theory]
-        [InlineData("name1", "desc1", false, "imageId1", "~/img/imageId1.jpg")]
-        [InlineData("name2", "",      false, "imageId2", "~/img/imageId2.jpg")]
-        [InlineData("name3", null,    false, "imageId3", "~/img/imageId3.jpg")]
-        [InlineData("name4", "desc4", true,  null, null)]
-        [InlineData("name5", "",      true,  null, null)]
-        [InlineData("name6", null,    true,  null, null)]
+        [InlineData("name1", "desc1", false, "/img/imageId1.jpg")]
+        [InlineData("name2", "", false, "/img/imageId2.jpg")]
+        [InlineData("name3", null, false, "/img/imageId3.jpg")]
+        [InlineData("name4", "desc4", true, null)]
+        [InlineData("name5", "", true, null)]
+        [InlineData("name6", null, true, null)]
         public async Task AddAsyncMapsTheInputModelAndAddsItToTheRepository(
             string name,
             string description,
             bool nullImage,
-            string imageId,
             string imageSource)
         {
             // Arrange
@@ -78,7 +77,6 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
 
             var imageInput = new ImageInputModel()
             {
-                Id = imageId,
                 Source = imageSource,
             };
 
@@ -97,15 +95,14 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
             Assert.Equal(name, actualCategory.Name);
             Assert.Equal(description, actualCategory.Description);
 
+            var actualImage = actualCategory.Image;
+
             if (nullImage)
             {
                 Assert.Null(actualCategory.Image);
             }
             else
             {
-                var actualImage = actualCategory.Image;
-
-                Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
             }
         }

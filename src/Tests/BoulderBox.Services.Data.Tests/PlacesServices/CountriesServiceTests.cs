@@ -37,18 +37,17 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
         }
 
         [Theory]
-        [InlineData("countryName1", "description1", "AAA", false, "imageId1", "~/img/imageId1.jpeg")]
-        [InlineData("countryName2", "",             "BBB", false, "imageId2", "~/img/imageId2.jpeg")]
-        [InlineData("countryName3", null,           "CCC", false, "imageId3", "~/img/imageId3.jpeg")]
-        [InlineData("countryName4", "description4", "DDD", true, null, null)]
-        [InlineData("countryName5", "",             "EEE", true, null, null)]
-        [InlineData("countryName6", null,           "FFF", true, null, null)]
+        [InlineData("countryName1", "description1", "AAA", false, "/img/imageId1.jpeg")]
+        [InlineData("countryName2", "",             "BBB", false, "/img/imageId2.jpeg")]
+        [InlineData("countryName3", null,           "CCC", false, "/img/imageId3.jpeg")]
+        [InlineData("countryName4", "description4", "DDD", true, null)]
+        [InlineData("countryName5", "",             "EEE", true, null)]
+        [InlineData("countryName6", null,           "FFF", true, null)]
         public async Task AddMapsTheInputModelAndImageAndAddsThem(
             string name,
             string description,
             string countryCode,
             bool nullImage,
-            string imageId,
             string imageSource)
         {
             // Arrange
@@ -80,7 +79,6 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
 
             var imageInputModel = new ImageInputModel()
             {
-                Id = imageId,
                 Source = imageSource,
             };
 
@@ -110,7 +108,6 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
             }
             else
             {
-                Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
             }
         }
@@ -150,12 +147,12 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
         }
 
         [Theory]
-        [InlineData("countryName1", "desc1", "AAA", "editedName1", "editedDesc1", "CCC", false, "imageId1", "imageSrc1", "editedImageId1", "editedImageSrc1")]
-        [InlineData("countryName2", "",      "BBB", "editedName2", "editedDesc2", "AAA", false, "imageId2", "imageSrc2", "editedImageId2", "editedImageSrc2")]
-        [InlineData("countryName4", null,    "CCC", "editedName2", "editedDesc2", "DDD", false, "imageId3", "imageSrc3", "editedImageId3", "editedImageSrc3")]
-        [InlineData("countryName4", "desc4", "DDD", "editedName3", "editedDesc3", "BBB", true, "imageId4",  "imageSrc4", null, null)]
-        [InlineData("countryName5", "desc5", "EEE", "editedName4", "",            "FFF", true, "imageId5",  "imageSrc5", null, null)]
-        [InlineData("countryName6", "desc6", "FFF", "editedName4", null,          "EEE", true, "imageId6",  "imageSrc6", null, null)]
+        [InlineData("countryName1", "desc1", "AAA", "editedName1", "editedDesc1", "CCC", false, "imageSrc1", "editedImageSrc1")]
+        [InlineData("countryName2", "",      "BBB", "editedName2", "editedDesc2", "AAA", false, "imageSrc2", "editedImageSrc2")]
+        [InlineData("countryName4", null,    "CCC", "editedName2", "editedDesc2", "DDD", false, "imageSrc3", "editedImageSrc3")]
+        [InlineData("countryName4", "desc4", "DDD", "editedName3", "editedDesc3", "BBB", true, "imageSrc4", null)]
+        [InlineData("countryName5", "desc5", "EEE", "editedName4", "",            "FFF", true, "imageSrc5", null)]
+        [InlineData("countryName6", "desc6", "FFF", "editedName4", null,          "EEE", true, "imageSrc6", null)]
         public async Task EditAsyncEditsTheCorrectPropertiesAndSavesTheResult(
             string countryName,
             string description,
@@ -164,9 +161,7 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
             string newDescription,
             string newCountryCode,
             bool imageNull,
-            string imageId,
             string imageSource,
-            string newImageId,
             string newImageSource)
         {
             // Arrange
@@ -180,8 +175,7 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
                 Description = description,
                 Image = new Image()
                 {
-                    Id = imageId,
-                    Source = imageSource
+                    Source = imageSource,
                 },
             };
 
@@ -215,7 +209,6 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
 
             var imageInputModel = new ImageInputModel()
             {
-                Id = newImageId,
                 Source = newImageSource,
             };
 
@@ -238,12 +231,10 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
 
             if (imageNull)
             {
-                Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
             }
             else
             {
-                Assert.Equal(newImageId, actualImage.Id);
                 Assert.Equal(newImageSource, actualImage.Source);
             }
         }

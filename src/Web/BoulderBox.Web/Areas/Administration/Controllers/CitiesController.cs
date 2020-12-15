@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using BoulderBox.Services;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
 using BoulderBox.Web.ViewModels.Places.Cities;
@@ -15,11 +16,16 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
     {
         private readonly ICountriesService countriesService;
         private readonly ICitiesService citiesService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public CitiesController(ICountriesService countriesService, ICitiesService citiesService)
+        public CitiesController(
+            ICountriesService countriesService,
+            ICitiesService citiesService,
+            ICloudinaryService cloudinaryService)
         {
             this.countriesService = countriesService;
             this.citiesService = citiesService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Create()
@@ -41,7 +47,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(cityInput);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.citiesService.AddAsync(cityInput, image);
 
             return this.RedirectToAction("Index", "Cities", new { area = "Places" });
@@ -80,7 +86,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 return this.View(city);
             }
 
-            var image = await this.SaveImageFileAsync(formFile);
+            var image = await this.cloudinaryService.SaveImageAsync(formFile);
             await this.citiesService.EditAsync(id, cityInput, image);
 
             return this.RedirectToAction("Index", "Cities", new { area = "Places" });

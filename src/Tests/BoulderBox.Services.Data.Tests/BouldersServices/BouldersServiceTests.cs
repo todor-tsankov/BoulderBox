@@ -71,15 +71,14 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
         }
 
         [Theory]
-        [InlineData("BoulderName1", "Description1", "sampleGradeId1", "sampleGymId1", "sampleImageId1", "imagesource1", "sampleAuthorId1")]
-        [InlineData("BoulderName2", "", "sampleGradeId2", "sampleGymId2", "sampleImageId2", "imagesource2", "sampleAuthorId2")]
-        [InlineData("BoulderName3", null, "sampleGradeId3", "sampleGymId3", "sampleImageId3", "imagesource3", "sampleAuthorId3")]
+        [InlineData("BoulderName1", "Description1", "sampleGradeId1", "sampleGymId1", "imagesource1", "sampleAuthorId1")]
+        [InlineData("BoulderName2", "", "sampleGradeId2", "sampleGymId2", "sampleImageId2", "sampleAuthorId2")]
+        [InlineData("BoulderName3", null, "sampleGradeId3", "sampleGymId3", "sampleImageId3", "sampleAuthorId3")]
         public async Task AddAsyncAddsTheEntityToTheRepository(
             string boulderName,
             string boulderDescription,
             string gradeId,
             string gymId,
-            string imageId,
             string imageSource,
             string authorId)
         {
@@ -98,7 +97,6 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
 
             var imageInput = new ImageInputModel()
             {
-                Id = imageId,
                 Source = imageSource,
             };
 
@@ -131,7 +129,6 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             Assert.Equal(boulderDescription, boulder.Description);
             Assert.Equal(gradeId, boulder.GradeId);
             Assert.Equal(gymId, boulder.GymId);
-            Assert.Equal(imageInput.Id, boulder.Image.Id);
             Assert.Equal(imageInput.Source, boulder.Image.Source);
         }
 
@@ -170,12 +167,12 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
         }
 
         [Theory]
-        [InlineData("name1", "desc1", "gradeId1", "gymId1", "newName1", "newDesc1", "newGradeId1", "newGymId1", false, "imageId1", "imageSource1", "newImageId1", "newImageSource1")]
-        [InlineData("name2", "",      "gradeId2", "gymId2", "newName2", "newDesc2", "newGradeId2", "newGymId2", false, "imageId2", "imageSource2", "newImageId2", "newImageSource2")]
-        [InlineData("name3", null,    "gradeId3", "gymId3", "newName3", "newDesc3", "newGradeId3", "newGymId3", false, "imageId3", "imageSource3", "newImageId3", "newImageSource3")]
-        [InlineData("name4", "desc4", "gradeId4", "gymId4", "newName4", "newDesc4", "newGradeId4", "newGymId4", true,  null, null, null, null)]
-        [InlineData("name5", "",      "gradeId5", "gymId5", "newName5", "newDesc5", "newGradeId5", "newGymId5", true,  null, null, null, null)]
-        [InlineData("name6", null,    "gradeId6", "gymId6", "newName6", "newDesc6", "newGradeId6", "newGymId6", true,  null, null, null, null)]
+        [InlineData("name1", "desc1", "gradeId1", "gymId1", "newName1", "newDesc1", "newGradeId1", "newGymId1", false, "imageSource1", "newImageSource1")]
+        [InlineData("name2", "",      "gradeId2", "gymId2", "newName2", "newDesc2", "newGradeId2", "newGymId2", false, "imageSource2", "newImageSource2")]
+        [InlineData("name3", null,    "gradeId3", "gymId3", "newName3", "newDesc3", "newGradeId3", "newGymId3", false, "imageSource3", "newImageSource3")]
+        [InlineData("name4", "desc4", "gradeId4", "gymId4", "newName4", "newDesc4", "newGradeId4", "newGymId4", true,  null, null)]
+        [InlineData("name5", "",      "gradeId5", "gymId5", "newName5", "newDesc5", "newGradeId5", "newGymId5", true,  null, null)]
+        [InlineData("name6", null,    "gradeId6", "gymId6", "newName6", "newDesc6", "newGradeId6", "newGymId6", true,  null, null)]
         public async Task EditAsyncEditsThePorpertiesAndSavesTheChanges(
             string name,
             string description,
@@ -186,9 +183,7 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             string newGradeId,
             string newGymId,
             bool imageNull,
-            string imageId,
             string imageSource,
-            string newImageId,
             string newImageSource)
         {
             // Arrange
@@ -203,7 +198,6 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
                 GymId = gymId,
                 Image = new Image()
                 {
-                    Id = imageId,
                     Source = imageSource,
                 },
             };
@@ -239,7 +233,6 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
 
             var imageEditModel = new ImageInputModel()
             {
-                Id = newImageId,
                 Source = newImageSource,
             };
 
@@ -265,12 +258,10 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
 
             if (imageNull)
             {
-                Assert.Equal(imageId, actualImage.Id);
                 Assert.Equal(imageSource, actualImage.Source);
             }
             else
             {
-                Assert.Equal(newImageId, actualImage.Id);
                 Assert.Equal(newImageSource, actualImage.Source);
             }
         }
