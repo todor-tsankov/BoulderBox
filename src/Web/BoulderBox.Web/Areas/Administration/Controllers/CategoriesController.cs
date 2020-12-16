@@ -62,8 +62,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 var category = new CategoryEditViewModel()
                 {
                     Id = id,
-                    CategoryInput = this.categoriesService
-                    .GetSingle<CategoryInputModel>(x => x.Id == id),
+                    CategoryInput = categoryInput,
                 };
 
                 return this.View(category);

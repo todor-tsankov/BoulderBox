@@ -36,8 +36,9 @@ namespace BoulderBox.Web.Controllers
 
         public IActionResult Index(string text)
         {
-            if (text.Length < 3)
+            if (text == null)
             {
+                text = string.Empty;
             }
 
             var searchResults = new SearchResultsViewModel()
@@ -51,6 +52,11 @@ namespace BoulderBox.Web.Controllers
 
         private IList<SearchViewModel> GetResults(string text)
         {
+            if (text == null || text == string.Empty)
+            {
+                return new List<SearchViewModel>();
+            }
+
             var countries = this.countriesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 

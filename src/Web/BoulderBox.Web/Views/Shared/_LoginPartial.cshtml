@@ -4,11 +4,14 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+
 @if (this.SignInManager.IsSignedIn(this.User))
 {
     if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-        <a class="btn btn-outline-primary text-dark m-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+        <div class="text-center col-10">
+            <a class="btn btn-outline-primary text-dark m-1" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+        </div>
     }
 
     <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="btn btn-outline-success m-1">Profile</a>
@@ -22,3 +25,4 @@ else
     <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-success m-1">Login</a>
     <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-primary m-1">Register</a>
 }
+

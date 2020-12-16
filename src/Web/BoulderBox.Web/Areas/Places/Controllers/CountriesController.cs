@@ -57,6 +57,14 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
         public IActionResult Details(string id)
         {
+            var existsCountry = this.countriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCountry)
+            {
+                return this.NotFound();
+            }
+
             var country = this.countriesService
                 .GetSingle<CountryDetailsViewModel>(x => x.Id == id);
 

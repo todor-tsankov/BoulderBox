@@ -15,8 +15,9 @@
 </div>
 <hr class="bg-secondary" />
 
-<form asp-area="Administration" asp-controller="Countries" asp-action="Edit" asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
+<form asp-area="Administration" asp-controller="Countries" asp-action="Edit" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" name="id" value="@Model.Id" />
     <div class="form-group">
         <label asp-for="CountryInput.Name" class="col-form-label"></label>
         <input asp-for="CountryInput.Name" class="form-control" placeholder="Country name" />

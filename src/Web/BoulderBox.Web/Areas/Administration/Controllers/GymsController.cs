@@ -46,10 +46,9 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
             if (!this.ModelState.IsValid || !cityExists)
             {
-                var gym = new GymInputModel();
-                this.SetCountrySelectListItems(gym);
+                this.SetCountrySelectListItems(gymInput);
 
-                return this.View(gym);
+                return this.View(gymInput);
             }
 
             var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
@@ -81,8 +80,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                 var gym = new GymEditViewModel()
                 {
                     Id = id,
-                    GymInput = this.gymsService
-                    .GetSingle<GymInputModel>(x => x.Id == id),
+                    GymInput = gymInput,
                 };
 
                 this.SetCountrySelectListItems(gym.GymInput);

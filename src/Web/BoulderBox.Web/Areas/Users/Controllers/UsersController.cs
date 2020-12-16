@@ -17,6 +17,14 @@ namespace BoulderBox.Web.Areas.Users.Controllers
 
         public IActionResult Details(string id)
         {
+            var existsUser = this.usersService
+                .Exists(x => x.Id == id);
+
+            if (!existsUser)
+            {
+                return this.NotFound();
+            }
+
             var user = this.usersService
                 .GetSingle<UserDetailsViewModel>(x => x.Id == id);
 

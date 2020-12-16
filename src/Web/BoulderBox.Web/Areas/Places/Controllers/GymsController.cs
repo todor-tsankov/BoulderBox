@@ -62,6 +62,14 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
         public IActionResult Details(string id)
         {
+            var existsGym = this.gymsService
+                .Exists(x => x.Id == id);
+
+            if (!existsGym)
+            {
+                return this.NotFound();
+            }
+
             var gym = this.gymsService
                 .GetSingle<GymDetailsViewModel>(x => x.Id == id);
 

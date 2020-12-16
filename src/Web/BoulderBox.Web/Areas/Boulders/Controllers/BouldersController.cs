@@ -85,6 +85,14 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
         public IActionResult Details(string id)
         {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
             var boulder = this.bouldersService
                 .GetSingle<BoulderDetailsViewModel>(x => x.Id == id);
 
@@ -121,6 +129,14 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         [Authorize]
         public IActionResult Edit(string id)
         {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var valid = this.bouldersService
@@ -157,7 +173,10 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
                 return this.Forbid();
             }
 
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.ErrorCount == 1 && boulderInput.FormFile == null)
+            {
+            }
+            else if (!this.ModelState.IsValid)
             {
                 var boulder = new BoulderEditViewModel()
                 {

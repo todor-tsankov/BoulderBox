@@ -57,6 +57,14 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
         public IActionResult Details(string id)
         {
+            var existsCity = this.citiesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCity)
+            {
+                return this.NotFound();
+            }
+
             var city = this.citiesService
                 .GetSingle<CityDetailsViewModel>(x => x.Id == id);
 

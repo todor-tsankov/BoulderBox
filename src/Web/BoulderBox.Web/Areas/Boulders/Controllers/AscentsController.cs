@@ -21,15 +21,18 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
     public class AscentsController : BaseController
     {
         private readonly IAscentsService ascentsService;
+        private readonly IBouldersService bouldersService;
         private readonly IGradesService gradesService;
         private readonly IStylesService stylesService;
 
         public AscentsController(
             IAscentsService ascentsService,
+            IBouldersService bouldersService
             IGradesService gradesService,
             IStylesService stylesService)
         {
             this.ascentsService = ascentsService;
+            this.bouldersService = bouldersService;
             this.gradesService = gradesService;
             this.stylesService = stylesService;
         }
@@ -70,6 +73,14 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         [Authorize]
         public IActionResult Create(string id)
         {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
             var ascent = new AscentInputModel()
             {
                 BoulderId = id,

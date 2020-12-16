@@ -31,6 +31,14 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
 
         public IActionResult Details(string id, int pageId = 1)
         {
+            var existsCategory = this.categoriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCategory)
+            {
+                return this.NotFound();
+            }
+
             var skip = DefaultItemsPerPage * (pageId - 1);
 
             var category = this.categoriesService

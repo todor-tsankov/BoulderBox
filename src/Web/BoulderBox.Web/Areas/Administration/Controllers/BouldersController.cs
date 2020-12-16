@@ -58,7 +58,10 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.ErrorCount == 1 && boulderInput.FormFile == null)
+            {
+            }
+            else if (!this.ModelState.IsValid)
             {
                 var boulder = new BoulderEditViewModel()
                 {

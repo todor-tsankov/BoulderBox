@@ -5,13 +5,13 @@
 }
 
 <div class="row ml-2">
-    <h1>@Model.Name</h1>
+    <h2>@Model.Name</h2>
     <a asp-area="Forum" asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-3">Create Post</a>
 </div>
 
 @if (Model.Description != null)
 {
-    <hr class="bg-secondary mt-2" />
+    <hr class="bg-secondary mt-1" />
     <p class="text-break">@(Model.Description)</p>
 }
 

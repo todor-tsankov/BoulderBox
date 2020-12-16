@@ -33,6 +33,14 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
 
         public IActionResult Details(string id, int pageId = 1)
         {
+            var existsPost = this.postsService
+                .Exists(x => x.Id == id);
+
+            if (!existsPost)
+            {
+                return this.NotFound();
+            }
+
             var skip = DefaultItemsPerPage * (pageId - 1);
 
             var postAndComment = new PostAndCommentInputViewModel()

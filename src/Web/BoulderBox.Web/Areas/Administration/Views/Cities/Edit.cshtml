@@ -17,6 +17,7 @@
 
 <form asp-area="Administration" asp-controller="Cities" asp-action="Edit" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" name="id" value="@Model.Id" />
     <div class="form-group">
         <label asp-for="CityInput.Name" class="col-form-label"></label>
         <input asp-for="CityInput.Name" class="form-control" placeholder="City name" />
