@@ -7,7 +7,11 @@
 <div class="row ml-2">
     @if (Model.ImageSource != null)
     {
-        <img src="@Url.Content(Model.ImageSource)" class="card-img border border-secondary col-2 col-lg-1 mr-3 p-0" />
+        <img src="@Url.Content(Model.ImageSource)" class="rounded-circle border mr-2" width="50" height="50" />
+    }
+    else
+    {
+        <i class="far fa-flag fa-3x mr-3"></i>
     }
     <h2 class="mt-2">@Model.Name (@Model.CountryCode)</h2>
 </div>
@@ -25,7 +29,8 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
-                <th scope="col">City Name</th>
+                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
+                <th scope="col">City</th>
                 <th scope="col">Gyms</th>
                 <th scope="col">Ascents</th>
                 <th scope="col">Boulders</th>
@@ -40,12 +45,23 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
                 </tr>
             }
 
             @foreach (var city in Model.Cities)
             {
                 <tr>
+                    <td width="50">
+                        @if (city.ImageSource != null)
+                        {
+                            <img src="@city.ImageSource" class="rounded-circle border" width="30" height="30" />
+                        }
+                        else
+                        {
+                            <i class="fas fa-city ml-1"></i>
+                        }
+                    </td>
                     <td><a asp-area="Places" asp-controller="Cities" asp-action="Details" asp-route-id="@city.Id" class="text-dark" />@city.Name<a /></td>
                     <td>@city.GymsCount</td>
                     <td>@city.AscentsCount</td>

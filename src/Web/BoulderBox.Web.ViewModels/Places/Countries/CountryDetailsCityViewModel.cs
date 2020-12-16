@@ -13,6 +13,8 @@ namespace BoulderBox.Web.ViewModels.Places.Countries
 
         public string Name { get; set; }
 
+        public string ImageSource { get; set; }
+
         public int GymsCount { get; set; }
 
         public int BouldersCount { get; set; }

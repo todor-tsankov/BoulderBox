@@ -27,7 +27,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
         public AscentsController(
             IAscentsService ascentsService,
-            IBouldersService bouldersService
+            IBouldersService bouldersService,
             IGradesService gradesService,
             IStylesService stylesService)
         {

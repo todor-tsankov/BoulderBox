@@ -12,6 +12,8 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
 
         public string Name { get; set; }
 
+        public string ImageSource { get; set; }
+
         public int BouldersCount { get; set; }
 
         public int AscentsCount { get; set; }

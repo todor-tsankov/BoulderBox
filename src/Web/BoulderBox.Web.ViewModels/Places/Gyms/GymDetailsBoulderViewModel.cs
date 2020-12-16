@@ -11,6 +11,8 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
 
         public string Name { get; set; }
 
+        public string ImageSource { get; set; }
+
         public string AuthorId { get; set; }
 
         public string AuthorUserName { get; set; }
