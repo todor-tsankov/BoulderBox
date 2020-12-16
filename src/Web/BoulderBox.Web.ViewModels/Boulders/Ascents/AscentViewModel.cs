@@ -13,6 +13,8 @@ namespace BoulderBox.Web.ViewModels.Boulders.Ascents
 
         public string ApplicationUserUsername { get; set; }
 
+        public string ApplicationUserImageSource { get; set; }
+
         public string BoulderId { get; set; }
 
         public string BoulderName { get; set; }

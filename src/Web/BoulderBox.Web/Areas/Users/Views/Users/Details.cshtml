@@ -7,7 +7,7 @@
 <div class="row ml-2">
     @if (Model.ImageSource != null)
     {
-        <img src="@Url.Content(Model.ImageSource)" class="card-img border border-secondary col-2 col-lg-1 p-0" />
+        <img src="@Url.Content(Model.ImageSource)" class="rounded-circle border" width="80" height="80" />
     }
     else
     {
@@ -30,6 +30,7 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
+                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>Date</th>
                 <th>Style</th>
                 <th>Boulder</th>
@@ -51,6 +52,8 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
+                    <td></td>
                 </tr>
             </tbody>
         }
@@ -59,12 +62,16 @@
         {
             <thead class="table-secondary">
                 <tr>
-                    <th>@group.Key</th>
+                    <th class="text-center">@group.Key</th>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
+                    @if (this.User.FindFirst(ClaimTypes.NameIdentifier).Value == Model.Id)
+                    {
+                        <th></th>
+                    }
                 </tr>
             </thead>
 
@@ -87,6 +94,12 @@
                     }
 
                     <tr>
+                        <td width="50">
+                            @if (ascent.BoulderImageSource != null)
+                            {
+                                <img src="@ascent.BoulderImageSource" class="rounded-circle border" width="30" height="30" />
+                            }
+                        </td>
                         <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                         <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                         <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>

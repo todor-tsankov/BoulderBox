@@ -13,6 +13,8 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
 
         public string ApplicationUserUserName { get; set; }
 
+        public string ApplicationUserImageSource { get; set; }
+
         public string GradeText { get; set; }
 
         public string StyleShortText { get; set; }

@@ -2,6 +2,10 @@
 using System.Threading.Tasks;
 
 using BoulderBox.Data.Models;
+using BoulderBox.Services;
+using BoulderBox.Services.Data.Users;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,13 +16,16 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ICloudinaryService cloudinaryService;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            ICloudinaryService cloudinaryService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public string Username { get; set; }
@@ -34,6 +41,10 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Image")]
+            [ImageAttribute]
+            public IFormFile FormFile { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -73,6 +84,17 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            var image = await this.cloudinaryService.SaveImageAsync(this.Input.FormFile);
+
+            if (image != null)
+            {
+                user.Image = new Image()
+                {
+                    Source = image.Source,
+                };
+            }
+
+            await this.userManager.UpdateAsync(user);
             await this.signInManager.RefreshSignInAsync(user);
             this.StatusMessage = "Your profile has been updated";
             return this.RedirectToPage();

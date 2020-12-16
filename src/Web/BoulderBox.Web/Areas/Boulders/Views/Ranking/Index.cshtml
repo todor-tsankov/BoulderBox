@@ -32,6 +32,7 @@
         <thead class="bg-primary text-light">
             <tr>
                 <th>#</th>
+                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>User</th>
                 <th>Weekly</th>
                 <th>Monthly</th>
@@ -50,17 +51,28 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    <td>-</td>
                 </tr>
             }
 
-            @{ 
+            @{
                 var i = Model.StartRank;
             }
 
             @foreach (var user in Model.Ranking)
             {
                 <tr>
-                    <td>@i</td>
+                    <td width="30">@i</td>
+                    <td width="50">
+                        @if (user.ImageSource != null)
+                        {
+                            <img src="@user.ImageSource" class="rounded-circle border" width="30" height="30" />
+                        }
+                        else
+                        {
+                            <i class="fas fa-user ml-1"></i>
+                        }
+                    </td>
                     <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id" class="text-dark">@user.UserName</a></td>
                     <td>@user.PointsWeekly</td>
                     <td>@user.PointsMonthly</td>

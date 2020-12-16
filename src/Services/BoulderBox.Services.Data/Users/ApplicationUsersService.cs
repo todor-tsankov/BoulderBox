@@ -35,6 +35,7 @@ namespace BoulderBox.Services.Data.Users
             var groups = this.ascentsRepository
                 .AllAsNoTracking()
                 .Include(x => x.Boulder)
+                .Include(x => x.Boulder.Image)
                 .Include(x => x.Grade)
                 .Include(x => x.Style)
                 .Where(x => x.ApplicationUserId == userId)
@@ -47,6 +48,7 @@ namespace BoulderBox.Services.Data.Users
                     Ascents = x.ToList().Select(x => new UserDetailsAscentViewModel()
                     {
                         Id = x.Id,
+                        BoulderImageSource = x.Boulder.Image.Source,
                         GradeText = x.Grade.Text,
                         Stars = x.Stars,
                         StyleShortText = x.Style.ShortText,

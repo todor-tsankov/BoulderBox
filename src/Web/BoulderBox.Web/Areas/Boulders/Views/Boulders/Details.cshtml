@@ -21,7 +21,7 @@
 
 <hr class="bg-secondary mb-4" />
 
-<img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0"/>
+<img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0" />
 
 <h3>Ascents Of @Model.Name</h3>
 
@@ -29,6 +29,7 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
+                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>User</th>
                 <th>Date</th>
                 <th>Style</th>
@@ -43,6 +44,7 @@
             {
                 <tr>
                     <td>No ascents</td>
+                    <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -69,6 +71,16 @@
                 }
 
                 <tr>
+                    <td width="50">
+                        @if (ascent.ApplicationUserImageSource != null)
+                        {
+                            <img src="@ascent.ApplicationUserImageSource" class="rounded-circle border" width="30" height="30" />
+                        }
+                        else
+                        {
+                            <i class="fas fa-user ml-1"></i>
+                        }
+                    </td>
                     <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUserName</a></td>
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
