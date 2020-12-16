@@ -11,6 +11,8 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
 
         public string ApplicationUserUserName { get; set; }
 
+        public string ApplicationUserImageSource { get; set; }
+
         public string Text { get; set; }
 
         public DateTime CreatedOn { get; set; }

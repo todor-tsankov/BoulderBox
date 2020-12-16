@@ -14,17 +14,11 @@ namespace BoulderBox.Web.Areas.Places.Controllers
     public class GymsController : BaseController
     {
         private readonly IGymsService gymsService;
-        private readonly ICitiesService citiesService;
-        private readonly ICountriesService countriesService;
 
         public GymsController(
-            IGymsService gymsService,
-            ICitiesService citiesService,
-            ICountriesService countriesService)
+            IGymsService gymsService)
         {
             this.gymsService = gymsService;
-            this.citiesService = citiesService;
-            this.countriesService = countriesService;
         }
 
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)

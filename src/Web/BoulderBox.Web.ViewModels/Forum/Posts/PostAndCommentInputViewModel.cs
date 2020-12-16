@@ -11,6 +11,8 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
 
         public string Username { get; set; }
 
+        public string ImageSource { get; set; }
+
         public string RedirectLink { get; set; }
 
         public PostDetailsViewModel Post { get; set; }

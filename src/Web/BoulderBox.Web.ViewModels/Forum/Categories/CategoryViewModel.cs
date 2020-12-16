@@ -9,6 +9,8 @@ namespace BoulderBox.Web.ViewModels.Forum.Categories
 
         public string Name { get; set; }
 
+        public string ImageSource { get; set; }
+
         public string Description { get; set; }
 
         public int PostsCount { get; set; }

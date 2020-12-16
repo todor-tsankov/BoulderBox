@@ -14,12 +14,10 @@ namespace BoulderBox.Web.Areas.Places.Controllers
     public class CitiesController : BaseController
     {
         private readonly ICitiesService citiesService;
-        private readonly ICountriesService countriesService;
 
-        public CitiesController(ICitiesService citiesService, ICountriesService countriesService)
+        public CitiesController(ICitiesService citiesService)
         {
             this.citiesService = citiesService;
-            this.countriesService = countriesService;
         }
 
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)

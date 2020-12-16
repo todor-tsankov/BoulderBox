@@ -1,15 +1,19 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
+using BoulderBox.Data.Models;
 using BoulderBox.Services;
+using BoulderBox.Services.Data.Files;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Common;
+using BoulderBox.Web.ViewModels.Files.Images;
 using BoulderBox.Web.ViewModels.Forum.Comments;
 using BoulderBox.Web.ViewModels.Forum.Posts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Areas.Forum.Controllers
@@ -20,18 +24,24 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
         private readonly IPostsService postsService;
         private readonly ICommentsService commentsService;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IImagesService imagesService;
 
         public PostsController(
             IPostsService postsService,
             ICommentsService commentsService,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+            UserManager<ApplicationUser> userManager,
+            IImagesService imagesService)
         {
             this.postsService = postsService;
             this.commentsService = commentsService;
             this.cloudinaryService = cloudinaryService;
+            this.userManager = userManager;
+            this.imagesService = imagesService;
         }
 
-        public IActionResult Details(string id, int pageId = 1)
+        public async Task<IActionResult> Details(string id, int pageId = 1)
         {
             var existsPost = this.postsService
                 .Exists(x => x.Id == id);
@@ -42,10 +52,13 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             }
 
             var skip = DefaultItemsPerPage * (pageId - 1);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var image = this.imagesService.GetSingle<ImageViewModel>(x => x.Id == user.ImageId);
 
             var postAndComment = new PostAndCommentInputViewModel()
             {
-                Username = this.User.FindFirstValue(ClaimTypes.Name),
+                Username = user.UserName,
+                ImageSource = image?.Source,
                 RedirectLink = $"{this.Request.Path}?pageId={pageId}",
                 Post = this.postsService.GetSingle<PostDetailsViewModel>(x => x.Id == id),
                 Comments = this.commentsService
