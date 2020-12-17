@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AutoMapper;
@@ -95,6 +96,98 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
             Assert.Equal(postId, actualComment.PostId);
             Assert.Equal(text, actualComment.Text);
             Assert.Equal(userId, actualComment.ApplicationUserId);
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenTheIdIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Comment>>();
+
+            var commentsService = new CommentsService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await commentsService.EditAsync(null, new CommentInputModel());
+            });
+        }
+
+        [Fact]
+        public async Task EditAsyncThrowsWhenTheInputModelIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var repositoryMock = new Mock<IDeletableEntityRepository<Comment>>();
+
+            var commentsService = new CommentsService(repositoryMock.Object, mapperMock.Object);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                // Act
+                await commentsService.EditAsync("validId", null);
+            });
+        }
+
+        [Theory]
+        [InlineData("userId1", "postId1", "text1", "newText1")]
+        [InlineData("userId2", "postId2", "text2", "newText2")]
+        public async Task EditAsyncEditsThePropertiesAndSavesTheChanges(
+            string userId,
+            string postId,
+            string text,
+            string newText)
+        {
+            // Arrange
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
+
+            var saved = false;
+            var comment = new Comment()
+            {
+                ApplicationUserId = userId,
+                Text = text,
+                PostId = postId,
+            };
+
+            var commentList = new List<Comment>()
+            {
+                new Comment(),
+                comment,
+                new Comment(),
+                new Comment(),
+            };
+
+            var repositoryMock = new Mock<IDeletableEntityRepository<Comment>>();
+
+            repositoryMock.Setup(x => x.All())
+                .Returns(commentList.AsQueryable());
+
+            repositoryMock.Setup(x => x.SaveChangesAsync())
+                .Callback(() =>
+                {
+                    saved = true;
+                });
+
+            var commentsService = new CommentsService(repositoryMock.Object, AutoMapperConfig.MapperInstance);
+
+            var commentEditModel = new CommentInputModel()
+            {
+                Text = newText,
+                PostId = postId,
+            };
+
+            // Act
+            await commentsService.EditAsync(comment.Id, commentEditModel);
+
+            // Assert
+            Assert.True(saved);
+
+            Assert.Equal(newText, comment.Text);
+            Assert.Equal(postId, comment.PostId);
+            Assert.Equal(userId, comment.ApplicationUserId);
         }
     }
 }
