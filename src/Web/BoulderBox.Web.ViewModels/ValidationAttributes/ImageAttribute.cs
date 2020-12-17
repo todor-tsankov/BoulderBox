@@ -9,9 +9,14 @@ namespace BoulderBox.Web.ViewModels.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is not IFormFile image)
+            if (value == null)
             {
                 return ValidationResult.Success;
+            }
+
+            if (value is not IFormFile image)
+            {
+                return new ValidationResult("Only .jpeg, .jpg and .png formats are accepted.");
             }
 
             var format = Image.DetectFormat(image.OpenReadStream());

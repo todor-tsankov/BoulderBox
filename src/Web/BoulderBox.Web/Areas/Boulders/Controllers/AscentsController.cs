@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Web.Controllers;
@@ -103,7 +104,9 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await this.ascentsService.AddAsync(ascentInput, userId);
 
-            return this.RedirectToAction("Index");
+            this.TempData[GlobalConstants.MessageKey] = "Successfully added ascent!";
+
+            return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }
 
         [Authorize]
@@ -157,6 +160,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             }
 
             await this.ascentsService.EditAsync(id, ascentInput);
+            this.TempData[GlobalConstants.MessageKey] = "Successfully edited ascent!";
 
             return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }
@@ -175,6 +179,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             }
 
             await this.ascentsService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = "Successfully deleted ascent!";
 
             return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }

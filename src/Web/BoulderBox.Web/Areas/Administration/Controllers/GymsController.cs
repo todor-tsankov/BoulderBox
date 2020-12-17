@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
@@ -54,11 +55,21 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.AddAsync(gymInput, image);
 
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created gym <strong>{gymInput.Name}</strong>!";
+
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
         }
 
         public IActionResult Edit(string id)
         {
+            var existsGym = this.gymsService
+                .Exists(x => x.Id == id);
+
+            if (!existsGym)
+            {
+                return this.NotFound();
+            }
+
             var gym = new GymEditViewModel()
             {
                 Id = id,
@@ -75,6 +86,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, GymInputModel gymInput)
         {
+            var existsGym = this.gymsService
+                .Exists(x => x.Id == id);
+
+            if (!existsGym)
+            {
+                return this.NotFound();
+            }
+
             if (!this.ModelState.IsValid)
             {
                 var gym = new GymEditViewModel()
@@ -92,13 +111,24 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.EditAsync(id, gymInput, image);
 
-            return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited gym <strong>{gymInput.Name}</strong>!";
+
+            return this.RedirectToAction("Details", "Gyms", new { area = "Places", id });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            var existsGym = this.gymsService
+                .Exists(x => x.Id == id);
+
+            if (!existsGym)
+            {
+                return this.NotFound();
+            }
+
             await this.gymsService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully deleted gym!";
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
         }

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Data.Models;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Files;
@@ -21,6 +22,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
     [Area("Forum")]
     public class PostsController : BaseController
     {
+        private readonly ICategoriesService categoriesService;
         private readonly IPostsService postsService;
         private readonly ICommentsService commentsService;
         private readonly ICloudinaryService cloudinaryService;
@@ -28,12 +30,14 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
         private readonly IImagesService imagesService;
 
         public PostsController(
+            ICategoriesService categoriesService,
             IPostsService postsService,
             ICommentsService commentsService,
             ICloudinaryService cloudinaryService,
             UserManager<ApplicationUser> userManager,
             IImagesService imagesService)
         {
+            this.categoriesService = categoriesService;
             this.postsService = postsService;
             this.commentsService = commentsService;
             this.cloudinaryService = cloudinaryService;
@@ -41,6 +45,7 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
             this.imagesService = imagesService;
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(string id, int pageId = 1)
         {
             var existsPost = this.postsService
@@ -81,6 +86,14 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
         [Authorize]
         public IActionResult Create(string id)
         {
+            var existsCategory = this.categoriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCategory)
+            {
+                return this.NotFound();
+            }
+
             var post = new PostInputModel()
             {
                 CategoryId = id,
@@ -93,6 +106,14 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PostInputModel postInput)
         {
+            var existsCategory = this.categoriesService
+                .Exists(x => x.Id == postInput.CategoryId);
+
+            if (!existsCategory)
+            {
+                return this.NotFound();
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(postInput);
@@ -102,6 +123,8 @@ namespace BoulderBox.Web.Areas.Forum.Controllers
 
             var image = await this.cloudinaryService.SaveImageAsync(postInput.FormFile);
             await this.postsService.AddAsync(postInput, image, userId);
+
+            this.TempData[GlobalConstants.MessageKey] = "Successfully created post!";
 
             return this.RedirectToAction("Details", "Categories", new { id = postInput.CategoryId });
         }

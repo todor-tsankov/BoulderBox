@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Forum;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
@@ -36,11 +37,21 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(categoryInput.FormFile);
             await this.categoriesService.AddAsync(categoryInput, image);
 
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created category <strong>{categoryInput.Name}</strong>";
+
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
         }
 
         public IActionResult Edit(string id)
         {
+            var existsCategory = this.categoriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCategory)
+            {
+                return this.NotFound();
+            }
+
             var category = new CategoryEditViewModel()
             {
                 Id = id,
@@ -54,10 +65,18 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, CategoryInputModel categoryInput)
         {
+            var existsId = this.categoriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsId)
+            {
+                return this.NotFound();
+            }
+
             var existsCategory = this.categoriesService
                 .Exists(x => x.Id != id && x.Name == categoryInput.Name);
 
-            if (!this.ModelState.IsValid || existsCategory)
+            if (!this.ModelState.IsValid || existsId)
             {
                 var category = new CategoryEditViewModel()
                 {
@@ -71,13 +90,24 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(categoryInput.FormFile);
             await this.categoriesService.EditAsync(id, categoryInput, image);
 
-            return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited category!";
+
+            return this.RedirectToAction("Details", "Categories", new { area = "Forum", id });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            var existsCategory = this.categoriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCategory)
+            {
+                return this.NotFound();
+            }
+
             await this.categoriesService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully deleted category!";
 
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
         }

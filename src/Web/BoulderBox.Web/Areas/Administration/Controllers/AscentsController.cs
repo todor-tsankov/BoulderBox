@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
 using BoulderBox.Web.ViewModels.Boulders.Ascents;
@@ -29,6 +30,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
         public IActionResult Edit(string id)
         {
+            var existsAscent = this.ascentsService
+                .Exists(x => x.Id == id);
+
+            if (!existsAscent)
+            {
+                return this.NotFound();
+            }
+
             var ascent = new AscentEditViewModel()
             {
                 Id = id,
@@ -44,6 +53,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, AscentInputModel ascentInput)
         {
+            var existsAscent = this.ascentsService
+                .Exists(x => x.Id == id);
+
+            if (!existsAscent)
+            {
+                return this.NotFound();
+            }
+
             if (!this.ModelState.IsValid)
             {
                 var ascent = new AscentEditViewModel()
@@ -58,6 +75,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             }
 
             await this.ascentsService.EditAsync(id, ascentInput);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited ascent!";
 
             return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }
@@ -65,7 +83,16 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            var existsAscent = this.ascentsService
+                .Exists(x => x.Id == id);
+
+            if (!existsAscent)
+            {
+                return this.NotFound();
+            }
+
             await this.ascentsService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully deleted ascent!";
 
             return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }

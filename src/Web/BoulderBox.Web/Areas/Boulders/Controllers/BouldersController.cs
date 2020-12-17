@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Data.Models;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Boulders;
@@ -123,7 +124,9 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.AddAsync(boulderInput, userId, image);
 
-            return this.RedirectToAction("Index");
+            this.TempData[GlobalConstants.MessageKey] = "Successfully created boulder!";
+
+            return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }
 
         [Authorize]
@@ -192,7 +195,9 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.EditAsync(id, boulderInput, image);
 
-            return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
+            this.TempData[GlobalConstants.MessageKey] = "Successfully edited boulder!";
+
+            return this.RedirectToAction("Details", "Boulders", new { area = "Boulders", id });
         }
 
         [Authorize]
@@ -209,6 +214,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             }
 
             await this.bouldersService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = "Successfully deleted boulder!";
 
             return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }

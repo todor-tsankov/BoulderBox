@@ -69,6 +69,15 @@
                 <div class="col-lg-10 mt-4">
                     <div class="container">
                         <partial name="_CookieConsentPartial" />
+                        @if (this.TempData[GlobalConstants.MessageKey] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                @Html.Raw(this.TempData[GlobalConstants.MessageKey])
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        }
                         @this.RenderBody()
                     </div>
                 </div>

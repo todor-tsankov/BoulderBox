@@ -6,7 +6,10 @@
 
 <div class="row ml-2">
     <h2>@ViewData["Title"]</h2>
-    <a asp-area="Administration" asp-controller="Countries" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Countries" asp-action="Create" class="btn btn-outline-primary ml-3 mt-1 mb-1">Create</a>
+    }
 </div>
 <hr class="bg-secondary" />
 

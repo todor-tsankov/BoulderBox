@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Areas.Administration.Controllers.Common;
@@ -38,11 +39,21 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(countryInput.FormFile);
             await this.countriesService.AddAsync(countryInput, image);
 
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created country <strong>{countryInput.Name}</strong>!";
+
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });
         }
 
         public IActionResult Edit(string id)
         {
+            var existsCountry = this.countriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCountry)
+            {
+                return this.NotFound();
+            }
+
             var country = new CountryEditViewModel()
             {
                 Id = id,
@@ -56,6 +67,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, CountryInputModel countryInput)
         {
+            var existsId = this.countriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsId)
+            {
+                return this.NotFound();
+            }
+
             var existsCountry = this.countriesService
                 .Exists(x => x.Id != id && (x.Name == countryInput.Name || x.CountryCode == countryInput.CountryCode));
 
@@ -73,13 +92,24 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(countryInput.FormFile);
             await this.countriesService.EditAsync(id, countryInput, image);
 
-            return this.RedirectToAction("Index", "Countries", new { area = "Places" });
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited country <strong>{countryInput.Name}</strong>!";
+
+            return this.RedirectToAction("Details", "Countries", new { area = "Places", id });
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
+            var existsCountry = this.countriesService
+                .Exists(x => x.Id == id);
+
+            if (!existsCountry)
+            {
+                return this.NotFound();
+            }
+
             await this.countriesService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully deleted country!";
 
             return this.RedirectToAction("Index", "Countries", new { area = "Places" });
         }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
+using BoulderBox.Common;
 using BoulderBox.Services;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Places;
@@ -43,6 +44,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
         public IActionResult Edit(string id)
         {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
             var boulder = new BoulderEditViewModel()
             {
                 Id = id,
@@ -58,6 +67,14 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, BoulderInputModel boulderInput)
         {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
             if (this.ModelState.ErrorCount == 1 && boulderInput.FormFile == null)
             {
             }
@@ -76,6 +93,25 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.EditAsync(id, boulderInput, image);
+
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited boulder <strong>{boulderInput.Name}</strong>!";
+
+            return this.RedirectToAction("Details", "Boulders", new { area = "Boulders", id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var existsBoulder = this.bouldersService
+                .Exists(x => x.Id == id);
+
+            if (!existsBoulder)
+            {
+                return this.NotFound();
+            }
+
+            await this.bouldersService.DeleteAsync(x => x.Id == id);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully deleted boulder!";
 
             return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }

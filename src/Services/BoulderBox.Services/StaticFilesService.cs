@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BoulderBox.Web.ViewModels.Files.Images;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using SixLabors.ImageSharp;
@@ -21,7 +22,9 @@ namespace BoulderBox.Services
 
         public async Task<ImageInputModel> SaveImageAsync(IFormFile formFile)
         {
-            if (formFile == null)
+            var isValid = new ImageAttribute().IsValid(formFile);
+
+            if (formFile == null || !isValid)
             {
                 return null;
             }
