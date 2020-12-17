@@ -6,6 +6,10 @@
 
 <div class="row ml-2">
     <h2>@Model.Post.Title</h2>
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
+    }
 </div>
 <hr class="bg-secondary" />
 
@@ -22,12 +26,12 @@
                         }
                         else
                         {
-                            <i class="fas fa-user ml-1"></i>
+                            <i class="fas fa-user ml-1 mr-2"></i>
                         }
                         <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Post.ApplicationUserId" class="text-light">@Model.Post.ApplicationUserUserName</a>
                     </div>
                     <div class="col-md-6">
-                        <div class="row justify-content-end">
+                        <div class="row justify-content-end  mt-2 mt-md-0">
                             <a class="mr-3">@Model.Post.CreatedOn</a>
                         </div>
                     </div>
@@ -43,7 +47,7 @@
 @foreach (var comment in Model.Comments)
 {
     <div class="card h-100 border-primary bg-light mb-4">
-        <div class="card-header text-light bg-primary">
+        <div class="card-header text-light bg-primary pb-0">
             <div class="card-title">
                 <div class="row">
                     <div class="col-md-6">
@@ -53,20 +57,24 @@
                         }
                         else
                         {
-                            <i class="fas fa-user ml-1"></i>
+                            <i class="fas fa-user ml-1 mr-2"></i>
                         }
                         <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@comment.ApplicationUserId" class="text-light">@comment.ApplicationUserUserName</a>
                     </div>
                     <div class="col-md-6">
-                        <div class="row justify-content-end">
+                        <div class="row justify-content-end mt-2 mt-md-0">
                             <a class="mr-3">@comment.CreatedOn</a>
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a asp-area="Administration" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-success mr-3">Edit</a>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card-body">
-            <p>@comment.Text</p>
+        <div class="card-body row">
+            <p class="col-12">@comment.Text</p>
         </div>
     </div>
 }
@@ -84,12 +92,12 @@
                         }
                         else
                         {
-                            <i class="fas fa-user ml-1"></i>
+                            <i class="fas fa-user ml-1 mr-2"></i>
                         }
                         <a>@Model.Username</a>
                     </div>
                     <div class="col-md-6">
-                        <div class="row justify-content-end">
+                        <div class="row justify-content-end mt-2 mt-md-0">
                             <a class="mr-3">@DateTime.UtcNow</a>
                         </div>
                     </div>
@@ -98,10 +106,8 @@
         </div>
         <div class="card-body">
             <form asp-area="Forum" asp-controller="Comments" asp-action="Create" method="post">
+                <input name="redirectLink" value="@Model.RedirectLink" type="hidden" />
                 <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <input name="redirectLink" value="@Model.RedirectLink" type="hidden" />
-                </div>
                 <div class="form-group">
                     <input asp-for="CommentInput.PostId" name="PostId" value="@Model.Post.Id" type="hidden" />
                 </div>

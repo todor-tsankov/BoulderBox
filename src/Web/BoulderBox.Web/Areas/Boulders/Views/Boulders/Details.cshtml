@@ -11,6 +11,11 @@
     {
         <a asp-area="Boulders" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
     }
+    else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
+    }
+    <h4 class="ml-3 mt-2">by: <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@Model.AuthorId" >@Model.AuthorUserName</a></h4>
 </div>
 
 @if (Model.Description != null)

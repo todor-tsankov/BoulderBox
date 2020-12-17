@@ -10,6 +10,10 @@
         <img src="@Url.Content(Model.ImageSource)" class="rounded-circle border mr-2" width="50" height="50" />
     }
     <h2 class="mt-2">@Model.Name (@Model.CityName)</h2>
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <a asp-area="Administration" asp-controller="Gyms" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-2 mb-3">Edit</a>
+    }
 </div>
 
 @if (Model.Description != null)

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
 using AutoMapper;
 using BoulderBox.Data.Common.Repositories;
@@ -30,6 +31,19 @@ namespace BoulderBox.Services.Data.Forum
             comment.ApplicationUserId = userId;
 
             await this.commentsRepository.AddAsync(comment);
+            await this.commentsRepository.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(string id, CommentInputModel commentInput)
+        {
+            this.NullCheck(id, nameof(id));
+            this.NullCheck(commentInput, nameof(commentInput));
+
+            var comment = this.commentsRepository
+                .All()
+                .FirstOrDefault(x => x.Id == id);
+
+            comment.Text = commentInput.Text;
             await this.commentsRepository.SaveChangesAsync();
         }
     }

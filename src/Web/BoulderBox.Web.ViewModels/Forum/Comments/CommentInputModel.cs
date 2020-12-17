@@ -5,7 +5,7 @@ using BoulderBox.Services.Mapping;
 
 namespace BoulderBox.Web.ViewModels.Forum.Comments
 {
-    public class CommentInputModel : IMapTo<Comment>
+    public class CommentInputModel : IMapTo<Comment>, IMapFrom<Comment>
     {
         public const string PostIdRequiredErrorMessage = "ForumPost is required.";
 

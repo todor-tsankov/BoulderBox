@@ -7,6 +7,8 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
 {
     public class CityDetailsViewModel : IMapFrom<City>
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
 
         public string CountryId { get; set; }

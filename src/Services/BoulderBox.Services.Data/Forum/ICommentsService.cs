@@ -9,5 +9,7 @@ namespace BoulderBox.Services.Data.Forum
     public interface ICommentsService : IBaseService<Comment>
     {
         Task AddAsync(CommentInputModel commentInput, string userId);
+
+        Task EditAsync(string id, CommentInputModel commentInput);
     }
 }

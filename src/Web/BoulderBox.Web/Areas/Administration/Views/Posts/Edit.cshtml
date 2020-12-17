@@ -1,0 +1,38 @@
+﻿@model BoulderBox.Web.ViewModels.Forum.Posts.PostEditModel
+
+@{
+    ViewData["Title"] = "Edit Post";
+}
+
+<div class="row ml-2">
+    <h2>@ViewData["Title"]</h2>
+    <form asp-area="Administration" asp-controller="Posts" asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-outline-danger ml-3 mt-1 mb-1">Delete</button>
+    </form>
+</div>
+<hr class="bg-secondary" />
+
+<form asp-area="Administration" asp-controller="Posts" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="PostInput.CategoryId" class="col-form-label"></label>
+        <select asp-for="PostInput.CategoryId" asp-items="@Model.PostInput.CategoriesSelectListItems" class="form-control"></select>
+        <span asp-validation-for="PostInput.CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PostInput.Title" class="col-form-label"></label>
+        <input asp-for="PostInput.Title" class="form-control" placeholder="Title of the post" />
+        <span asp-validation-for="PostInput.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PostInput.Text" class="col-form-label"></label>
+        <textarea asp-for="PostInput.Text" class="form-control" placeholder="Post's text goes here"></textarea>
+        <span asp-validation-for="PostInput.Text" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label"></label>
+        <input type="file" asp-for="PostInput.FormFile" class="form-control-file" />
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>

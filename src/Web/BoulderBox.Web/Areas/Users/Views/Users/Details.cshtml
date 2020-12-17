@@ -36,7 +36,7 @@
                 <th>Boulder</th>
                 <th>Comment</th>
                 <th>Stars</th>
-                @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
                 {
                     <th></th>
                 }
@@ -53,7 +53,10 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
-                    <td></td>
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                    {
+                        <th></th>
+                    }
                 </tr>
             </tbody>
         }
@@ -68,7 +71,7 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
                     {
                         <th></th>
                     }
@@ -93,30 +96,34 @@
                         styleBadge += "danger";
                     }
 
-                    <tr>
-                        <td width="50">
-                            @if (ascent.BoulderImageSource != null)
-                            {
-                                <img src="@ascent.BoulderImageSource" class="rounded-circle border" width="30" height="30" />
-                            }
-                        </td>
-                        <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
-                        <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
-                        <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
-                        <td>@(ascent.Comment ?? "-")</td>
-                        @if (ascent.Stars == null)
+                <tr>
+                    <td width="50">
+                        @if (ascent.BoulderImageSource != null)
                         {
-                            <td>-</td>
+                            <img src="@ascent.BoulderImageSource" class="rounded-circle border" width="30" height="30" />
                         }
-                        else
-                        {
-                            <td>@ascent.Stars</td>
-                        }
-                        @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
-                        {
-                            <td><a asp-area="Boulders" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
-                        }
-                    </tr>
+                    </td>
+                    <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
+                    <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
+                    <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a></td>
+                    <td>@(ascent.Comment ?? "-")</td>
+                    @if (ascent.Stars == null)
+                    {
+                        <td>-</td>
+                    }
+                    else
+                    {
+                        <td>@ascent.Stars</td>
+                    }
+                    @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                    {
+                        <td><a asp-area="Boulders" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
+                    }
+                    else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    {
+                        <td><a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
+                    }
+                </tr>
                 }
             </tbody>
         }

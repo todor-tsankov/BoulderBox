@@ -44,9 +44,7 @@ namespace BoulderBox.Services.Data.Places
 
             if (imageInput != null)
             {
-                var image = this.mapper.Map<Image>(imageInput);
-
-                gym.Image = image;
+                gym.Image = this.mapper.Map<Image>(imageInput);
             }
 
             gym.Name = gymInput.Name;

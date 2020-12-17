@@ -10,5 +10,7 @@ namespace BoulderBox.Services.Data.Forum
     public interface IPostsService : IBaseService<Post>
     {
         Task AddAsync(PostInputModel postInput, ImageInputModel image, string userId);
+
+        Task EditAsync(string id, PostInputModel postInput, ImageInputModel imageInput);
     }
 }

@@ -5,13 +5,11 @@
 }
 
 <div class="row ml-2">
-    <div class="row">
-        <h2>@ViewData["Title"]</h2>
-        <form asp-area="Administration" asp-controller="Ascents" asp-action="Delete" method="post">
-            <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-danger ml-3 mt-1 mb-1">Delete</button>
-        </form>
-    </div>
+    <h2>@ViewData["Title"]</h2>
+    <form asp-area="Administration" asp-controller="Ascents" asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-outline-danger ml-3 mt-1 mb-1">Delete</button>
+    </form>
 </div>
 <hr class="bg-secondary" />
 

@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Forum.Posts
 {
-    public class PostInputModel : IMapTo<Post>
+    public class PostInputModel : IMapTo<Post>, IMapFrom<Post>
     {
         public const string TitleDisplay = "Title *";
         public const string TitleRequiredErrorMessage = "Title is required.";
@@ -18,6 +20,9 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
         public const string TextLengthErrorMessage = "Text must be between 2 and 10 000 characters long.";
 
         public const string FormFileDisplay = "Image";
+
+        public const string CategoryIdDisplay = "Category *";
+        public const string CategoryIdrequiredErrorMessage = "Category is required.";
 
         [Display(Name = TitleDisplay)]
         [Required(ErrorMessage = TitleRequiredErrorMessage)]
@@ -31,11 +36,14 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
         [MaxLength(10000, ErrorMessage = TextLengthErrorMessage)]
         public string Text { get; set; }
 
-        [Required]
+        [Display(Name = CategoryIdDisplay)]
+        [Required(ErrorMessage = CategoryIdrequiredErrorMessage)]
         public string CategoryId { get; set; }
 
         [Display(Name = FormFileDisplay)]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
+
+        public IEnumerable<SelectListItem> CategoriesSelectListItems { get; set; }
     }
 }

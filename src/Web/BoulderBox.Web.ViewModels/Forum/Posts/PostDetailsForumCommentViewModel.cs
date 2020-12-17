@@ -7,6 +7,8 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
 {
     public class PostDetailsForumCommentViewModel : IMapFrom<Comment>
     {
+        public string Id { get; set; }
+
         public string ApplicationUserId { get; set; }
 
         public string ApplicationUserUserName { get; set; }

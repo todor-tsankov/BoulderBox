@@ -46,9 +46,7 @@ namespace BoulderBox.Services.Data.Places
 
             if (imageInput != null)
             {
-                var newImage = this.mapper.Map<Image>(imageInput);
-
-                country.Image = newImage;
+                country.Image = this.mapper.Map<Image>(imageInput);
             }
 
             country.Name = countryInput.Name;
