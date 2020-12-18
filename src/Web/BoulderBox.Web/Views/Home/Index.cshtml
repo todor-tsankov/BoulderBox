@@ -1,9 +1,250 @@
 ﻿@using BoulderBox.Common
+@using BoulderBox.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@model BoulderBox.Web.ViewModels.Home.HomeViewModel
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center jumbotron">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron text-center pb-4 pt-4">
+    <h3>Welcome to Boulder Box!</h3>
+    Find new
+    <a asp-area="Boulders" asp-controller="Boulders" asp-action="Index"><strong>Boulders</strong></a>
+    and Keep track of your
+    <a asp-area="Boulders" asp-controller="Ascents" asp-action="Index"><strong>Ascents</strong></a>.
+    Explore new
+    <a asp-area="Places" asp-controller="Countries" asp-action="Index"><strong>Countries</strong></a>
+    ,
+    <a asp-area="Places" asp-controller="Cities" asp-action="Index"><strong>Cities</strong></a>
+    and
+    <a asp-area="Places" asp-controller="Gyms" asp-action="Index"><strong>Gyms</strong></a>.
+    <br />
+    Find a Climbing Partner at  the
+    <a asp-area="Forum" asp-controller="Categories" asp-action="Index"><strong>Forum</strong></a>
+    or just have fun at the
+    <a asp-area="Forum" asp-controller="Categories" asp-action="Index"><strong>Chat</strong></a>.
+
+    @if (!this.SignInManager.IsSignedIn(this.User))
+    {
+        <div class="row justify-content-center">
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-success mt-3 mr-2">Login</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-outline-primary mt-3">Register</a>
+        </div>
+    }
+</div>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="10000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/roya-ann-miller-AWJfZjHJwqc-unsplash.jpg" />
+                        <h4 class="card-title text-primary mt-3">Ascents</h4>
+                        <p class="card-text text-center">See the <strong>latest</strong> or <strong>hardest</strong> ascents anywhere. Filter them by <strong>grade</strong> or <strong>style</strong>. Today, this week, month, year or of all time.</p>
+                        <a asp-area="Boulders" asp-controller="Ascents" asp-action="Index" class="btn btn-primary mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/markus-spiske-VQpOgh5R68I-unsplash.jpg" />
+                        <h4 class="card-title text-primary mt-3">Boulders</h4>
+                        <p class="card-text text-center">See the <strong>latest</strong> or <strong>hardest</strong> boulders. Order them by <strong>grade</strong> or number of <strong>ascents</strong>. Which one is going to be your next <strong>project</strong>?</p>
+                        <a asp-area="Boulders" asp-controller="Boulders" asp-action="Index" class="btn btn-primary mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/joshua-golde-qIu77BsFdds-unsplash.jpg" />
+                        <h4 class="card-title text-primary mt-3">Ranking</h4>
+                        <p class="card-text text-center">See who's the best gym <strong>climber</strong> this week, month, year or of all time. More about how we count <strong>points</strong> at the end of this page.</p>
+                        <a asp-area="Boulders" asp-controller="Ranking" asp-action="Index" class="btn btn-primary mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <i class="fas fa-angle-left fa-2x text-primary"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <i class="fas fa-angle-right fa-2x text-primary"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div id="carouselExampleIndicators1" class="carousel slide mt-5" data-ride="carousel" data-interval="9000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/jason-leung-jCBzW_Q_UGI-unsplash.jpg" />
+                        <h4 class="card-title text-success mt-3">Countries</h4>
+                        <p class="card-text text-center">Explore all <strong>countries</strong> where climbers use <strong>BoulderBox</strong>. Find the countries with the most cities with gyms.</p>
+                        <a asp-area="Places" asp-controller="Countries" asp-action="Index" class="btn btn-success mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/hristo-sahatchiev-sOqzAvn3pQA-unsplash.jpg" />
+                        <h4 class="card-title text-success mt-3">Cities</h4>
+                        <p class="card-text text-center">See all <strong>cities</strong> that have climbing <strong>gyms</strong>. Maybe find a new place to <strong>live</strong>?</p>
+                        <a asp-area="Places" asp-controller="Cities" asp-action="Index" class="btn btn-success mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/stenatasu.jpg" />
+                        <h4 class="card-title text-success mt-3">Gyms</h4>
+                        <p class="card-text text-center">Find the <strong>gym</strong> with the most <strong>boulders</strong>. See all the boulders at that gym and climb them.</p>
+                        <a asp-area="Places" asp-controller="Gyms" asp-action="Index" class="btn btn-success mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators1" role="button" data-slide="prev">
+            <i class="fas fa-angle-left fa-2x text-primary"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators1" role="button" data-slide="next">
+            <i class="fas fa-angle-right fa-2x text-primary"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div id="carouselExampleIndicators2" class="carousel slide mt-5" data-ride="carousel" data-interval="11000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/engin-akyurt-o-99rrlwNVY-unsplash.jpg" />
+                        <h4 class="card-title text-dark mt-3">Forum</h4>
+                        <p class="card-text text-center">If you're looking for <strong>advice</strong> or a climbing <strong>partner</strong> the <strong>forum</strong> is the right place for you.</p>
+                        <a asp-area="Forum" asp-controller="Categories" asp-action="Index" class="btn btn-dark mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="col-lg-6 offset-lg-3 col-10 offset-1 justify-content-center">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img class="rounded-circle border" width="100" height="100" src="~/img/christin-hume-mfB1B1s4sMc-unsplash.jpg" />
+                        <h4 class="card-title text-dark mt-3">Chat</h4>
+                        <p class="card-text text-center">Real time <strong>chat</strong>. Messages are <strong>not saved</strong> anywhere so don't expect anything serious there.</p>
+                        <a asp-area="Places" asp-controller="Gyms" asp-action="Index" class="btn btn-dark mt-auto">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+            <i class="fas fa-angle-left fa-2x text-primary"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators2" role="button" data-slide="next">
+            <i class="fas fa-angle-right fa-2x text-primary"></i>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<div class="jumbotron text-center pb-4 pt-4 mt-5">
+    <h4 class="mb-2">How do we count points?</a></h4>
+    <strong>Ranking = top 10 ascents</strong> <br />
+    <strong>Grade + Style = Points for 1 ascent.</strong> <br />
+</div>
+
+<p class="text-center">
+    
+    The grade you give to a boulder has specific base points.
+    Ths style in which you climb the boulder has bonus points. <br />
+    For each timespan the sum of top 10 ascents is taken (with the most points).
+    The exact points for each grade and style youcan see below.
+</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="table-responsive mt-3">
+            <table class="table table-borderless table-hover table-striped">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th scope="col">Grade</th>
+                        <th scope="col">Points</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+
+                    @foreach (var grade in Model.Grades)
+                    {
+                        <tr>
+                            <td>@grade.Text</td>
+                            <td>@grade.Points</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="table-responsive mt-3">
+            <table class="table table-borderless table-hover table-striped">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th scope="col">Style</th>
+                        <th scope="col">Bonus Points</th>
+                    </tr>
+                </thead>
+                <tbody class="table-light">
+
+                    @foreach (var style in Model.Styles)
+                    {
+                        var styleBadgeClass = "badge badge-";
+
+                        if (style.ShortText == "OS")
+                        {
+                            styleBadgeClass += "success";
+                        }
+                        else if (style.ShortText == "FL")
+                        {
+                            styleBadgeClass += "warning";
+                        }
+                        else if (style.ShortText == "RP")
+                        {
+                            styleBadgeClass += "danger";
+                        }
+
+                        <tr>
+                            <td><span class="@styleBadgeClass">@style.ShortText</span> @style.LongText</td>
+                            <td>@style.BonusPoints</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

@@ -45,7 +45,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 350px;
+    margin-bottom: 420px;
 }
 
 .footer {
@@ -54,7 +54,7 @@ body {
     width: 100%;
     white-space: normal;
     /* Set the fixed height of the footer here */
-    height: 250px;
+    height: 350px;
     line-height: 25px; /* Vertically center the text there */
 }
 

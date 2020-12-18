@@ -19,10 +19,11 @@
         @foreach (var result in Model.Results)
         {
             <li class="list-group-item">
-                <a asp-area="@result.Area" asp-controller="@result.Controller" , asp-action="@result.Action" asp-route-id="@result.Id">
-                    <span class="m-0">@result.GetBeoreText(Model.Text)</span><span class="text-danger p-0 m-0">@Model.Text</span><span class="m-0 mr-2">@result.GetAfterText(Model.Text)</span>
-                </a>
-                ( @result.Category )
+                <h5>
+                    <a asp-area="@result.Area" asp-controller="@result.Controller" , asp-action="@result.Action" asp-route-id="@result.Id">
+                        <span class="m-0">@result.GetBeoreText(Model.Text)</span><span class="text-danger p-0 m-0">@Model.Text</span><span class="m-0 mr-2">@result.GetAfterText(Model.Text)</span></a>
+                    ( @result.Category )
+                </h5>
             </li>
         }
         @if (!Model.Results.Any())
