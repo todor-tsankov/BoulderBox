@@ -32,6 +32,11 @@ namespace BoulderBox.Web.Controllers
             return this.View(homeViewModel);
         }
 
+        public IActionResult Chat()
+        {
+            return this.View();
+        }
+
         public IActionResult Privacy()
         {
             return this.View();

@@ -43,7 +43,7 @@
                         <a asp-area="Forum" asp-controller="Categories" asp-action="Index" class="nav-link">Forum</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="Forum" asp-controller="Categories" asp-action="Index" class="nav-link">Chat</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Chat" class="nav-link">Chat</a>
                     </li>
                     <partial name="_LoginPartialNavBar" />
                 </ul>
@@ -58,7 +58,7 @@
     <main role="main" class="pb-3">
         <div class="container col-12">
             <div class="row">
-                <div class="border-primary border-right border-bottom bg-light d-none d-lg-block col-lg-2">
+                <div id="leftNavbar" class="border-primary border-right border-bottom bg-light d-none d-lg-block col-lg-2">
                     <div class="row ml-2 mr-2 mt-4 mb-4">
                         <partial name="_LoginPartial" />
                     </div>
@@ -136,7 +136,7 @@
                                 <a asp-area="Forum" asp-controller="Categories" asp-action="Index" class="text-light"><strong>Forum</strong></a>
                             </div>
                             <div>
-                                <a asp-area="Places" asp-controller="Cities" asp-action="Index" class="text-light"><strong>Chat</strong></a>
+                                <a asp-area="" asp-controller="Home" asp-action="Chat" class="text-light"><strong>Chat</strong></a>
                             </div>
                         </div>
                     </div>
@@ -152,6 +152,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

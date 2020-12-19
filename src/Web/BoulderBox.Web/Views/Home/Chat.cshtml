@@ -1,0 +1,70 @@
+﻿@{
+    this.ViewData["Title"] = "Chat";
+}
+
+<div class="card h-100 border-primary bg-light col-lg-10 offset-lg-1 mt-4">
+    <div class="card-body">
+        <div>
+        <div class="border-bottom border-secondary mb-3">
+            <h4 class="card-title text-center"><strong>Chat</strong></h4>
+        </div>
+        <div id="messagesList" class="overflow-auto">
+        </div>
+        <textarea id="messageInput" class="form-control col-12 m-2 p-3"></textarea>
+        <button id="sendButton" class="btn btn-primary float-right col-12"><i class="far fa-paper-plane fa-2x"></i></button>
+
+    </div>
+</div>
+</div>
+
+@section Scripts {
+    <script>
+        var connection =
+            new signalR.HubConnectionBuilder()
+                .withUrl("/chat")
+                .build();
+
+        connection.on("NewMessage",
+            function (message) {
+                var chatText = `<div class="col-12 mt-2"><div class="font-weight-light badge badge-light col-12"><div class="float-center">${new Date().toLocaleString()}</div><div class="text-left">${message.user}</div></div><div class="badge badge-warning text-wrap text-break text-left p-2">${escapeHtml(message.text)}</div></div>`;
+
+                appendText(chatText);
+            });
+
+        $("#sendButton").click(function () {
+            var message = $("#messageInput").val();
+            var chatText = `<div class="col-12 mt-2 text-right"><div class="font-weight-light badge badge-light col-12">${new Date().toLocaleString()}</div><div class="badge badge-dark text-wrap text-break text-right p-2">${escapeHtml(message)}</div></div>`;
+
+            if (message.length != 0) {
+                appendText(chatText);
+                connection.invoke("Send", message);
+            }
+            $("#messageInput").val("");
+        });
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function appendText(text) {
+            $("#messagesList").append(text);
+            scrollSmoothToBottom('messagesList');
+        }
+
+        function scrollSmoothToBottom(id) {
+            var div = document.getElementById(id);
+            $('#' + id).animate({
+                scrollTop: div.scrollHeight - div.clientHeight
+            }, 500);
+        }
+    </script>
+}

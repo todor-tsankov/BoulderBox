@@ -17,6 +17,7 @@ using BoulderBox.Services.Data.Tests.CommonServices.TestClasses;
 using BoulderBox.Services.Data.Users;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Services.Messaging;
+using BoulderBox.Web.Hubs;
 using BoulderBox.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
@@ -77,6 +78,8 @@ namespace BoulderBox.Web
                         options.CheckConsentNeeded = context => true;
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
+
+            services.AddSignalR();
 
             services.AddControllersWithViews(
                 options =>
@@ -166,6 +169,8 @@ namespace BoulderBox.Web
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
+
+                        endpoints.MapHub<ChatHub>("/chat");
                     });
         }
     }

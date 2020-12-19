@@ -60,3 +60,10 @@ body {
 
 /* Custom css
 -------------------------------------------------- */
+#leftNavbar {
+    height: 900px
+}
+
+#messagesList {
+    height: 400px
+}

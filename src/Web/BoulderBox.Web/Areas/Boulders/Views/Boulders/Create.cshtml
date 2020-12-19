@@ -49,60 +49,61 @@
     <button type="submit" class="btn btn-success">Create</button>
 </form>
 
-<script>
-    function fillCitySelect() {
+@section Scripts {
+    <script>
+        function fillCitySelect() {
 
-        let xhttp = new XMLHttpRequest();
+            let xhttp = new XMLHttpRequest();
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
 
-                document.getElementById("citySelect").innerHTML = '';
-                document.getElementById("gymSelect").innerHTML = '';
+                    document.getElementById("citySelect").innerHTML = '';
+                    document.getElementById("gymSelect").innerHTML = '';
 
-                var cities = JSON.parse(this.responseText);
+                    var cities = JSON.parse(this.responseText);
 
-                for (var i = 0; i < cities.length; i++) {
-                    var city = cities[i];
+                    for (var i = 0; i < cities.length; i++) {
+                        var city = cities[i];
 
-                    document.getElementById("citySelect").innerHTML += '<option value="' + city.id + '">' + city.name + '</option>';
+                        document.getElementById("citySelect").innerHTML += '<option value="' + city.id + '">' + city.name + '</option>';
+                    }
+
+                    fillGymSelect();
                 }
+            };
 
-                fillGymSelect();
-            }
-        };
+            var yourSelect = document.getElementById("countrySelect");
+            var countryId = yourSelect.options[yourSelect.selectedIndex].value;
 
-        var yourSelect = document.getElementById("countrySelect");
-        var countryId = yourSelect.options[yourSelect.selectedIndex].value;
+            xhttp.open("GET", "/api/Cities?countryId=" + countryId + "&withGyms=true", true);
+            xhttp.send();
+        }
 
-        xhttp.open("GET", "/api/Cities?countryId=" + countryId + "&withGyms=true", true);
-        xhttp.send();
-    }
+        function fillGymSelect() {
 
-    function fillGymSelect() {
+            let xhttp = new XMLHttpRequest();
 
-        let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
 
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("gymSelect").innerHTML = '';
 
-                document.getElementById("gymSelect").innerHTML = '';
+                    var gyms = JSON.parse(this.responseText);
 
-                var gyms = JSON.parse(this.responseText);
+                    for (var i = 0; i < gyms.length; i++) {
+                        var gym = gyms[i];
 
-                for (var i = 0; i < gyms.length; i++) {
-                    var gym = gyms[i];
-
-                    document.getElementById("gymSelect").innerHTML += '<option value="' + gym.id + '">' + gym.name + '</option>';
+                        document.getElementById("gymSelect").innerHTML += '<option value="' + gym.id + '">' + gym.name + '</option>';
+                    }
                 }
-            }
-        };
+            };
 
-        var yourSelect = document.getElementById("citySelect");
-        var gymId = yourSelect.options[yourSelect.selectedIndex].value
+            var yourSelect = document.getElementById("citySelect");
+            var gymId = yourSelect.options[yourSelect.selectedIndex].value
 
-        xhttp.open("GET", "/api/Gyms?cityId=" + gymId, true);
-        xhttp.send();
-    }
-</script>
-
+            xhttp.open("GET", "/api/Gyms?cityId=" + gymId, true);
+            xhttp.send();
+        }
+    </script>
+}
