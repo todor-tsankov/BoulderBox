@@ -64,7 +64,7 @@
             }
             var chatText = `<div class="col-12 mt-2 text-right"><div id="timeBadge" class="font-weight-light badge ${timeBadge} col-12">${new Date().toLocaleString()}</div><div id="myMessageBadge" class="badge ${messageBadge} text-wrap text-break text-right p-2">${escapeHtml(message)}</div></div>`;
 
-            if (message.length != 0 && mess.length <= 10000) {
+            if (message.length != 0 && message.length <= 10000) {
                 appendText(chatText);
                 connection.invoke("Send", message);
             }

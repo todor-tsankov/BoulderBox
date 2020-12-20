@@ -2,4 +2,48 @@
     this.ViewData["Title"] = "About BoulderBox";
 }
 
-<h2>@this.ViewData["Title"]</h2>
+<h4 class="alert-primary text-center mb-3 pt-3 pb-3">@this.ViewData["Title"]</h4>
+
+<p>
+    <strong>BoulderBox</strong> is a website for <strong>climbers</strong>. Each climber can explore the various <strong>countries</strong>, <strong>cities</strong>, <strong>gyms</strong> and sort/filter them in any way he likes.
+    In each gym there are <strong>boulders</strong>, which are short routes (2-5m) that are climbed without rope and there is a matress underneath for protection.
+    Climbers can make an ascent of a boulder and see all of their ascents in their profile and also create their own boulder. Each climber participates in the <strong>ranking</strong>.
+    There are 4 types of ranking: weekly, monthly, yearly and all time. For each climber the top 10 <strong>ascents</strong> are taken for each type (timespan).
+    The points for one ascent come from the <strong>grade</strong> of the boulder, which gives the base points (harder boulder means more points).
+    Bonus points are given for the <strong>style</strong> in which the ascent is done.
+    In addition, there's a simple <strong>forum</strong> with categories, <strong>posts</strong> in the categories and comments for each post where climbers (or normal) people can
+    ask for advice, find a climbing buddy or suggest improvements or problems with the website.
+    The last form of communication is the <strong>chat</strong>, which is just for fun. It's messages are not stored anywhere so you don't have to worry about whether
+    something stupid you said 5 years ago is going to come up and embrass you.
+</p>
+
+<h4 class="mt-3 mb-3 text-center">Idea</h4>
+
+<p>
+    My name is Todor Tsankov and I'm a climber this website is my  defense project for <strong>ASP.NET Core MVC</strong> course at
+    <a href="https://softuni.bg/"><strong>SoftwareUniversity</strong></a> (September-December 2020).
+    It has an <strong>open source</strong> code that can be seen this <a href="https://github.com/todor-tsankov/BoulderBox"><strong>gihtub repository</strong></a>.
+</p>
+
+<h4 class="alert-primary text-center mb-5 mt-5 pt-3 pb-3">Some random photos</h4>
+
+<div id="carouselExampleIndicators" class="carousel slide col-12 card-header-pills" data-ride="carousel" data-interval="5000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="col-12" src="~/img/aboutImage1.jpg" />
+        </div>
+        <div class="carousel-item">
+            <img class="col-12" src="~/img/aboutImage2.jpg" />
+        </div>
+        <div class="carousel-item">
+            <img class="col-12" src="~/img/aboutImage3.jpg" />
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <i class="fas fa-angle-left fa-2x text-dark"></i>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <i class="fas fa-angle-right fa-2x text-dark"></i>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

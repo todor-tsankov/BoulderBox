@@ -14,7 +14,7 @@
         <i class="fas fa-book-open fa-3x mr-3"></i>
     }
     <h2 class="mt-1">@Model.Name</h2>
-    <a asp-area="Forum" asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-3">Create Post</a>
+    <a asp-area="Forum" asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-lg-3 mt-1 mb-3">Create Post</a>
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
         <a asp-area="Administration" asp-controller="Categories" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-3">Edit</a>
