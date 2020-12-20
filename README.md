@@ -11,7 +11,7 @@ Climbers can make an ascent of a boulder and see all of their ascents in their p
 There are 4 types of ranking: weekly, monthly, yearly and all time. For each climber the top 10 ascents are taken for each type (timespan). 
 The points for one ascent come from the grade of the boulder, which gives the base points (harder boulder means more points). 
 Bonus points are given for the style in which the ascent is done. 
-In addition, there's a simple forum with categories, posts in the categories and comments for each post where climbers (or normal) people can
+In addition, there's a simple forum with categories, posts in the categories and comments for each post where climbers (or normal people) can
 ask for advice, find a climbing buddy or suggest improvements or problems with the website.
 The last form of communication is the chat, which is just for fun. It's messages are not stored anywhere so you don't have to worry about whether
 something stupid you said 5 years ago is going to come up and embrass you.
