@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
+
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Web.ViewModels;
 using BoulderBox.Web.ViewModels.Boulders.Grades;
 using BoulderBox.Web.ViewModels.Boulders.Styles;
 using BoulderBox.Web.ViewModels.Home;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoulderBox.Web.Controllers
@@ -32,6 +34,7 @@ namespace BoulderBox.Web.Controllers
             return this.View(homeViewModel);
         }
 
+        [Authorize]
         public IActionResult Chat()
         {
             return this.View();

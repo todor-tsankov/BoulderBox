@@ -13,7 +13,9 @@ namespace BoulderBox.Web.Hubs
         {
             var trimmedMessage = message?.Trim();
 
-            if (trimmedMessage == null || trimmedMessage.Length == 0)
+            if (trimmedMessage == null
+                || trimmedMessage.Length == 0
+                || trimmedMessage.Length > 10000)
             {
                 return;
             }
