@@ -23,6 +23,7 @@ something stupid you said 5 years ago is going to come up and embrass you.
 - ASP.NET Core areas
 - SignalR
 - SendGrid
+- Hangfire
 - Cloudinary (for storing images)
 - Bootstrap 4
 - AJAX
