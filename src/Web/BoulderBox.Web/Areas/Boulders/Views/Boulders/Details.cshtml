@@ -4,7 +4,7 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="row ml-2">
+<div class="row ml-2 justify-content-center">
     <h2>@Model.Name (@Model.GradeText)</h2>
     <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
     @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.AuthorId)
@@ -15,18 +15,25 @@
     {
         <a asp-area="Administration" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
     }
-    <h4 class="ml-3 mt-2">by: <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@Model.AuthorId" >@Model.AuthorUserName</a></h4>
 </div>
 
-@if (Model.Description != null)
-{
-    <hr class="bg-secondary mt-4" />
-    <p class="text-break">@(Model.Description)</p>
-}
+<div class="row mt-4 mb-3 col-12">
+    <img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0" />
 
-<hr class="bg-secondary mb-4" />
+    <div class="col-lg-5 ml-2 mt-2">
+        <div class="jumbotron container-fluid">
+            <h4>by: <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@Model.AuthorId">@Model.AuthorUserName</a></h4>
+            <h4>gym: <a asp-area="Places" asp-controller="Gyms" asp-action="Details" asp-route-id="@Model.GymId">@Model.GymName</a></h4>
+            <h4>created on: @Model.CreatedOn.ToString("dd/MM/yyyy")</h4>
+            <br />
+            @if (Model.Description != null)
+            {
+                <p>@(Model.Description)</p>
+            }
+        </div>
+    </div>
+</div>
 
-<img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0" />
 
 <h3>Ascents Of @Model.Name</h3>
 
