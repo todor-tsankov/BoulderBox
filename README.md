@@ -33,4 +33,4 @@ something stupid you said 5 years ago is going to come up and embrass you.
 - Moq (for testing)
 
 ## :wrench: DB Diagram
-![]()
+![](https://res.cloudinary.com/boulderbox/image/upload/v1608549504/DatabaseDiagram_fumqsq.jpg)
