@@ -5,6 +5,7 @@ using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Forum.Posts
@@ -44,6 +45,7 @@ namespace BoulderBox.Web.ViewModels.Forum.Posts
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CategoriesSelectListItems { get; set; }
     }
 }

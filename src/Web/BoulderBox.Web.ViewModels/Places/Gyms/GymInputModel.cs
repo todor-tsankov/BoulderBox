@@ -6,6 +6,7 @@ using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Gyms
@@ -47,8 +48,10 @@ namespace BoulderBox.Web.ViewModels.Places.Gyms
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CitiesSelectListItems { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

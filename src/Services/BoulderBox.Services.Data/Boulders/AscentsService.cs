@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using AutoMapper;
+using BoulderBox.Common;
 using BoulderBox.Data.Common.Repositories;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Data.Common;
@@ -13,12 +14,6 @@ namespace BoulderBox.Services.Data.Boulders
 {
     public class AscentsService : BaseService<Ascent>, IAscentsService
     {
-        public const int NumberOfTopBouldersInRanking = 10;
-
-        public const int WeeklyRankingDays = 7;
-        public const int MonthlyRankingMonths = 1;
-        public const int YearlyRankingYears = 1;
-
         private readonly IDeletableEntityRepository<Ascent> ascentsRepository;
         private readonly IDeletableEntityRepository<Points> pointsRepository;
         private readonly IMapper mapper;
@@ -51,9 +46,9 @@ namespace BoulderBox.Services.Data.Boulders
                 .All()
                 .First(x => x.ApplicationUserId == userId);
 
-            points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(WeeklyRankingDays) >= DateTime.UtcNow);
-            points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(MonthlyRankingMonths) >= DateTime.UtcNow);
-            points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(YearlyRankingYears) >= DateTime.UtcNow);
+            points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
+            points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);
+            points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(GlobalConstants.YearlyRankingYears) >= DateTime.UtcNow);
             points.AllTime = this.CalculatePoints(userId, x => true);
 
             await this.ascentsRepository.SaveChangesAsync();
@@ -86,7 +81,7 @@ namespace BoulderBox.Services.Data.Boulders
                             .Where(filter)
                             .Select(x => x.Grade.Points + x.Style.BonusPoints)
                             .OrderByDescending(x => x)
-                            .Take(NumberOfTopBouldersInRanking)
+                            .Take(GlobalConstants.NumberOfTopBouldersInRanking)
                             .Sum();
 
             return points;

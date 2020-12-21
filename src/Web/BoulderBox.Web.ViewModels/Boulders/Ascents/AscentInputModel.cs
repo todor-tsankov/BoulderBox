@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Boulders.Ascents
@@ -47,8 +48,10 @@ namespace BoulderBox.Web.ViewModels.Boulders.Ascents
         [Required(ErrorMessage = DateRequiredErrorMessage)]
         public DateTime Date { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> GradesSelectListItems { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> StylesSelectListItems { get; set; }
     }
 }

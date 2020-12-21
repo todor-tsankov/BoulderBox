@@ -5,6 +5,7 @@ using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Places.Cities
@@ -39,6 +40,7 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CountriesSelectListItems { get; set; }
     }
 }

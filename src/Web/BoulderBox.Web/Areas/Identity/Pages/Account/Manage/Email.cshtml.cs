@@ -4,11 +4,12 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 using BoulderBox.Data.Models;
+using BoulderBox.Services.Messaging;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 
 namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
 {
@@ -17,15 +18,18 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
+        private readonly IConfiguration configuration;
 
         public EmailModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
+            this.configuration = configuration;
         }
 
         public string Username { get; set; }
@@ -85,6 +89,8 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
                     values: (userId, email: this.Input.NewEmail, code),
                     protocol: this.Request.Scheme);
                 await this.emailSender.SendEmailAsync(
+                    this.configuration["Email:Address"],
+                    this.configuration["Email:Name"],
                     this.Input.NewEmail,
                     "Confirm your email",
                     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
@@ -121,6 +127,8 @@ namespace BoulderBox.Web.Areas.Identity.Pages.Account.Manage
                 values: new { area = "Identity", userId, code },
                 protocol: this.Request.Scheme);
             await this.emailSender.SendEmailAsync(
+                this.configuration["Email:Address"],
+                this.configuration["Email:Name"],
                 email,
                 "Confirm your email",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

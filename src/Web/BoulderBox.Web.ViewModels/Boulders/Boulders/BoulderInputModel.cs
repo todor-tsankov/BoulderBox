@@ -6,6 +6,7 @@ using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BoulderBox.Web.ViewModels.Boulders.Boulders
@@ -33,6 +34,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
         public const string DescriptionLengthErrorMessage = "Description must be between 5 and 1000 characters.";
 
         public const string FormFileDisplay = "Image *";
+        public const string FormFileRequiredErrorMessage = "Image is required";
 
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]
@@ -61,16 +63,20 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
         public string CityId { get; set; }
 
         [Display(Name = FormFileDisplay)]
-        [Required]
+        [Required(ErrorMessage = FormFileRequiredErrorMessage)]
         [ImageAttribute]
         public IFormFile FormFile { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> GradesSelectItems { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CountriesSelectItems { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> CitiesSelectItems { get; set; }
 
+        [BindNever]
         public IEnumerable<SelectListItem> GymsSelectItems { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

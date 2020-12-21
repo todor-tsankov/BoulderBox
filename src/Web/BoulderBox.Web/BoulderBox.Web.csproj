@@ -18,6 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.18" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1">
@@ -38,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BoulderBox.Common\BoulderBox.Common.csproj" />
+    <ProjectReference Include="..\..\BoulderBox.Services.CronJobs\BoulderBox.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Data\BoulderBox.Data.Models\BoulderBox.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\BoulderBox.Data\BoulderBox.Data.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Data\BoulderBox.Services.Data.csproj" />
