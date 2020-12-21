@@ -14,10 +14,12 @@ namespace BoulderBox.Web.Areas.Places.Controllers
     public class CitiesController : BaseController
     {
         private readonly ICitiesService citiesService;
+        private readonly IGymsService gymsService;
 
-        public CitiesController(ICitiesService citiesService)
+        public CitiesController(ICitiesService citiesService, IGymsService gymsService)
         {
             this.citiesService = citiesService;
+            this.gymsService = gymsService;
         }
 
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)
@@ -65,6 +67,9 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
             var city = this.citiesService
                 .GetSingle<CityDetailsViewModel>(x => x.Id == id);
+
+            city.Gyms = this.gymsService
+                .GetMany<CityDetailsGymViewModel>(x => x.CityId == id, x => x.Name);
 
             return this.View(city);
         }

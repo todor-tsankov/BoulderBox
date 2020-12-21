@@ -24,7 +24,7 @@
             <tr>
                 <td class="@badgeClass mt-1">@ascent.StyleShortText</td>
                 <td><div class="row justify-content-center ml-1 mr-1">@ascent.GradeText</div></td>
-                <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUserName</a></td>
+                <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark text-break">@ascent.ApplicationUserUserName</a></td>
             </tr>
         }
     </tbody>
@@ -37,7 +37,7 @@
         {
             <tr>
                 <td>@boulder.GradeText</td>
-                <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark">@boulder.Name</a></td>
+                <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@boulder.Id" class="text-dark text-break">@boulder.Name</a></td>
             </tr>
         }
     </tbody>

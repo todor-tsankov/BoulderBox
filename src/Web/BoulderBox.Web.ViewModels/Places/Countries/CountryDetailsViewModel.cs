@@ -20,6 +20,7 @@ namespace BoulderBox.Web.ViewModels.Places.Countries
 
         public virtual string ImageSource { get; set; }
 
-        public ICollection<CountryDetailsCityViewModel> Cities { get; set; }
+        [IgnoreMap]
+        public IEnumerable<CountryDetailsCityViewModel> Cities { get; set; }
     }
 }

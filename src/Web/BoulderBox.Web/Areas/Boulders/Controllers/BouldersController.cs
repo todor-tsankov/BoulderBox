@@ -32,6 +32,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         private readonly ICitiesService citiesService;
         private readonly IGymsService gymsService;
         private readonly IGradesService gradesService;
+        private readonly IAscentsService ascentsService;
         private readonly ICloudinaryService cloudinaryService;
 
         public BouldersController(
@@ -40,6 +41,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             ICitiesService citiesService,
             IGymsService gymsService,
             IGradesService gradesService,
+            IAscentsService ascentsService,
             ICloudinaryService cloudinaryService)
         {
             this.bouldersService = bouldersService;
@@ -47,6 +49,7 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             this.citiesService = citiesService;
             this.gymsService = gymsService;
             this.gradesService = gradesService;
+            this.ascentsService = ascentsService;
             this.cloudinaryService = cloudinaryService;
         }
 
@@ -96,6 +99,9 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
 
             var boulder = this.bouldersService
                 .GetSingle<BoulderDetailsViewModel>(x => x.Id == id);
+
+            boulder.Ascents = this.ascentsService
+                .GetMany<BoulderDetailsAscentViewModel>(x => x.BoulderId == id, x => x.Date, false);
 
             return this.View(boulder);
         }

@@ -16,10 +16,12 @@ namespace BoulderBox.Web.Areas.Places.Controllers
     public class CountriesController : BaseController
     {
         private readonly ICountriesService countriesService;
+        private readonly ICitiesService citiesService;
 
-        public CountriesController(ICountriesService countriesService)
+        public CountriesController(ICountriesService countriesService, ICitiesService citiesService)
         {
             this.countriesService = countriesService;
+            this.citiesService = citiesService;
         }
 
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)
@@ -67,6 +69,9 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
             var country = this.countriesService
                 .GetSingle<CountryDetailsViewModel>(x => x.Id == id);
+
+            country.Cities = this.citiesService
+                .GetMany<CountryDetailsCityViewModel>(x => x.CountryId == id, x => x.Name);
 
             return this.View(country);
         }

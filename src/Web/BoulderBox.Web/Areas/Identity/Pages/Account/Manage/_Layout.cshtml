@@ -11,6 +11,7 @@
 
 <div class="row ml-2">
     <h4>Manage your account</h4>
+    <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" class="btn btn-outline-primary ml-3 mb-1">Public Profile</a>
 </div>
 <hr class="bg-secondary" />
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 
@@ -19,6 +20,7 @@ namespace BoulderBox.Web.ViewModels.Places.Cities
 
         public string Description { get; set; }
 
-        public ICollection<CityDetailsGymViewModel> Gyms { get; set; }
+        [IgnoreMap]
+        public IEnumerable<CityDetailsGymViewModel> Gyms { get; set; }
     }
 }

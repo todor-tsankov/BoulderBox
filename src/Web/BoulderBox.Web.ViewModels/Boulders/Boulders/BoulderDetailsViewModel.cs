@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 
@@ -28,6 +29,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
 
         public DateTime CreatedOn { get; set; }
 
-        public ICollection<BoulderDetailsAscentViewModel> Ascents { get; set; }
+        [IgnoreMap]
+        public IEnumerable<BoulderDetailsAscentViewModel> Ascents { get; set; }
     }
 }

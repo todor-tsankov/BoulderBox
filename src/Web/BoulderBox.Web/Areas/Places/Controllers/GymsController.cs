@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 
 using BoulderBox.Data.Models;
+using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Places;
 using BoulderBox.Web.Controllers;
 using BoulderBox.Web.ViewModels.Common;
@@ -14,11 +15,12 @@ namespace BoulderBox.Web.Areas.Places.Controllers
     public class GymsController : BaseController
     {
         private readonly IGymsService gymsService;
+        private readonly IBouldersService bouldersService;
 
-        public GymsController(
-            IGymsService gymsService)
+        public GymsController(IGymsService gymsService, IBouldersService bouldersService)
         {
             this.gymsService = gymsService;
+            this.bouldersService = bouldersService;
         }
 
         public IActionResult Index(SortingInputModel sorting, int pageId = 1)
@@ -66,6 +68,9 @@ namespace BoulderBox.Web.Areas.Places.Controllers
 
             var gym = this.gymsService
                 .GetSingle<GymDetailsViewModel>(x => x.Id == id);
+
+            gym.Boulders = this.bouldersService
+                .GetMany<GymDetailsBoulderViewModel>(x => x.GymId == id, x => x.CreatedOn, false);
 
             return this.View(gym);
         }

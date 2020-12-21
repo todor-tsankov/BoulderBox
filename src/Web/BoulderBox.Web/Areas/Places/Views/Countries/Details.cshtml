@@ -42,10 +42,10 @@
         </thead>
         <tbody class="table-light">
 
-            @if (Model.Cities.Count == 0)
+            @if (!Model.Cities.Any())
             {
                 <tr>
-                    <td>No cities in @Model.Name</td>
+                    <td  width="50">-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
