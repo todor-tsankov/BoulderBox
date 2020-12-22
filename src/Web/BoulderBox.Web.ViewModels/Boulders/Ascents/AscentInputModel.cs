@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
+using BoulderBox.Web.ViewModels.ValidationAttributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -46,6 +47,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Ascents
         [Display(Name = DateDisplay)]
         [DataType(DataType.Date)]
         [Required(ErrorMessage = DateRequiredErrorMessage)]
+        [AscentDateAtribute]
         public DateTime Date { get; set; }
 
         [BindNever]

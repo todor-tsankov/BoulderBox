@@ -28,6 +28,7 @@ namespace BoulderBox.Data.Seeding
                               new RolesSeeder(),
                               new GradesSeeder(),
                               new StylesSeeder(),
+                              new AdminSeeder(),
                           };
 
             foreach (var seeder in seeders)

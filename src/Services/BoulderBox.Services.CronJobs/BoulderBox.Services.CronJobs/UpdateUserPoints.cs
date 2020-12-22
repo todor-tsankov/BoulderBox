@@ -34,8 +34,8 @@ namespace BoulderBox.Services.CronJobs
             foreach (var userId in userIds)
             {
                 var points = this.pointsRepository
-                .All()
-                .First(x => x.ApplicationUserId == userId);
+                    .All()
+                    .First(x => x.ApplicationUserId == userId);
 
                 points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
                 points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+
 using BoulderBox.Common;
 using BoulderBox.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -13,31 +15,50 @@ namespace BoulderBox.Data.Seeding
 {
     public class AdminSeeder : ISeeder
     {
-        private readonly IConfiguration configuration;
-
-        public AdminSeeder(IConfiguration configuration)
+        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            this.configuration = configuration;
+            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            var firstAdminEmail = configuration["FirstAdmin:Email"];
+            var firstAdminUserName = configuration["FirstAdmin:UserName"];
+
+            var alreadyExists = dbContext.Users
+                .Any(x => x.UserName == firstAdminUserName || x.Email == firstAdminEmail);
+
+            if (!alreadyExists)
+            {
+                var password = configuration["FirstAdmin:Password"];
+                await AddAdmin(userManager, firstAdminEmail, firstAdminUserName, password);
+            }
+
+            var secondAdminEmail = configuration["SecondAdmin:Email"];
+            var secondAdminUserName = configuration["SecondAdmin:UserName"];
+
+            alreadyExists = dbContext.Users
+                .Any(x => x.UserName == secondAdminUserName || x.Email == secondAdminEmail);
+
+            if (!alreadyExists)
+            {
+                var password = configuration["SecondAdmin:Password"];
+                await AddAdmin(userManager, secondAdminEmail, secondAdminUserName, password);
+            }
         }
 
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        private static async Task AddAdmin(UserManager<ApplicationUser> userManager, string email, string username, string password)
         {
             var admin = new ApplicationUser()
             {
-                Use
+                UserName = username,
+                Email = email,
             };
 
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            await userManager.CreateAsync(admin, "");
+            var success = await userManager.CreateAsync(admin, password);
 
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-
-            var administratorRole = await roleManager.FindByNameAsync(GlobalConstants.AdministratorRoleName);
-
-
-            applicationUser.Roles.Add(administratorRole);
-
-            userManager.CreateAsync(applicationUser);
+            if (success.Succeeded)
+            {
+                await userManager.AddToRoleAsync(admin, GlobalConstants.AdministratorRoleName);
+            }
         }
     }
 }

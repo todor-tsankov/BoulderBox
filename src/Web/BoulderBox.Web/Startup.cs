@@ -10,6 +10,7 @@ using BoulderBox.Data.Models;
 using BoulderBox.Data.Repositories;
 using BoulderBox.Data.Seeding;
 using BoulderBox.Services;
+using BoulderBox.Services.CronJobs;
 using BoulderBox.Services.Data;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Files;
@@ -161,7 +162,7 @@ namespace BoulderBox.Web
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-                this.SeedHangfireJobs(recurringJobManager);
+                SeedHangfireJobs(recurringJobManager);
             }
 
             if (env.IsDevelopment())
@@ -200,7 +201,7 @@ namespace BoulderBox.Web
                     });
         }
 
-        private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
+        private static void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
         {
             recurringJobManager.AddOrUpdate<UpdateUserPoints>("UpdateUserPoints", x => x.Update(), Cron.Daily);
         }

@@ -41,15 +41,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BoulderBox.Common\BoulderBox.Common.csproj" />
-    <ProjectReference Include="..\..\BoulderBox.Services.CronJobs\BoulderBox.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Data\BoulderBox.Data.Models\BoulderBox.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\BoulderBox.Data\BoulderBox.Data.csproj" />
+    <ProjectReference Include="..\..\Services\BoulderBox.Services.CronJobs\BoulderBox.Services.CronJobs\BoulderBox.Services.CronJobs.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Data\BoulderBox.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Mapping\BoulderBox.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Messaging\BoulderBox.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\BoulderBox.Services\BoulderBox.Services.csproj" />
     <ProjectReference Include="..\..\Tests\BoulderBox.Services.Data.Tests\BoulderBox.Services.Data.Tests.csproj" />
-    <ProjectReference Include="..\BoulderBox.Web.Infrastructure\BoulderBox.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\BoulderBox.Web.ViewModels\BoulderBox.Web.ViewModels.csproj" />
   </ItemGroup>
 </Project>
