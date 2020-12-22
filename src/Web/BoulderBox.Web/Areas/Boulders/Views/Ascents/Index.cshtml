@@ -96,7 +96,7 @@
                     <td><a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@ascent.ApplicationUserId" class="text-dark">@ascent.ApplicationUserUsername</a></td>
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
-                    <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark">@ascent.BoulderName</a> (@ascent.GradeText)</td>
+                    <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark text-nowrap">@ascent.BoulderName</a> (@ascent.GradeText)</td>
                     <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
@@ -104,7 +104,12 @@
                     }
                     else
                     {
-                        <td>@ascent.Stars</td>
+                        <td class="text-nowrap">
+                            @for (int i = 0; i < ascent.Stars; i++)
+                            {
+                                <i class="far fa-star"></i>
+                            }
+                        </td>
                     }
                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                     {
