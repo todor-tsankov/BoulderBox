@@ -10,7 +10,6 @@ using BoulderBox.Data.Models;
 using BoulderBox.Data.Repositories;
 using BoulderBox.Data.Seeding;
 using BoulderBox.Services;
-using BoulderBox.Services.CronJobs;
 using BoulderBox.Services.Data;
 using BoulderBox.Services.Data.Boulders;
 using BoulderBox.Services.Data.Files;
@@ -99,6 +98,7 @@ namespace BoulderBox.Web
                     });
 
             services.AddSignalR();
+            services.AddApplicationInsightsTelemetry();
 
             services.AddControllersWithViews(
                 options =>
@@ -149,6 +149,7 @@ namespace BoulderBox.Web
 
             // Users - Application services
             services.AddTransient<IApplicationUsersService, ApplicationUsersService>();
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
