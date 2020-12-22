@@ -4,7 +4,7 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="row ml-2 justify-content-center">
+<div class="row ml-2 justify-content-lg-center">
     <h2>@Model.Name (@Model.GradeText)</h2>
     <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
     @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.AuthorId)

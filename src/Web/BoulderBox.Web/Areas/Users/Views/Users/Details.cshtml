@@ -24,7 +24,28 @@
 
 <hr class="bg-secondary mb-4" />
 
-<h3>Ascents Of @Model.UserName</h3>
+<div class="row col-12 text-center justify-content-center mb-4">
+    <div class="row col-12 col-lg-5 jumbotron mt-lg-5 mr-lg-4 pt-3 pb-2">
+        <h5 class="col-12">Statistics</h5>
+        <div class="col-6">
+            <h6>Points</h6>
+            <p>Weekly: <strong>@Model.PointsWeekly</strong></p>
+            <p>Monthly:<strong> @Model.PointsMonthly</strong></p>
+            <p>Yearly:<strong> @Model.PointsYearly</strong></p>
+            <p>All Time: <strong>@Model.PointsAllTime</strong></p>
+        </div>
+        <div class="col-6">
+            <h6>Count</h6>
+            <p>Ascents: <strong>@Model.AscentsCount</strong></p>
+            <p>Boulders:<strong> @Model.BouldersCount</strong></p>
+            <p>Posts:<strong> @Model.PostsCount</strong></p>
+            <p>Comments: <strong>@Model.CommentsCount</strong></p>
+        </div>
+    </div>
+    <div id="ascentsChart" class="col-lg-6 col-12 p-0" style="height: 400px"></div>
+</div>
+
+<h3>Ascents</h3>
 
 <div class="table-responsive mt-3">
     <table class="table table-borderless table-hover table-striped">
@@ -106,7 +127,14 @@
                         <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                         <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                         <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark text-nowrap">@ascent.BoulderName</a></td>
-                        <td>@(ascent.Comment ?? "-")</td>
+                        @if (ascent.Comment != null)
+                        {
+                            <td>@ascent.Comment</td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                        }
                         @if (ascent.Stars == null)
                         {
                             <td>-</td>
@@ -134,3 +162,65 @@
         }
     </table>
 </div>
+
+@section Scripts{
+    <script>
+        Highcharts.setOptions({
+            colors: ['#cc1b1b', '#dfe620', '#22b324']
+        });
+
+        Highcharts.chart('ascentsChart', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Ascents by grade and style'
+            },
+            xAxis: {
+                categories: [
+                    @foreach (var ascentGroup in Model.Ascents)
+                    {
+                        @Html.Raw($"'{ascentGroup.Key}',");
+                    }
+                ]
+            },
+            yAxis: {
+                min: 0,
+                minTickInterval: 1,
+                title: {
+                    text: ''
+                }
+            },
+            legend: {
+                reversed: true
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+            series: [ {
+                name: 'RP',
+                    data: [
+                        @foreach (var ascentGroup in Model.Ascents)
+                    {
+                        @Html.Raw($"{ascentGroup.Ascents.Count(x => x.StyleShortText == "RP")},");
+                    }]
+            }, {
+                name: 'FL',
+                    data: [
+                        @foreach (var ascentGroup in Model.Ascents)
+                    {
+                        @Html.Raw($"{ascentGroup.Ascents.Count(x => x.StyleShortText == "FL")},");
+                    }]
+            }, {
+                name: 'OS',
+                data: [
+                    @foreach (var ascentGroup in Model.Ascents)
+                    {
+                        @Html.Raw($"{ascentGroup.Ascents.Count(x => x.StyleShortText == "OS")},");
+                    }]
+            },]
+        });
+    </script>
+}

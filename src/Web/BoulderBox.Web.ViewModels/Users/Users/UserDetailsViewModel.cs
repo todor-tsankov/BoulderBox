@@ -25,6 +25,14 @@ namespace BoulderBox.Web.ViewModels.Users.Users
 
         public string ImageSource { get; set; }
 
+        public int AscentsCount { get; set; }
+
+        public int BouldersCount { get; set; }
+
+        public int PostsCount { get; set; }
+
+        public int CommentsCount { get; set; }
+
         [IgnoreMap]
         public virtual IEnumerable<AscentGroupViewModel> Ascents { get; set; }
     }
