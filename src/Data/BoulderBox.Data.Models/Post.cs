@@ -25,8 +25,10 @@ namespace BoulderBox.Data.Models
         [MaxLength(10000)]
         public string Text { get; set; }
 
+        [Required]
         public string CategoryId { get; set; }
 
+        [Required]
         public Category Category { get; set; }
 
         [Required]

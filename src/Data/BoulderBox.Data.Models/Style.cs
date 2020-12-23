@@ -25,9 +25,6 @@ namespace BoulderBox.Data.Models
 
         public int BonusPoints { get; set; }
 
-        [MaxLength(1000)]
-        public string Description { get; set; }
-
         public virtual ICollection<Ascent> Ascents { get; set; }
     }
 }

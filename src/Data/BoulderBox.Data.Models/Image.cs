@@ -14,8 +14,5 @@ namespace BoulderBox.Data.Models
 
         [Required]
         public string Source { get; set; }
-
-        [MaxLength(1000)]
-        public string Description { get; set; }
     }
 }

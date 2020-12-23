@@ -48,14 +48,13 @@
 <h3>Ascents</h3>
 
 <div class="table-responsive mt-3">
-    <table class="table table-borderless table-hover table-striped">
+    <table class="table table-borderless table-hover">
         <thead class="bg-primary text-light">
             <tr>
                 <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>Date</th>
                 <th>Style</th>
                 <th>Boulder</th>
-                <th>Comment</th>
                 <th>Stars</th>
                 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
                 {
@@ -86,12 +85,7 @@
         {
             <thead class="table-secondary">
                 <tr>
-                    <th class="text-center">@group.Key</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th class="text-center" colspan="5">@group.Key</th>
                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
                     {
                         <th></th>
@@ -127,14 +121,7 @@
                         <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                         <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                         <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark text-nowrap">@ascent.BoulderName</a></td>
-                        @if (ascent.Comment != null)
-                        {
-                            <td>@ascent.Comment</td>
-                        }
-                        else
-                        {
-                            <td>-</td>
-                        }
+
                         @if (ascent.Stars == null)
                         {
                             <td>-</td>
@@ -157,6 +144,13 @@
                             <td><a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
                         }
                     </tr>
+                    @if (ascent.Comment != null)
+                    {
+                        <tr>
+                            <td colspan="6">@ascent.Comment</td>
+                        </tr>
+                    }
+
                 }
             </tbody>
         }
