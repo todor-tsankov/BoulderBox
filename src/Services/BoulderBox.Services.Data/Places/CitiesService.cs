@@ -18,6 +18,9 @@ namespace BoulderBox.Services.Data.Places
         public CitiesService(IDeletableEntityRepository<City> citiesRepository, IMapper mapper)
             : base(citiesRepository, mapper)
         {
+            this.NullCheck(citiesRepository, nameof(citiesRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.citiesRepository = citiesRepository;
             this.mapper = mapper;
         }

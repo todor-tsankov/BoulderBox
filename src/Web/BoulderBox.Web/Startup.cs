@@ -203,7 +203,7 @@ namespace BoulderBox.Web
 
         private static void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
         {
-            recurringJobManager.AddOrUpdate<UpdateUserPoints>("UpdateUserPoints", x => x.Update(), Cron.Daily);
+            recurringJobManager.AddOrUpdate<UpdateUserPoints>("UpdateUserPoints", x => x.UpdateAll(), Cron.Daily);
         }
 
         private class HangfireAuthorizationFilter : IDashboardAuthorizationFilter

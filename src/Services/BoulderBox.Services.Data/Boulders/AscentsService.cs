@@ -24,11 +24,13 @@ namespace BoulderBox.Services.Data.Boulders
             IMapper mapper)
             : base(ascentsRepository, mapper)
         {
+            this.NullCheck(mapper, nameof(mapper));
+            this.NullCheck(ascentsRepository, nameof(ascentsRepository));
             this.NullCheck(pointsRepository, nameof(pointsRepository));
 
+            this.mapper = mapper;
             this.ascentsRepository = ascentsRepository;
             this.pointsRepository = pointsRepository;
-            this.mapper = mapper;
         }
 
         public async Task AddAsync(AscentInputModel ascentInput, string userId)
@@ -41,17 +43,7 @@ namespace BoulderBox.Services.Data.Boulders
 
             await this.ascentsRepository.AddAsync(ascent);
             await this.ascentsRepository.SaveChangesAsync();
-
-            var points = this.pointsRepository
-                .All()
-                .First(x => x.ApplicationUserId == userId);
-
-            points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
-            points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);
-            points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(GlobalConstants.YearlyRankingYears) >= DateTime.UtcNow);
-            points.AllTime = this.CalculatePoints(userId, x => true);
-
-            await this.ascentsRepository.SaveChangesAsync();
+            await this.CalculatePointsForUser(userId);
         }
 
         public async Task EditAsync(string id, AscentInputModel ascentInput)
@@ -71,6 +63,21 @@ namespace BoulderBox.Services.Data.Boulders
             ascent.Date = ascentInput.Date;
 
             await this.ascentsRepository.SaveChangesAsync();
+            await this.CalculatePointsForUser(ascent.ApplicationUserId);
+        }
+
+        private async Task CalculatePointsForUser(string userId)
+        {
+            var points = this.pointsRepository
+                            .All()
+                            .First(x => x.ApplicationUserId == userId);
+
+            points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
+            points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);
+            points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(GlobalConstants.YearlyRankingYears) >= DateTime.UtcNow);
+            points.AllTime = this.CalculatePoints(userId, x => true);
+
+            await this.pointsRepository.SaveChangesAsync();
         }
 
         private int CalculatePoints(string userId, Expression<Func<Ascent, bool>> filter)

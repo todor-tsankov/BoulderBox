@@ -25,6 +25,10 @@ namespace BoulderBox.Services.Data.Users
             IMapper mapper)
             : base(usersRepository, mapper)
         {
+            this.NullCheck(usersRepository, nameof(usersRepository));
+            this.NullCheck(ascentsRepository, nameof(ascentsRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.usersRepository = usersRepository;
             this.ascentsRepository = ascentsRepository;
             this.mapper = mapper;

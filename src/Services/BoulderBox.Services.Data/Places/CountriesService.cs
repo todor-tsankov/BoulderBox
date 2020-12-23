@@ -18,11 +18,14 @@ namespace BoulderBox.Services.Data.Places
         public CountriesService(IDeletableEntityRepository<Country> countriesRepository, IMapper mapper)
             : base(countriesRepository, mapper)
         {
+            this.NullCheck(countriesRepository, nameof(countriesRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.countriesRepository = countriesRepository;
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddAsync(CountryInputModel countryInput, ImageInputModel imageInput = null)
+        public async Task AddAsync(CountryInputModel countryInput, ImageInputModel imageInput = null)
         {
             this.NullCheck(countryInput, nameof(countryInput));
 
@@ -31,8 +34,6 @@ namespace BoulderBox.Services.Data.Places
 
             await this.countriesRepository.AddAsync(country);
             await this.countriesRepository.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task EditAsync(string id, CountryInputModel countryInput, ImageInputModel imageInput)

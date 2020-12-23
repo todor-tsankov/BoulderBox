@@ -25,6 +25,6 @@ namespace BoulderBox.Services.Data.Common
 
         Task AddAsync(object inputModel);
 
-        Task<bool> DeleteAsync(Expression<Func<TModel, bool>> predicate);
+        Task DeleteAsync(Expression<Func<TModel, bool>> predicate);
     }
 }

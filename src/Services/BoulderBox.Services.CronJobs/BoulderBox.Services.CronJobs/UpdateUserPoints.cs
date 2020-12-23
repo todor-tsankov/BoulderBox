@@ -24,7 +24,12 @@ namespace BoulderBox.Services.CronJobs
             this.ascentsRepository = ascentsRepository;
         }
 
-        public async Task Update()
+        public async Task Update(string userId)
+        {
+            await this.UpdatePointsForUser(userId);
+        }
+
+        public async Task UpdateAll()
         {
             var userIds = this.usersRepository
                 .All()
@@ -33,17 +38,22 @@ namespace BoulderBox.Services.CronJobs
 
             foreach (var userId in userIds)
             {
-                var points = this.pointsRepository
-                    .All()
-                    .First(x => x.ApplicationUserId == userId);
-
-                points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
-                points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);
-                points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(GlobalConstants.YearlyRankingYears) >= DateTime.UtcNow);
-                points.AllTime = this.CalculatePoints(userId, x => true);
-
-                await this.pointsRepository.SaveChangesAsync();
+                await UpdatePointsForUser(userId);
             }
+        }
+
+        private async Task UpdatePointsForUser(string userId)
+        {
+            var points = this.pointsRepository
+                                .All()
+                                .First(x => x.ApplicationUserId == userId);
+
+            points.Weekly = this.CalculatePoints(userId, x => x.Date.AddDays(GlobalConstants.WeeklyRankingDays) >= DateTime.UtcNow);
+            points.Monthly = this.CalculatePoints(userId, x => x.Date.AddMonths(GlobalConstants.MonthlyRankingMonths) >= DateTime.UtcNow);
+            points.Yearly = this.CalculatePoints(userId, x => x.Date.AddYears(GlobalConstants.YearlyRankingYears) >= DateTime.UtcNow);
+            points.AllTime = this.CalculatePoints(userId, x => true);
+
+            await this.pointsRepository.SaveChangesAsync();
         }
 
         private int CalculatePoints(string userId, Expression<Func<Ascent, bool>> filter)

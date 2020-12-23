@@ -19,11 +19,14 @@ namespace BoulderBox.Services.Data.Boulders
         public BouldersService(IDeletableEntityRepository<Boulder> bouldersRepository, IMapper mapper)
             : base(bouldersRepository, mapper)
         {
-            this.bouldersRepository = bouldersRepository;
+            this.NullCheck(mapper, nameof(mapper));
+            this.NullCheck(bouldersRepository, nameof(bouldersRepository));
+
             this.mapper = mapper;
+            this.bouldersRepository = bouldersRepository;
         }
 
-        public async Task<bool> AddAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
+        public async Task AddAsync(BoulderInputModel boulderInput, string authorId, ImageInputModel imageInput)
         {
             this.NullCheck(boulderInput, nameof(boulderInput));
             this.NullCheck(authorId, nameof(authorId));
@@ -37,8 +40,6 @@ namespace BoulderBox.Services.Data.Boulders
 
             await this.bouldersRepository.AddAsync(boulder);
             await this.bouldersRepository.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task EditAsync(string id, BoulderInputModel boulderInput, ImageInputModel imageInput)

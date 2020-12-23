@@ -64,13 +64,12 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var baseService = new BaseService<Test>(repositoryMock.Object, mapperMock.Object);
 
             // Act
-            var success = await baseService.DeleteAsync(predicate);
+            await baseService.DeleteAsync(predicate);
 
             // Assert
             var contains = testData.Any(x => x.Name == name);
 
             Assert.False(contains);
-            Assert.True(success);
             Assert.True(saved);
         }
 
@@ -107,13 +106,12 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
             var baseService = new BaseService<Test>(repositoryMock.Object, mapperMock.Object);
 
             // Act
-            var success = await baseService.DeleteAsync(predicate);
+            await baseService.DeleteAsync(predicate);
 
             // Assert
             var contains = testData.Any(x => x.Name == name);
 
             Assert.True(contains);
-            Assert.False(success);
             Assert.False(saved);
         }
 

@@ -117,13 +117,12 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             var bouldersService = new BouldersService(repositoryMock.Object, AutoMapperConfig.MapperInstance);
 
             // Act
-            var success = await bouldersService.AddAsync(boulderInput, authorId, imageInput);
+            await bouldersService.AddAsync(boulderInput, authorId, imageInput);
 
             // Assert
             var boulder = testData[0];
 
             Assert.True(saved);
-            Assert.True(success);
             Assert.Equal(authorId, boulder.AuthorId);
             Assert.Equal(boulderName, boulder.Name);
             Assert.Equal(boulderDescription, boulder.Description);

@@ -18,6 +18,9 @@ namespace BoulderBox.Services.Data.Forum
         public CategoriesService(IDeletableEntityRepository<Category> categoriesRepository, IMapper mapper)
             : base(categoriesRepository, mapper)
         {
+            this.NullCheck(categoriesRepository, nameof(categoriesRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.categoriesRepository = categoriesRepository;
             this.mapper = mapper;
         }

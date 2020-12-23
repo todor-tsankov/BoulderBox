@@ -17,6 +17,9 @@ namespace BoulderBox.Services.Data.Forum
         public CommentsService(IDeletableEntityRepository<Comment> commentsRepository, IMapper mapper)
             : base(commentsRepository, mapper)
         {
+            this.NullCheck(commentsRepository, nameof(commentsRepository));
+            this.NullCheck(mapper, nameof(mapper));
+
             this.commentsRepository = commentsRepository;
             this.mapper = mapper;
         }

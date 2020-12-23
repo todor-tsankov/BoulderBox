@@ -117,7 +117,7 @@ namespace BoulderBox.Services.Data.Common
             return mapped;
         }
 
-        public async Task<bool> DeleteAsync(Expression<Func<TModel, bool>> predicate)
+        public async Task DeleteAsync(Expression<Func<TModel, bool>> predicate)
         {
             this.NullCheck(predicate, nameof(predicate));
 
@@ -128,13 +128,11 @@ namespace BoulderBox.Services.Data.Common
 
             if (entity == null)
             {
-                return false;
+                return;
             }
 
             this.entityRepository.Delete(entity);
             await this.entityRepository.SaveChangesAsync();
-
-            return true;
         }
 
         protected void NullCheck(object obj, string name)

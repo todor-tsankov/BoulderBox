@@ -19,7 +19,7 @@ namespace BoulderBox.Data.Migrations
                 table: "Posts",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
                 oldNullable: true);
@@ -29,7 +29,7 @@ namespace BoulderBox.Data.Migrations
                 table: "Comments",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
                 oldNullable: true);
@@ -39,7 +39,7 @@ namespace BoulderBox.Data.Migrations
                 table: "Comments",
                 type: "nvarchar(450)",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
                 oldNullable: true);

@@ -43,6 +43,7 @@ namespace BoulderBox.Services
             };
 
             var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
             var imageInput = new ImageInputModel()
             {
                 Source = uploadResult.SecureUrl.AbsoluteUri,
