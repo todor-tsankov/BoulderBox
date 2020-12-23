@@ -119,13 +119,13 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         private void SetSelectListItems(BoulderInputModel boulder)
         {
             boulder.CountriesSelectItems = this.countriesService
-                            .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
-                            .Select(x => new SelectListItem()
-                            {
-                                Value = x.Id,
-                                Text = x.Name,
-                            })
-                            .ToList();
+                .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.Name,
+                })
+                .ToList();
 
             boulder.CitiesSelectItems = this.citiesService
                 .GetMany<CityViewModel>(x => x.CountryId == boulder.CountryId && x.Gyms.Any(), x => x.Name)

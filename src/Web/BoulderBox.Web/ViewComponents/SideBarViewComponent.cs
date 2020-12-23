@@ -9,6 +9,9 @@ namespace BoulderBox.Web.ViewComponents
 {
     public class SideBarViewComponent : ViewComponent
     {
+        private const int LatestAscentsCount = 8;
+        private const int LatestBouldersCount = 8;
+
         private readonly IAscentsService ascentsService;
         private readonly IBouldersService bouldersService;
         private readonly IApplicationUsersService usersService;
@@ -28,9 +31,11 @@ namespace BoulderBox.Web.ViewComponents
             var ascentsBoulders = new SideBarViewModel()
             {
                 LatestAscents = this.ascentsService
-                    .GetMany<SideBarAscentViewModel>(orderBySelector: x => x.Date, asc: false, take: 8),
+                    .GetMany<SideBarAscentViewModel>(orderBySelector: x => x.Date, asc: false, take: LatestAscentsCount),
+
                 LatestBoulders = this.bouldersService
-                    .GetMany<SideBarBoulderViewModel>(orderBySelector: x => x.CreatedOn, asc: false, take: 8),
+                    .GetMany<SideBarBoulderViewModel>(orderBySelector: x => x.CreatedOn, asc: false, take: LatestBouldersCount),
+
                 Statistics = new SideBarStatistics()
                 {
                     MembersCount = this.usersService.Count(),

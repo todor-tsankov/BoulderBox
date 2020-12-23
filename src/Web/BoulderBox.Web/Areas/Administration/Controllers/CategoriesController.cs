@@ -12,6 +12,9 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 {
     public class CategoriesController : AdministrationController
     {
+        private const string MatchingCategoryKey = "MatchingCategory";
+        private const string MatchingCategoryErrorMessage = "Category with that name already exists.";
+
         private readonly ICategoriesService categoriesService;
         private readonly ICloudinaryService cloudinaryService;
 
@@ -29,8 +32,16 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryInputModel categoryInput)
         {
-            if (!this.ModelState.IsValid)
+            var existsMatchingCategory = this.categoriesService
+                .Exists(x => x.Name == categoryInput.Name);
+
+            if (!this.ModelState.IsValid || existsMatchingCategory)
             {
+                if (existsMatchingCategory)
+                {
+                    this.ModelState.AddModelError(MatchingCategoryKey, MatchingCategoryErrorMessage);
+                }
+
                 return this.View(categoryInput);
             }
 
@@ -65,19 +76,24 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string id, CategoryInputModel categoryInput)
         {
-            var existsId = this.categoriesService
+            var existsCategory = this.categoriesService
                 .Exists(x => x.Id == id);
 
-            if (!existsId)
+            if (!existsCategory)
             {
                 return this.NotFound();
             }
 
-            var existsCategory = this.categoriesService
+            var existsMatchingCategory = this.categoriesService
                 .Exists(x => x.Id != id && x.Name == categoryInput.Name);
 
-            if (!this.ModelState.IsValid || existsId)
+            if (!this.ModelState.IsValid || existsMatchingCategory)
             {
+                if (existsMatchingCategory)
+                {
+                    this.ModelState.AddModelError(MatchingCategoryKey, MatchingCategoryErrorMessage);
+                }
+
                 var category = new CategoryEditViewModel()
                 {
                     Id = id,

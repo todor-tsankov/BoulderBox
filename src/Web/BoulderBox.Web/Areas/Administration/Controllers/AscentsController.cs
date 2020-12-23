@@ -45,7 +45,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                     .GetSingle<AscentInputModel>(x => x.Id == id),
             };
 
-            this.SetListItems(ascent.AscentInput);
+            this.SetselectListItems(ascent.AscentInput);
 
             return this.View(ascent);
         }
@@ -69,7 +69,7 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
                     AscentInput = ascentInput,
                 };
 
-                this.SetListItems(ascent.AscentInput);
+                this.SetselectListItems(ascent.AscentInput);
 
                 return this.View(ascent);
             }
@@ -97,16 +97,16 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             return this.RedirectToAction("Index", "Ascents", new { area = "Boulders" });
         }
 
-        private void SetListItems(AscentInputModel ascent)
+        private void SetselectListItems(AscentInputModel ascent)
         {
             ascent.GradesSelectListItems = this.gradesService
-                                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
-                                .Select(x => new SelectListItem()
-                                {
-                                    Value = x.Id,
-                                    Text = x.Text,
-                                })
-                                .ToList();
+                .GetMany<GradeViewModel>(orderBySelector: x => x.Text)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.Text,
+                })
+                .ToList();
 
             ascent.StylesSelectListItems = this.stylesService
                 .GetMany<StyleViewModel>()

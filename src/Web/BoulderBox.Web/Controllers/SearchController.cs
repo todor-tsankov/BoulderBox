@@ -57,76 +57,55 @@ namespace BoulderBox.Web.Controllers
                 return new List<SearchViewModel>();
             }
 
+            var results = new List<SearchViewModel>();
+
             var countries = this.countriesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
-
-            foreach (var country in countries)
-            {
-                country.Area = "Places";
-                country.Controller = "Countries";
-                country.Action = "Details";
-            }
+            
+            results.AddRange(countries);
+            this.SetProperties(countries, "Places", "Countries", "Details");
 
             var cities = this.citiesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 
-            foreach (var city in cities)
-            {
-                city.Area = "Places";
-                city.Controller = "Cities";
-                city.Action = "Details";
-            }
+            results.AddRange(cities);
+            this.SetProperties(cities, "Places", "Cities", "Details");
 
             var gyms = this.gymsService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 
-            foreach (var gym in gyms)
-            {
-                gym.Area = "Places";
-                gym.Controller = "Gyms";
-                gym.Action = "Details";
-            }
+            results.AddRange(gyms);
+            this.SetProperties(gyms, "Places", "Gyms", "Details");
 
             var boulders = this.bouldersService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 
-            foreach (var boulder in boulders)
-            {
-                boulder.Area = "Boulders";
-                boulder.Controller = "Boulders";
-                boulder.Action = "Details";
-            }
+            results.AddRange(boulders);
+            this.SetProperties(boulders, "Boulders", "Boulders", "Details");
 
             var categories = this.categoriesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 
-            foreach (var category in categories)
-            {
-                category.Area = "Forum";
-                category.Controller = "Categories";
-                category.Action = "Details";
-            }
+            results.AddRange(categories);
+            this.SetProperties(categories, "Forum", "Categories", "Details");
 
             var posts = this.postsService
                 .GetMany<SearchViewModel>(x => x.Title.Contains(text));
 
-            foreach (var post in posts)
-            {
-                post.Area = "Forum";
-                post.Controller = "Posts";
-                post.Action = "Details";
-            }
-
-            var results = new List<SearchViewModel>();
-
-            results.AddRange(countries);
-            results.AddRange(cities);
-            results.AddRange(gyms);
-            results.AddRange(boulders);
-            results.AddRange(categories);
             results.AddRange(posts);
+            this.SetProperties(posts, "Forum", "Posts", "Details");
 
             return results;
+        }
+
+        private void SetProperties(IEnumerable<SearchViewModel> searchViewModels, string area, string controller, string action)
+        {
+            foreach (var viewModel in searchViewModels)
+            {
+                viewModel.Area = area;
+                viewModel.Controller = controller;
+                viewModel.Action = action;
+            }
         }
     }
 }

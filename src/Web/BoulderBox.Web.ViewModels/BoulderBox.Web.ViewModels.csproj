@@ -25,8 +25,4 @@
     <ProjectReference Include="..\..\Services\BoulderBox.Services.Mapping\BoulderBox.Services.Mapping.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Administration\" />
-  </ItemGroup>
-
 </Project>

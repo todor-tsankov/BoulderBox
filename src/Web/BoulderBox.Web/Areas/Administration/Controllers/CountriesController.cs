@@ -12,6 +12,9 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 {
     public class CountriesController : AdministrationController
     {
+        private const string MatchingCountryKey = "MatchingCountry";
+        private const string MatchingCountryErrorMessage = "Country with that name or code already exists.";
+
         private readonly ICountriesService countriesService;
         private readonly ICloudinaryService cloudinaryService;
 
@@ -29,10 +32,16 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CountryInputModel countryInput)
         {
-            var existsCountry = this.countriesService.Exists(x => x.Name == countryInput.Name);
+            var existsCountry = this.countriesService
+                .Exists(x => x.Name == countryInput.Name || x.CountryCode == countryInput.CountryCode);
 
             if (!this.ModelState.IsValid || existsCountry)
             {
+                if (existsCountry)
+                {
+                    this.ModelState.AddModelError(MatchingCountryKey, MatchingCountryErrorMessage);
+                }
+
                 return this.View(countryInput);
             }
 
@@ -80,6 +89,11 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
 
             if (!this.ModelState.IsValid || existsCountry)
             {
+                if (existsCountry)
+                {
+                    this.ModelState.AddModelError(MatchingCountryKey, MatchingCountryErrorMessage);
+                }
+
                 var country = new CountryEditViewModel()
                 {
                     Id = id,

@@ -4,25 +4,23 @@
 
 <div id="chatCard" class="card h-100 border-primary bg-light text-dark col-lg-10 offset-lg-1 mt-4">
     <div class="card-body">
-        <div>
-            <div id="cardHeader" class="border-bottom border-secondary mb-3 row">
-                <div class="col-4">
-                    <h4 class="card-title"><strong>Chat</strong></h4>
-                </div>
-                <div class="col-8 text-right">
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                        <label class="custom-control-label" for="customSwitch1"><strong>Dark theme</strong></label>
-                    </div>
+        <div id="cardHeader" class="border-bottom border-secondary mb-3 row">
+            <div class="col-4">
+                <h4 class="card-title"><strong>Chat</strong></h4>
+            </div>
+            <div class="col-8 text-right">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1"><strong>Dark theme</strong></label>
                 </div>
             </div>
-            <div id="messagesList" class="overflow-auto p-lg-2 pb-2 pt-2">
-            </div>
-            <div class="row col-12 mt-3">
-                <textarea id="messageInput" class="form-control col-lg-11 p-3" style="max-height: 300px"></textarea>
-                <div class="col-lg-1 mt-lg-0 mt-2 text-center">
-                    <button id="sendButton" class="btn btn-primary ml-lg-2"><i class="far fa-paper-plane fa-2x"></i></button>
-                </div>
+        </div>
+        <div id="messagesList" class="overflow-auto p-lg-2 pb-2 pt-2">
+        </div>
+        <div class="row mt-3 p-0 justify-content-center">
+            <textarea id="messageInput" class="form-control col-lg-10 p-3" style="max-height: 300px"></textarea>
+            <div class="col-lg-1 mt-lg-0 mt-2 text-center">
+                <button id="sendButton" class="btn btn-primary ml-lg-2"><i class="far fa-paper-plane fa-2x"></i></button>
             </div>
         </div>
     </div>
