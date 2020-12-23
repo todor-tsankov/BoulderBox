@@ -19,6 +19,35 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
 {
     public class BouldersServiceTests
     {
+
+        [Fact]
+        public void BouldersServiceConstructorThrowsIfBouldersRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new BouldersService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void BouldersServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var bouldersRepoMock = new Mock<IDeletableEntityRepository<Boulder>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new BouldersService(bouldersRepoMock.Object, null);
+            });
+        }
+
         [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {

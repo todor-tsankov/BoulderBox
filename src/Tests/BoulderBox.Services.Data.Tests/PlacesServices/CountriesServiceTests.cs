@@ -20,6 +20,34 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
     public class CountriesServiceTests
     {
         [Fact]
+        public void CountriesServiceConstructorThrowsIfCountriesRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CountriesService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void CountriesServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var countriesRepoMock = new Mock<IDeletableEntityRepository<Country>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CountriesService(countriesRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {
             // Arrange

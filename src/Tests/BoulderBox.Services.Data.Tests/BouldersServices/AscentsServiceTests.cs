@@ -18,7 +18,22 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
     public class AscentsServiceTests
     {
         [Fact]
-        public void AscentsServiceThrowsIfPointsRepositoryIsNull()
+        public void AscentsServiceConstructorThrowsIfAscentsRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+            var pointsRepoMock = new Mock<IDeletableEntityRepository<Points>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new AscentsService(null, pointsRepoMock.Object, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void AscentsServiceConstructorThrowsIfPointsRepositoryIsNull()
         {
             // Arrange
             var mapperMock = new Mock<IMapper>();
@@ -29,6 +44,21 @@ namespace BoulderBox.Services.Data.Tests.BouldersServices
             {
                 // Act
                 new AscentsService(ascentsRepoMock.Object, null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void AscentsServiceConstructorThrowsIfMapperMockIsNull()
+        {
+            // Arrange
+            var ascentsRepoMock = new Mock<IDeletableEntityRepository<Ascent>>();
+            var pointRepoMock = new Mock<IDeletableEntityRepository<Points>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new AscentsService(ascentsRepoMock.Object, pointRepoMock.Object, null);
             });
         }
 

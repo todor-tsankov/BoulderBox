@@ -19,6 +19,34 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
     public class CommentsServiceTests
     {
         [Fact]
+        public void CommentsServiceConstructorThrowsIfCommentsRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CommentsService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void CommentsServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var commentsRepoMock = new Mock<IDeletableEntityRepository<Comment>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CommentsService(commentsRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {
             // Arrange

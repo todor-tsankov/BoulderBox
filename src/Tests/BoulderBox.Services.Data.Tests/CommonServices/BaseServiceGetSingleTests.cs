@@ -68,13 +68,13 @@ namespace BoulderBox.Services.Data.Tests.CommonServices
         {
             // Arrange
             var predicate = DynamicExpressionParser.ParseLambda<Test, bool>(new ParsingConfig() { }, true, predicateStr);
-            var mapperMock = new Mock<IMapper>();
+            AutoMapperConfig.RegisterMappings(typeof(Test).Assembly, typeof(ErrorViewModel).Assembly);
             var repositoryMock = new Mock<IDeletableEntityRepository<Test>>();
 
             repositoryMock.Setup(x => x.AllAsNoTracking())
                 .Returns(GetTestData());
 
-            var baseService = new BaseService<Test>(repositoryMock.Object, mapperMock.Object);
+            var baseService = new BaseService<Test>(repositoryMock.Object, AutoMapperConfig.MapperInstance);
 
             // Act
             var test = baseService.GetSingle<TestViewModel>(predicate);

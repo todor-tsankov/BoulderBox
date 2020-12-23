@@ -20,6 +20,34 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
     public class CategoriesServiceTests
     {
         [Fact]
+        public void CategoriesServiceConstructorThrowsIfCategoriesRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CategoriesService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void CategoriesServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var categoriesRepoMock = new Mock<IDeletableEntityRepository<Category>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CategoriesService(categoriesRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsIfTheInputModelIsNull()
         {
             // Arrange

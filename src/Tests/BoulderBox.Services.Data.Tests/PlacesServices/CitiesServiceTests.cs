@@ -20,6 +20,34 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
     public class CitiesServiceTests
     {
         [Fact]
+        public void CitiesServiceConstructorThrowsIfCitiesRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CitiesService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void CitiesServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var citiesRepoMock = new Mock<IDeletableEntityRepository<City>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new CitiesService(citiesRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {
             // Arrange

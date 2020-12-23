@@ -21,6 +21,34 @@ namespace BoulderBox.Services.Data.Tests.PlacesServices
     public class GymsServiceTests
     {
         [Fact]
+        public void GymsServiceConstructorThrowsIfGymsRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new GymsService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void GymsServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var gymsRepoMock = new Mock<IDeletableEntityRepository<Gym>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new GymsService(gymsRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {
             // Arrange

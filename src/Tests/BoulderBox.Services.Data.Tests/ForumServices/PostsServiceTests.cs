@@ -20,6 +20,34 @@ namespace BoulderBox.Services.Data.Tests.ForumServices
     public class PostsServiceTests
     {
         [Fact]
+        public void PostsServiceConstructorThrowsIfPostsRepositoryIsNull()
+        {
+            // Arrange
+            var mapperMock = new Mock<IMapper>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new PostsService(null, mapperMock.Object);
+            });
+        }
+
+        [Fact]
+        public void PostsServiceConstructorThrowsIfMapperIsNull()
+        {
+            // Arrange
+            var postsRepoMock = new Mock<IDeletableEntityRepository<Post>>();
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                // Act
+                new PostsService(postsRepoMock.Object, null);
+            });
+        }
+
+        [Fact]
         public async Task AddAsyncThrowsWhenTheInputModelIsNull()
         {
             // Arrange
