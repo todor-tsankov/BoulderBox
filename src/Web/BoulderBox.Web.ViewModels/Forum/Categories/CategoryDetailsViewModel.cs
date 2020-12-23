@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+using AutoMapper;
 using BoulderBox.Data.Models;
 using BoulderBox.Services.Mapping;
 using BoulderBox.Web.ViewModels.Common;
@@ -18,7 +19,7 @@ namespace BoulderBox.Web.ViewModels.Forum.Categories
 
         public string ImageSource { get; set; }
 
-        [AutoMapper.IgnoreMap]
+        [IgnoreMap]
         public IEnumerable<CategoryDetailsForumPostViewModel> Posts { get; set; }
     }
 }
