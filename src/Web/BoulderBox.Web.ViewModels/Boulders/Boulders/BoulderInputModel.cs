@@ -34,7 +34,7 @@ namespace BoulderBox.Web.ViewModels.Boulders.Boulders
         public const string DescriptionLengthErrorMessage = "Description must be between 5 and 1000 characters.";
 
         public const string FormFileDisplay = "Image *";
-        public const string FormFileRequiredErrorMessage = "Image is required";
+        public const string FormFileRequiredErrorMessage = "Image is required.";
 
         [Display(Name = NameDisplay)]
         [Required(ErrorMessage = NameRequiredErrorMessage)]

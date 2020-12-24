@@ -58,7 +58,7 @@
     <main role="main" class="pb-3">
         <div class="container col-12">
             <div class="row">
-                <div id="leftNavbar" class="border-primary border-right border-bottom bg-light d-none d-lg-block col-lg-2">
+                <div id="leftNavbar" class="border-primary border-right border-bottom bg-light d-none d-xl-block col-lg-2">
                     <div class="row ml-2 mr-2 mt-4 mb-4">
                         <partial name="_LoginPartial" />
                     </div>
@@ -66,7 +66,7 @@
                         <vc:side-bar></vc:side-bar>
                     </cache>
                 </div>
-                <div class="col-lg-10 mt-4">
+                <div class="col-xl-10 mt-4">
                     <div class="container">
                         <partial name="_CookieConsentPartial" />
                         @if (this.TempData[GlobalConstants.MessageKey] != null)

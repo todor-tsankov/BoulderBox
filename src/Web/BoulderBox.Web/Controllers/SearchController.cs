@@ -11,6 +11,8 @@ namespace BoulderBox.Web.Controllers
 {
     public class SearchController : BaseController
     {
+        private const int MaxFoundElementsPerService = 8;
+
         private readonly ICountriesService countriesService;
         private readonly ICitiesService citiesService;
         private readonly IGymsService gymsService;
@@ -60,25 +62,25 @@ namespace BoulderBox.Web.Controllers
             var results = new List<SearchViewModel>();
 
             var countries = this.countriesService
-                .GetMany<SearchViewModel>(x => x.Name.Contains(text));
-            
+                .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
+
             results.AddRange(countries);
             this.SetProperties(countries, "Places", "Countries", "Details");
 
             var cities = this.citiesService
-                .GetMany<SearchViewModel>(x => x.Name.Contains(text));
+                .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(cities);
             this.SetProperties(cities, "Places", "Cities", "Details");
 
             var gyms = this.gymsService
-                .GetMany<SearchViewModel>(x => x.Name.Contains(text));
+                .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(gyms);
             this.SetProperties(gyms, "Places", "Gyms", "Details");
 
             var boulders = this.bouldersService
-                .GetMany<SearchViewModel>(x => x.Name.Contains(text));
+                .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(boulders);
             this.SetProperties(boulders, "Boulders", "Boulders", "Details");
@@ -90,7 +92,7 @@ namespace BoulderBox.Web.Controllers
             this.SetProperties(categories, "Forum", "Categories", "Details");
 
             var posts = this.postsService
-                .GetMany<SearchViewModel>(x => x.Title.Contains(text));
+                .GetMany<SearchViewModel>(x => x.Title.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(posts);
             this.SetProperties(posts, "Forum", "Posts", "Details");

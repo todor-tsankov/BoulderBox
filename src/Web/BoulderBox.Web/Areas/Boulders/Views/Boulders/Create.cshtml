@@ -44,6 +44,7 @@
     <div class="form-group">
         <label asp-for="FormFile" class="col-form-label"></label>
         <input type="file" asp-for="FormFile" class="form-control-file" />
+        <span asp-validation-for="FormFile" class="text-danger"></span>
     </div>
     <p>* Required</p>
     <button type="submit" class="btn btn-success">Create</button>
