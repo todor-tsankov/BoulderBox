@@ -2,26 +2,29 @@
 
 @{
     ViewData["Title"] = Model.Name;
+
+    var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 }
 
-<div class="row ml-2 justify-content-lg-center">
+<div class="row col-12 justify-content-center text-center">
     <h2>@Model.Name (@Model.GradeText)</h2>
     <a asp-area="Boulders" asp-controller="Ascents" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-3 mt-1 mb-1">Add Ascent</a>
+
     @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.AuthorId)
     {
         <a asp-area="Boulders" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
     }
-    else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    else if (admin)
     {
         <a asp-area="Administration" asp-controller="Boulders" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
     }
 </div>
 
-<div class="row mt-4 mb-3 col-12">
-    <img src="@Url.Content(Model.ImageSource)" class="card-img col-lg-6 mb-3 border border-primary p-0" />
+<div class="row mt-4 mb-3 col-12 justify-content-center">
+    <img src="@Model.ImageSource" class="card-img col-lg-6 mb-3 border border-primary p-0" />
 
-    <div class="col-lg-5 ml-2">
-        <div class="jumbotron container-fluid pt-4 pb-4">
+    <div class="col-lg-5 ml-lg-4 p-0">
+        <div class="jumbotron col-12 pt-4 pb-4">
             <div class="row justify-content-center mb-2">
                 <h5><i class="far fa-thumbs-up"></i> @Model.RecommendCount</h5>
                 <h5><i class="far fa-star ml-2"></i> @Model.AverageStars.ToString("f1")</h5>
@@ -30,7 +33,7 @@
             <h5>gym: <a asp-area="Places" asp-controller="Gyms" asp-action="Details" asp-route-id="@Model.GymId">@Model.GymName</a></h5>
             <h5>created on: @Model.CreatedOn.ToString("dd/MM/yyyy")</h5>
         </div>
-        <div class="jumbotron container-fluid pt-4 pb-2">
+        <div class="jumbotron col-12 pt-4 pb-2">
             @if (Model.Description != null)
             {
                 <p class="text-center">@(Model.Description)</p>
@@ -46,13 +49,16 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
-                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
+                <th width="50" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>User</th>
                 <th>Date</th>
                 <th>Style</th>
                 <th>Grade</th>
-                <th>Comment</th>
                 <th>Stars</th>
+                @if (admin)
+                {
+                    <th></th>
+                }
             </tr>
         </thead>
         <tbody class="table-light">
@@ -60,13 +66,16 @@
             @if (!Model.Ascents.Any())
             {
                 <tr>
-                    <td width="50">-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
+                    @if (admin)
+                    {
+                        <td></td>
+                    }
                 </tr>
             }
 
@@ -87,8 +96,15 @@
                     styleBadge += "danger";
                 }
 
-                <tr>
-                    <td width="50">
+                var trClass = string.Empty;
+
+                if (ascent.Comment == null)
+                {
+                    trClass = "border-bottom";
+                }
+
+                <tr class="@trClass">
+                    <td>
                         @if (ascent.ApplicationUserImageSource != null)
                         {
                             <img src="@ascent.ApplicationUserImageSource" class="rounded-circle border" width="30" height="30" />
@@ -102,7 +118,6 @@
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                     <td>@ascent.GradeText</td>
-                    <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
                         <td>-</td>
@@ -116,7 +131,22 @@
                             }
                         </td>
                     }
+                    @if (admin)
+                    {
+                        <td><a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
+                    }
                 </tr>
+
+                if (ascent.Comment != null)
+                {
+                    <tr class="border-bottom">
+                        <td colspan="6">@ascent.Comment</td>
+                        @if (admin)
+                        {
+                            <td></td>
+                        }
+                    </tr>
+                }
             }
         </tbody>
     </table>

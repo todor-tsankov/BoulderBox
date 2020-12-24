@@ -4,10 +4,10 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="row ml-2">
+<div class="row col-12 justify-content-center text-center text-md-left justify-content-md-start">
     @if (Model.ImageSource != null)
     {
-        <img src="@Url.Content(Model.ImageSource)" class="rounded-circle border mr-2" width="50" height="50" />
+        <img src="@Model.ImageSource" class="rounded-circle border mr-2" width="50" height="50" />
     }
     else
     {

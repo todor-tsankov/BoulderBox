@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = @Model.Name;
+
+    var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 }
 
 <div class="row ml-2">
@@ -15,7 +17,7 @@
     }
     <h2 class="mt-1">@Model.Name</h2>
     <a asp-area="Forum" asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-outline-primary ml-lg-3 mt-1 mb-3">Create Post</a>
-    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    @if (admin)
     {
         <a asp-area="Administration" asp-controller="Categories" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-success ml-3 mt-1 mb-3">Edit</a>
     }
@@ -34,12 +36,12 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
-                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
-                <th scope="col">Subject</th>
-                <th scope="col">UserName</th>
-                <th scope="col">Created On</th>
-                <th scope="col">Comments</th>
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                <th width="50" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
+                <th>Subject</th>
+                <th>UserName</th>
+                <th>Created On</th>
+                <th>Comments</th>
+                @if (admin)
                 {
                     <th></th>
                 }
@@ -49,12 +51,12 @@
             @if (!Model.Posts.Any())
             {
                 <tr>
-                    <td>No posts in this category</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    <td>-</td>
+                    @if (admin)
                     {
                         <td></td>
                     }
@@ -64,7 +66,7 @@
             @foreach (var post in Model.Posts)
             {
                 <tr class="text-dark">
-                    <td width="50">
+                    <td>
                         @if (post.ImageSource != null)
                         {
                             <img src="@post.ImageSource" class="rounded-circle border" width="30" height="30" />
@@ -78,7 +80,7 @@
                     <td>@post.ApplicationUserUserName</td>
                     <td>@post.CreatedOn.ToString("dd/MM/yyyy")</td>
                     <td>@post.CommentsCount</td>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    @if (admin)
                     {
                         <td>
                             <a asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>

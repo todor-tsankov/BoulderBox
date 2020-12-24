@@ -2,11 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 }
 
 <div class="row ml-2">
     <h2>@Model.Post.Title</h2>
-    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+
+    @if (admin)
     {
         <a asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
     }
@@ -31,7 +34,7 @@
                         <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@Model.Post.ApplicationUserId" class="text-light">@Model.Post.ApplicationUserUserName</a>
                     </div>
                     <div class="col-md-6">
-                        <div class="row justify-content-end  mt-2 mt-md-0">
+                        <div class="row justify-content-end mt-2 mt-md-0">
                             <a class="mr-3">@Model.Post.CreatedOn</a>
                         </div>
                     </div>
@@ -64,7 +67,7 @@
                     <div class="col-md-6">
                         <div class="row justify-content-end mt-2 mt-md-0">
                             <a class="mr-3">@comment.CreatedOn</a>
-                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            @if (admin)
                             {
                                 <a asp-area="Administration" asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="btn btn-outline-success mr-3">Edit</a>
                             }

@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = Model.UserName;
+
+    var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
+    var ownProfile = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id;
 }
 
 <div class="row ml-2">
@@ -51,12 +54,12 @@
     <table class="table table-borderless table-hover">
         <thead class="bg-primary text-light">
             <tr>
-                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
+                <th width="50" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>Date</th>
                 <th>Style</th>
                 <th>Boulder</th>
                 <th>Stars</th>
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                @if (admin || ownProfile)
                 {
                     <th></th>
                 }
@@ -67,15 +70,14 @@
         {
             <tbody class="table-secondary">
                 <tr>
-                    <td>No ascents</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                    @if (admin || ownProfile)
                     {
-                        <th></th>
+                        <td><a class="btn btn-primary text-light">Edit</a></td>
                     }
                 </tr>
             </tbody>
@@ -83,13 +85,17 @@
 
         @foreach (var group in Model.Ascents)
         {
+            var colspan = 5;
+
+            if (admin || ownProfile)
+            {
+                colspan = 6;
+            }
+
             <thead class="table-secondary">
                 <tr>
-                    <th class="text-center" colspan="5">@group.Key</th>
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
-                    {
-                        <th></th>
-                    }
+                    
+                    <th class="text-center" colspan="@colspan">@group.Key</th>
                 </tr>
             </thead>
 
@@ -111,8 +117,15 @@
                         styleBadge += "danger";
                     }
 
-                    <tr>
-                        <td width="50">
+                    var trClass = string.Empty;
+
+                    if (ascent.Comment == null)
+                    {
+                        trClass = "border-bottom";
+                    }
+
+                    <tr class="@trClass">
+                        <td>
                             @if (ascent.BoulderImageSource != null)
                             {
                                 <img src="@ascent.BoulderImageSource" class="rounded-circle border" width="30" height="30" />
@@ -135,22 +148,21 @@
                                 }
                             </td>
                         }
-                        @if (this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value == Model.Id)
+                        @if (ownProfile)
                         {
                             <td><a asp-area="Boulders" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
                         }
-                        else if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        else if (admin)
                         {
                             <td><a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a></td>
                         }
                     </tr>
                     @if (ascent.Comment != null)
                     {
-                        <tr>
+                        <tr class="border-bottom">
                             <td colspan="6">@ascent.Comment</td>
                         </tr>
                     }
-
                 }
             </tbody>
         }

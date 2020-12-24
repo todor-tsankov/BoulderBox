@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Ascents";
+
+    var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 }
 
 <div class="row ml-2">
@@ -42,9 +44,8 @@
                 <th>Date</th>
                 <th>Style</th>
                 <th>Boulder</th>
-                <th>Comment</th>
                 <th>Stars</th>
-                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                @if (admin)
                 {
                     <th></th>
                 }
@@ -61,7 +62,10 @@
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
-                    <td>-</td>
+                    @if (admin)
+                    {
+                        <th><a class="btn btn-primary disabled">Edit</a></th>
+                    }
                 </tr>
             }
 
@@ -82,7 +86,14 @@
                     styleBadge += "danger";
                 }
 
-                <tr>
+                var trClass = string.Empty;
+
+                if (ascent.Comment == null)
+                {
+                    trClass = "border-bottom";
+                }
+
+                <tr class="@trClass">
                     <td width="50">
                         @if (ascent.ApplicationUserImageSource != null)
                         {
@@ -97,7 +108,6 @@
                     <td>@ascent.Date.ToString("dd/MM/yyyy")</td>
                     <td><span class="@styleBadge">@ascent.StyleShortText</span></td>
                     <td><a asp-area="Boulders" asp-controller="Boulders" asp-action="Details" asp-route-id="@ascent.BoulderId" class="text-dark text-nowrap">@ascent.BoulderName</a> (@ascent.GradeText)</td>
-                    <td>@(ascent.Comment ?? "-")</td>
                     @if (ascent.Stars == null)
                     {
                         <td>-</td>
@@ -111,13 +121,24 @@
                             }
                         </td>
                     }
-                    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                    @if (admin)
                     {
                         <td>
                             <a asp-area="Administration" asp-controller="Ascents" asp-action="Edit" asp-route-id="@ascent.Id" class="btn btn-primary">Edit</a>
                         </td>
                     }
                 </tr>
+
+                if (ascent.Comment != null)
+                {
+                    <tr class="border-bottom">
+                        <td colspan="6">@ascent.Comment</td>
+                        @if (admin)
+                        {
+                            <th></th>
+                        }
+                    </tr>
+                }
             }
         </tbody>
     </table>

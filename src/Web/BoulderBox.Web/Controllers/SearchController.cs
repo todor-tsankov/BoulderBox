@@ -52,6 +52,16 @@ namespace BoulderBox.Web.Controllers
             return this.View(searchResults);
         }
 
+        private static void SetProperties(IEnumerable<SearchViewModel> searchViewModels, string area, string controller, string action)
+        {
+            foreach (var viewModel in searchViewModels)
+            {
+                viewModel.Area = area;
+                viewModel.Controller = controller;
+                viewModel.Action = action;
+            }
+        }
+
         private IList<SearchViewModel> GetResults(string text)
         {
             if (text == null || text == string.Empty)
@@ -65,49 +75,39 @@ namespace BoulderBox.Web.Controllers
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(countries);
-            this.SetProperties(countries, "Places", "Countries", "Details");
+            SetProperties(countries, "Places", "Countries", "Details");
 
             var cities = this.citiesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(cities);
-            this.SetProperties(cities, "Places", "Cities", "Details");
+            SetProperties(cities, "Places", "Cities", "Details");
 
             var gyms = this.gymsService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(gyms);
-            this.SetProperties(gyms, "Places", "Gyms", "Details");
+            SetProperties(gyms, "Places", "Gyms", "Details");
 
             var boulders = this.bouldersService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(boulders);
-            this.SetProperties(boulders, "Boulders", "Boulders", "Details");
+            SetProperties(boulders, "Boulders", "Boulders", "Details");
 
             var categories = this.categoriesService
                 .GetMany<SearchViewModel>(x => x.Name.Contains(text));
 
             results.AddRange(categories);
-            this.SetProperties(categories, "Forum", "Categories", "Details");
+            SetProperties(categories, "Forum", "Categories", "Details");
 
             var posts = this.postsService
                 .GetMany<SearchViewModel>(x => x.Title.Contains(text), take: MaxFoundElementsPerService);
 
             results.AddRange(posts);
-            this.SetProperties(posts, "Forum", "Posts", "Details");
+            SetProperties(posts, "Forum", "Posts", "Details");
 
             return results;
-        }
-
-        private void SetProperties(IEnumerable<SearchViewModel> searchViewModels, string area, string controller, string action)
-        {
-            foreach (var viewModel in searchViewModels)
-            {
-                viewModel.Area = area;
-                viewModel.Controller = controller;
-                viewModel.Action = action;
-            }
         }
     }
 }
