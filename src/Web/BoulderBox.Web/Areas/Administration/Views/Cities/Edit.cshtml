@@ -32,7 +32,7 @@
         <span asp-validation-for="CityInput.Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label class="col-form-label"></label>
+        <label asp-for="CityInput.FormFile" class="col-form-label"></label>
         <input type="file" asp-for="CityInput.FormFile" class="form-control-file" />
     </div>
     <p>* Required</p>
