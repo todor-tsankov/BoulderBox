@@ -9,14 +9,14 @@
     }
 }
 
-<div class="row ml-2">
+<div class="row ml-md-2 justify-content-center text-center text-md-left justify-content-md-start">
     <h4>Manage your account</h4>
     <a asp-area="Users" asp-controller="Users" asp-action="Details" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" class="btn btn-outline-primary ml-3 mb-1">Public Profile</a>
 </div>
 <hr class="bg-secondary" />
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 mb-3">
         <partial name="_ManageNav" />
     </div>
     <div class="col-md-9">

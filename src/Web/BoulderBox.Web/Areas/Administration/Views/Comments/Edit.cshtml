@@ -9,7 +9,7 @@
     <form asp-area="Administration" asp-controller="Comments" asp-action="Delete" method="post">
         <input type="hidden" name="id" value="@Model.Id" />
         <input type="hidden" name="postId" value="@Model.CommentInput.PostId" />
-        <button type="submit" class="btnbtn-outline-danger ml-3 mt-1 mb-1">Delete</button>
+        <button type="submit" class="btn btn-outline-danger ml-3 mt-1 mb-1">Delete</button>
     </form>
 </div>
 <hr class="bg-secondary mb-3" />
@@ -22,5 +22,5 @@
         <textarea asp-for="CommentInput.Text" name="Text" class="form-control"></textarea>
         <span asp-validation-for="CommentInput.Text" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-success">Save</button>
 </form>

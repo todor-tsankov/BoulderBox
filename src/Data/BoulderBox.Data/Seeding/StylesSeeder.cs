@@ -18,8 +18,12 @@ namespace BoulderBox.Data.Seeding
                 return;
             }
 
-            var stylesJson = await File.ReadAllTextAsync(@"../../Data/BoulderBox.Data/Seeding/Data/Styles.json");
-            var styles = JsonConvert.DeserializeObject<IEnumerable<Style>>(stylesJson);
+            var styles = new List<Style>()
+            {
+                new Style() { ShortText = "RP", LongText = "Redpoint", BonusPoints = 0 },
+                new Style() { ShortText = "FL", LongText = "Flash", BonusPoints = 53 },
+                new Style() { ShortText = "OS", LongText = "On-sight", BonusPoints = 145 },
+            };
 
             await dbContext.Styles.AddRangeAsync(styles);
             await dbContext.SaveChangesAsync();

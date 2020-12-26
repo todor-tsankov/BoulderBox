@@ -49,6 +49,9 @@ namespace BoulderBox.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+
             services.AddHangfire(
                 config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                     .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
@@ -62,9 +65,6 @@ namespace BoulderBox.Web
                             UsePageLocksOnDequeue = true,
                             DisableGlobalLocks = true,
                         }));
-
-            services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
