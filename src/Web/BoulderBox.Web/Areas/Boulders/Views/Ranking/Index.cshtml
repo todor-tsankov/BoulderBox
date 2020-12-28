@@ -31,8 +31,8 @@
     <table class="table table-borderless table-hover table-striped">
         <thead class="bg-primary text-light">
             <tr>
-                <th>#</th>
-                <th scope="col" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
+                <th width="30">#</th>
+                <th width="50" class="text-center"><i class="fas fa-camera-retro fa-1x"></i></th>
                 <th>User</th>
                 <th>Weekly</th>
                 <th>Monthly</th>
@@ -45,7 +45,7 @@
             @if (!Model.Ranking.Any())
             {
                 <tr>
-                    <td>No users</td>
+                    <td class="text-center">-</td>
                     <td>-</td>
                     <td>-</td>
                     <td>-</td>
@@ -62,8 +62,8 @@
             @foreach (var user in Model.Ranking)
             {
                 <tr>
-                    <td width="30">@i</td>
-                    <td width="50">
+                    <td>@i</td>
+                    <td>
                         @if (user.ImageSource != null)
                         {
                             <img src="@user.ImageSource" class="rounded-circle border" width="30" height="30" />
