@@ -22,6 +22,7 @@ something stupid you said 5 years ago is going to come up and embarass you.
 - MSSQL Server
 - Entity Framework [CORE 5.0](https://docs.microsoft.com/en-us/ef/core/)
 - ASP.NET Core areas
+- Razor
 - SignalR
 - SendGrid
 - Hangfire
@@ -31,7 +32,6 @@ something stupid you said 5 years ago is going to come up and embarass you.
 - jQuery
 - JavaScript
 - XUnit (for testing)
-- Selenium (for testing)
 - Moq (for testing)
 
 ## :wrench: DB Diagram
