@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Web;
 
 using BoulderBox.Common;
 using BoulderBox.Services;
@@ -48,7 +49,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(categoryInput.FormFile);
             await this.categoriesService.AddAsync(categoryInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully created category <strong>{categoryInput.Name}</strong>";
+            var categoryNameEncoded = HttpUtility.HtmlEncode(categoryInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created category <strong>{categoryNameEncoded}</strong>";
 
             return this.RedirectToAction("Index", "Categories", new { area = "Forum" });
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 
 using BoulderBox.Common;
 using BoulderBox.Data.Models;
@@ -130,7 +131,8 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.AddAsync(boulderInput, userId, image);
 
-            this.TempData[GlobalConstants.MessageKey] = "Successfully created boulder!";
+            var boulderNameEncoded = HttpUtility.HtmlEncode(boulderInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created boulder <strong>{boulderNameEncoded}</strong>!";
 
             return this.RedirectToAction("Index", "Boulders", new { area = "Boulders" });
         }
@@ -201,7 +203,8 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.EditAsync(id, boulderInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = "Successfully edited boulder!";
+            var boulderNameEncoded = HttpUtility.HtmlEncode(boulderInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited boulder <strong>{boulderNameEncoded}</strong>!";
 
             return this.RedirectToAction("Details", "Boulders", new { area = "Boulders", id });
         }
@@ -244,13 +247,13 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         private void SetEditListItems(BoulderInputModel boulder)
         {
             boulder.CountriesSelectItems = this.countriesService
-                            .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
-                            .Select(x => new SelectListItem()
-                            {
-                                Value = x.Id,
-                                Text = x.Name,
-                            })
-                            .ToList();
+                .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
+                .Select(x => new SelectListItem()
+                {
+                    Value = x.Id,
+                    Text = x.Name,
+                })
+                .ToList();
 
             boulder.CitiesSelectItems = this.citiesService
                 .GetMany<CityViewModel>(x => x.CountryId == boulder.CountryId && x.Gyms.Any(), x => x.Name)
@@ -283,9 +286,9 @@ namespace BoulderBox.Web.Areas.Boulders.Controllers
         private void SetCreateListItems(BoulderInputModel boulder)
         {
             boulder.CountriesSelectItems = this.countriesService
-                            .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
-                            .Select(x => new SelectListItem(x.Name, x.Id))
-                            .ToList();
+                 .GetMany<CountryViewModel>(x => x.Cities.Any(y => y.Gyms.Any()), x => x.Name)
+                 .Select(x => new SelectListItem(x.Name, x.Id))
+                 .ToList();
 
             boulder.GradesSelectItems = this.gradesService
                 .GetMany<GradeViewModel>(orderBySelector: x => x.Text)

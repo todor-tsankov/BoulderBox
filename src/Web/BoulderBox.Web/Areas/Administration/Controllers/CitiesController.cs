@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 using BoulderBox.Common;
 using BoulderBox.Services;
@@ -51,7 +52,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(cityInput.FormFile);
             await this.citiesService.AddAsync(cityInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully created city <strong>{cityInput.Name}</strong>!";
+            var cityNameEncoded = HttpUtility.HtmlEncode(cityInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created city <strong>{cityNameEncoded}</strong>!";
 
             return this.RedirectToAction("Index", "Cities", new { area = "Places" });
         }
@@ -108,7 +110,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(cityInput.FormFile);
             await this.citiesService.EditAsync(id, cityInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited city <strong>{cityInput.Name}</strong>!";
+            var cityNameEncoded = HttpUtility.HtmlEncode(cityInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited city <strong>{cityNameEncoded}</strong>!";
 
             return this.RedirectToAction("Details", "Cities", new { area = "Places", id });
         }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 using BoulderBox.Common;
 using BoulderBox.Services;
@@ -94,7 +95,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(boulderInput.FormFile);
             await this.bouldersService.EditAsync(id, boulderInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited boulder <strong>{boulderInput.Name}</strong>!";
+            var boulderNameEncoded = HttpUtility.HtmlEncode(boulderInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited boulder <strong>{boulderNameEncoded}</strong>!";
 
             return this.RedirectToAction("Details", "Boulders", new { area = "Boulders", id });
         }

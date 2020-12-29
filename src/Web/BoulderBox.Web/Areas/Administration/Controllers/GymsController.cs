@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 using BoulderBox.Common;
 using BoulderBox.Services;
@@ -55,7 +56,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.AddAsync(gymInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully created gym <strong>{gymInput.Name}</strong>!";
+            var encodedGymName = HttpUtility.HtmlEncode(gymInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully created gym <strong>{encodedGymName}</strong>!";
 
             return this.RedirectToAction("Index", "Gyms", new { area = "Places" });
         }
@@ -111,7 +113,8 @@ namespace BoulderBox.Web.Areas.Administration.Controllers
             var image = await this.cloudinaryService.SaveImageAsync(gymInput.FormFile);
             await this.gymsService.EditAsync(id, gymInput, image);
 
-            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited gym <strong>{gymInput.Name}</strong>!";
+            var encodedGymName = HttpUtility.HtmlEncode(gymInput.Name);
+            this.TempData[GlobalConstants.MessageKey] = $"Successfully edited gym <strong>{encodedGymName}</strong>!";
 
             return this.RedirectToAction("Details", "Gyms", new { area = "Places", id });
         }
