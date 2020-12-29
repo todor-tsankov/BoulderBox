@@ -6,12 +6,12 @@
     var admin = this.User.IsInRole(GlobalConstants.AdministratorRoleName);
 }
 
-<div class="row ml-2">
-    <h2>@Model.Post.Title</h2>
+<div class="row col-12 justify-content-center text-center text-md-left justify-content-md-start m-0">
+    <h2 class="ml-2 mr-2">@Model.Post.Title</h2>
 
     @if (admin)
     {
-        <a asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id" class="btn btn-outline-success ml-3 mt-1 mb-1">Edit</a>
+        <a asp-area="Administration" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.Post.Id" class="btn btn-outline-success ml-2 mr-2 mt-1 mb-1">Edit</a>
     }
 </div>
 <hr class="bg-secondary" />
