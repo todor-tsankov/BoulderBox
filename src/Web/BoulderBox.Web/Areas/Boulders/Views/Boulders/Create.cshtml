@@ -62,10 +62,10 @@
                     document.getElementById("citySelect").innerHTML = '';
                     document.getElementById("gymSelect").innerHTML = '';
 
-                    var cities = JSON.parse(this.responseText);
+                    let cities = JSON.parse(this.responseText);
 
-                    for (var i = 0; i < cities.length; i++) {
-                        var city = cities[i];
+                    for (let i = 0; i < cities.length; i++) {
+                        let city = cities[i];
 
                         document.getElementById("citySelect").innerHTML += '<option value="' + city.id + '">' + city.name + '</option>';
                     }
@@ -74,8 +74,8 @@
                 }
             };
 
-            var yourSelect = document.getElementById("countrySelect");
-            var countryId = yourSelect.options[yourSelect.selectedIndex].value;
+            let yourSelect = document.getElementById("countrySelect");
+            let countryId = yourSelect.options[yourSelect.selectedIndex].value;
 
             xhttp.open("GET", "/api/Cities?countryId=" + countryId + "&withGyms=true", true);
             xhttp.send();
@@ -90,18 +90,18 @@
 
                     document.getElementById("gymSelect").innerHTML = '';
 
-                    var gyms = JSON.parse(this.responseText);
+                    let gyms = JSON.parse(this.responseText);
 
-                    for (var i = 0; i < gyms.length; i++) {
-                        var gym = gyms[i];
+                    for (let i = 0; i < gyms.length; i++) {
+                        let gym = gyms[i];
 
                         document.getElementById("gymSelect").innerHTML += '<option value="' + gym.id + '">' + gym.name + '</option>';
                     }
                 }
             };
 
-            var yourSelect = document.getElementById("citySelect");
-            var gymId = yourSelect.options[yourSelect.selectedIndex].value
+            let yourSelect = document.getElementById("citySelect");
+            let gymId = yourSelect.options[yourSelect.selectedIndex].value
 
             xhttp.open("GET", "/api/Gyms?cityId=" + gymId, true);
             xhttp.send();

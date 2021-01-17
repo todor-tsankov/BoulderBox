@@ -45,24 +45,24 @@
     <script>
         function fillCitySelect() {
 
-            var xhttp = new XMLHttpRequest();
+            let xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("citySelect").innerHTML = '';
 
-                    var cities = JSON.parse(this.responseText);
+                    let cities = JSON.parse(this.responseText);
 
-                    for (var i = 0; i < cities.length; i++) {
-                        var city = cities[i];
+                    for (let i = 0; i < cities.length; i++) {
+                        let city = cities[i];
 
                         document.getElementById("citySelect").innerHTML += '<option value="' + city.id + '">' + city.name + '</option>';
                     }
                 }
             };
 
-            var yourSelect = document.getElementById("countrySelect");
-            var countryId = yourSelect.options[yourSelect.selectedIndex].value;
+            let yourSelect = document.getElementById("countrySelect");
+            let countryId = yourSelect.options[yourSelect.selectedIndex].value;
 
             xhttp.open("GET", "/api/Cities?countryId=" + countryId, true);
             xhttp.send();
