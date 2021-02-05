@@ -14,8 +14,7 @@ The points for one ascent come from the grade of the boulder, which gives the ba
 Bonus points are given for the style in which the ascent is done. 
 In addition, there's a simple forum with categories, posts in the categories and comments for each post where climbers (or normal people) can
 ask for advice, find a climbing buddy or suggest improvements or problems with the website.
-The last form of communication is the chat, which is just for fun. Its messages are not stored anywhere so you don't have to worry about whether
-something stupid you said 5 years ago is going to come up and embarass you.
+The last form of communication is the chat, which is just for fun.
 
 ## :hammer: Built With
 - ASP.NET [CORE 5.0](https://docs.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-5.0) MVC
