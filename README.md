@@ -2,8 +2,6 @@
 
 **BoulderBox Website** is my defense project for **ASP.NET Core MVC** course at [SoftUni](https://softuni.bg/ "SoftUni") (September-December 2020).
 
-It can be seen running on: [https://boulderbox.azurewebsites.net/](https://boulderbox.azurewebsites.net/).
-
 ## :pencil2: Overview
 
 **BoulderBox** is a website for climbers. Each climber can explore the various countries, cities, gyms and sort/filter them in any way he likes.
